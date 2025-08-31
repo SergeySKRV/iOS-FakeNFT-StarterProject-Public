@@ -2,11 +2,8 @@ import UIKit
 
 final class StatisticsViewController: UIViewController {
     
-    let nameOfUser = "Mike Volkov"
-    let numberOfNFT = 123
-    let avatarImage = UIImage(named: "Avatar")
-    
-    
+    private let presenter = StatisticsViewPresenter.shared
+   
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "SortIcon"), for: .normal)
@@ -22,6 +19,8 @@ final class StatisticsViewController: UIViewController {
         tableView.register(StatisticsTableViewCell.self, forCellReuseIdentifier: "StatisticsTableViewCell")
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.layer.borderColor = UIColor.systemGray6.cgColor
+        tableView.layer.borderWidth = 1
         return tableView
     }()
     
@@ -67,12 +66,15 @@ extension StatisticsViewController: UITableViewDelegate {
 
 extension StatisticsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return presenter.statisticsViewModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatisticsTableViewCell") as? StatisticsTableViewCell else { return UITableViewCell() }
-        cell.configureCellData(number: indexPath.item+1, avatarImage: avatarImage ?? UIImage(), nameOfUser: nameOfUser, numberOfNFT: numberOfNFT)
+        cell.configureCellData(number: indexPath.item+1,
+                               avatarImage: presenter.statisticsViewModel[indexPath.item].avatarImage,
+                               nameOfUser: presenter.statisticsViewModel[indexPath.item].name,
+                               numberOfNFT: presenter.statisticsViewModel[indexPath.item].nftCount)
         return cell
     }
 }

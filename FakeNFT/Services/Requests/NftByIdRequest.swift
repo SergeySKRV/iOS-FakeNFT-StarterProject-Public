@@ -7,3 +7,5 @@ struct NFTRequest: NetworkRequest {
     }
     var dto: Dto?
 }
+
+
