@@ -1,9 +1,13 @@
 import UIKit
 
-final class StatisticsViewController: UIViewController {
-    
+protocol StatisticsView: AnyObject, ErrorView, LoadingView {
+    func showStatistics()
+}
+
+
+final class StatisticsViewController: UIViewController, StatisticsView {
+    internal lazy var activityIndicator = UIActivityIndicatorView()
     private let presenter = StatisticsViewPresenter.shared
-   
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "SortIcon"), for: .normal)
@@ -27,7 +31,10 @@ final class StatisticsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        presenter.view = self
         configureView()
+        presenter.viewDidLoad()
+        showStatistics()
     }
     
     private func configureView() {
@@ -51,7 +58,12 @@ final class StatisticsViewController: UIViewController {
         statisticsTableView.dataSource = self
         statisticsTableView.delegate = self
     }
+    internal func showStatistics () {
+        statisticsTableView.reloadData()
+    }
+
 }
+
 
 
 extension StatisticsViewController: UITableViewDelegate {

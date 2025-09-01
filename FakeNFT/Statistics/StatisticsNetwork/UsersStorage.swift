@@ -5,8 +5,14 @@ protocol UsersStorage: AnyObject {
     func getUsers() -> [User]?
 }
 
+
+
 final class UsersStorageImpl: UsersStorage {
+    
     private var storage: [User] = []
+    
+    static let shared = UsersStorageImpl()
+    
 
     private let syncQueue = DispatchQueue(label: "sync-users-queue")
 

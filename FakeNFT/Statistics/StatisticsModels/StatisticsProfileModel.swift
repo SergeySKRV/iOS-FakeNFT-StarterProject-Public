@@ -1,7 +1,7 @@
 import UIKit
 
 struct StatisticsProfileModel  {
-    let avatarImage: UIImage
+    let avatarImage: String
     let name: String
     let nftCount: Int
 }

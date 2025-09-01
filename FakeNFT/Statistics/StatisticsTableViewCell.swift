@@ -1,5 +1,6 @@
 
 import UIKit
+import Kingfisher
 
 final class StatisticsTableViewCell: UITableViewCell {
     
@@ -28,6 +29,8 @@ final class StatisticsTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 14
+        imageView.image = UIImage(named: "AvatarStub")
         return imageView
     }()
     
@@ -76,7 +79,9 @@ final class StatisticsTableViewCell: UITableViewCell {
         contentView.addSubview(profileAvatarImageView)
         NSLayoutConstraint.activate([
             profileAvatarImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            profileAvatarImageView.leadingAnchor.constraint(equalTo: profileRectView.leadingAnchor, constant: 16)
+            profileAvatarImageView.leadingAnchor.constraint(equalTo: profileRectView.leadingAnchor, constant: 16),
+            profileAvatarImageView.heightAnchor.constraint(equalToConstant: 28),
+            profileAvatarImageView.widthAnchor.constraint(equalToConstant: 28)
         ])
         contentView.addSubview(profileNameLabel)
         NSLayoutConstraint.activate([
@@ -90,9 +95,12 @@ final class StatisticsTableViewCell: UITableViewCell {
             profileNFTCountLabel.trailingAnchor.constraint(equalTo: profileRectView.trailingAnchor, constant: -16)
         ])
     }
-    func configureCellData(number: Int, avatarImage: UIImage, nameOfUser: String, numberOfNFT: Int) {
+    func configureCellData(number: Int, avatarImage: String, nameOfUser: String, numberOfNFT: Int) {
         numberLabel.text = "\(number)"
-        profileAvatarImageView.image = avatarImage
+       
+        if avatarImage != ""  {
+            profileAvatarImageView.kf.setImage(with: URL(string: avatarImage), placeholder: UIImage(named: "AvatarStub"))
+        }
         profileNameLabel.text = nameOfUser
         profileNFTCountLabel.text = "\(numberOfNFT)"
     }
