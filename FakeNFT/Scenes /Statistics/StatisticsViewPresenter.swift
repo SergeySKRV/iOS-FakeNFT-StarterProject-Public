@@ -37,10 +37,16 @@ final class StatisticsViewPresenter {
     
     
     private init() {
-    
+        
     }
     
     func viewDidLoad() {
+        
+        switch UserDefaults.standard.string(forKey: statisticsSortingKey) {
+        case "name": currentSortMode = .name
+        case "rating": currentSortMode = .nft
+        default : currentSortMode = .nft
+        }
         state = .loading
     }
     
@@ -61,7 +67,7 @@ final class StatisticsViewPresenter {
             view?.showError(errorModel)
         }
     }
-
+    
     private func loadStatistics() {
         let networkClient = DefaultNetworkClient()
         let service = UsersServiceImpl(networkClient: networkClient, storage: storage)
@@ -72,7 +78,6 @@ final class StatisticsViewPresenter {
                     self?.statisticsViewModel = self?.convertStoreToViewModel(users).sorted {$0.nftCount > $1.nftCount} ?? []
                     self?.sortViewModel()
                 }
-                print("Data!")
                 self?.state = .data
             case .failure(let error):
                 self?.state = .failed(error)
@@ -89,7 +94,6 @@ final class StatisticsViewPresenter {
             guard let nfts = user.nfts?.count else { continue }
             guard let avatar = user.avatar else { continue }
             guard let rating = user.rating else { continue }
-            print("Name: \(name), avatar: \(avatar), nfts: \(nfts), rating: \(user.rating)")
             let vmUser = StatisticsProfileModel(avatarImage: avatar,
                                                 name: name,
                                                 nftCount: nfts,
@@ -107,7 +111,7 @@ final class StatisticsViewPresenter {
         default:
             message = NSLocalizedString("Error.unknown", comment: "")
         }
-
+        
         let actionText = NSLocalizedString("Error.repeat", comment: "")
         return ErrorModel(message: message, actionText: actionText) { [weak self] in
             self?.state = .loading

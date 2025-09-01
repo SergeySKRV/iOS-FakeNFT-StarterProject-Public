@@ -1,0 +1,1 @@
+let statisticsSortingKey = "StatisticsSortingType"

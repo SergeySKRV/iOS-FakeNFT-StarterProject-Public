@@ -19,15 +19,13 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     }()
     
     private let statisticsTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.contentMode = .scaleToFill
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.register(StatisticsTableViewCell.self, forCellReuseIdentifier: "StatisticsTableViewCell")
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.layer.borderColor = UIColor.systemGray6.cgColor
-        tableView.layer.borderWidth = 1
         return tableView
     }()
     
@@ -35,8 +33,8 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         presenter.view = self
-        configureView()
         presenter.viewDidLoad()
+        configureView()
         showStatistics()
     }
     
@@ -76,27 +74,20 @@ final class StatisticsViewController: UIViewController, StatisticsView {
             ]
         )
         alert.setValue(title, forKey: "attributedTitle")
-        
-        
-        
         let byNameTitle =  NSLocalizedString("name_sort_title", comment: "по имени")
         alert.addAction(UIAlertAction(title: byNameTitle, style: .default , handler: { [weak self] _ in
             guard let self else { return }
             self.presenter.currentSortMode = .name
+            UserDefaults.standard.set("name", forKey: statisticsSortingKey)
         }))
-        
-        
-        
         let byRatingTitle =  NSLocalizedString("rating_sort_title", comment: "по рейтингу")
         alert.addAction(UIAlertAction(title: byRatingTitle, style: .default, handler: { [weak self] _ in
             guard let self else { return }
+            UserDefaults.standard.set("rating", forKey: statisticsSortingKey)
             self.presenter.currentSortMode = .nft
         }))
-        
-        
         let cancelTitle =  NSLocalizedString("close_title", comment: "закрыть")
         alert.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: nil))
-        
         present(alert, animated: true)
     }
     
@@ -110,7 +101,6 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     }
     internal func showStatistics () {
         statisticsTableView.reloadData()
-        
     }
     
     @objc func filtersButtonTouch() {

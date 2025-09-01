@@ -112,17 +112,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4A1928122E620C8700A3C1DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		4A1929742E664D2200A3C1DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Docs/statistics_decomposition.md,
+				statistics_decomposition.md,
 			);
 			target = 3F68069229CBBAF100B4F915 /* FakeNFT */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4A19280F2E620C0900A3C1DE /* Statistics */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4A1928122E620C8700A3C1DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Statistics; sourceTree = "<group>"; };
+		4A19280F2E620C0900A3C1DE /* Statistics */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Statistics; sourceTree = "<group>"; };
+		4A1929732E664D2200A3C1DE /* Docs */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4A1929742E664D2200A3C1DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Docs; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,7 +239,6 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
-				4A19280F2E620C0900A3C1DE /* Statistics */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
@@ -248,6 +248,7 @@
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
+				4A1929732E664D2200A3C1DE /* Docs */,
 			);
 			path = FakeNFT;
 			sourceTree = "<group>";
@@ -282,6 +283,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				4A19280F2E620C0900A3C1DE /* Statistics */,
 				E1A1B9D82AA01C9700C3AFBC /* TabBarController */,
 				0CF2C2D92A783C1600FDC837 /* Common */,
 				0CFCB7472A7808870009A829 /* Catalog */,
@@ -393,6 +395,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				4A19280F2E620C0900A3C1DE /* Statistics */,
+				4A1929732E664D2200A3C1DE /* Docs */,
 			);
 			name = FakeNFT;
 			packageProductDependencies = (
