@@ -1,7 +1,9 @@
 import UIKit
 
-protocol StatisticsView: AnyObject, ErrorView, LoadingView {
+protocol StatisticsView: AnyObject, ErrorView {
     func showStatistics()
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
 }
 
 
@@ -12,6 +14,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "SortIcon"), for: .normal)
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside)
         return button
     }()
     
@@ -58,10 +61,61 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         statisticsTableView.dataSource = self
         statisticsTableView.delegate = self
     }
+    
+    private func showSortingAlert() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        let title = NSAttributedString(
+            string: NSLocalizedString("sort_title", comment: "сортировка"),
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 13),
+                .foregroundColor: UIColor.label,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+        alert.setValue(title, forKey: "attributedTitle")
+        
+        
+        
+        let byNameTitle =  NSLocalizedString("name_sort_title", comment: "по имени")
+        alert.addAction(UIAlertAction(title: byNameTitle, style: .default , handler: { [weak self] _ in
+            guard let self else { return }
+            self.presenter.currentSortMode = .name
+        }))
+        
+        
+        
+        let byRatingTitle =  NSLocalizedString("rating_sort_title", comment: "по рейтингу")
+        alert.addAction(UIAlertAction(title: byRatingTitle, style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            self.presenter.currentSortMode = .nft
+        }))
+        
+        
+        let cancelTitle =  NSLocalizedString("close_title", comment: "закрыть")
+        alert.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: nil))
+        
+        present(alert, animated: true)
+    }
+    
+    
+    func showLoadingIndicator() {
+        StatisticsUIBlockingProgressHUD.show()
+    }
+    
+    func hideLoadingIndicator() {
+        StatisticsUIBlockingProgressHUD.dismiss()
+    }
     internal func showStatistics () {
         statisticsTableView.reloadData()
+        
     }
-
+    
+    @objc func filtersButtonTouch() {
+        showSortingAlert()
+    }
 }
 
 

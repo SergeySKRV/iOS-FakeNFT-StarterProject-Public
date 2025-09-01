@@ -10,13 +10,16 @@ enum StatisticsViewState {
     case initial, loading, failed(Error), data
 }
 
+enum CurrentSortMode {
+    case name, nft
+    
+}
+
 
 final class StatisticsViewPresenter {
     static let shared = StatisticsViewPresenter()
     
-    private let mockProfile = StatisticsProfileModel(avatarImage: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/255.jpg",
-                                                     name: "Joaquin Phoenix",
-                                                     nftCount: 123)
+    
     weak var view: StatisticsView?
     var statisticsViewModel: [StatisticsProfileModel] = []
     private let storage = UsersStorageImpl.shared
@@ -26,9 +29,15 @@ final class StatisticsViewPresenter {
         }
     }
     
+    var currentSortMode = CurrentSortMode.nft {
+        didSet {
+            sortViewModel()
+        }
+    }
+    
     
     private init() {
-       
+    
     }
     
     func viewDidLoad() {
@@ -40,15 +49,15 @@ final class StatisticsViewPresenter {
         case .initial:
             assertionFailure("can't move to initial state")
         case .loading:
-            view?.showLoading()
+            view?.showLoadingIndicator()
             loadStatistics()
         case .data:
-            view?.hideLoading()
-           
+            view?.hideLoadingIndicator()
             view?.showStatistics()
+            
         case .failed(let error):
             let errorModel = makeErrorModel(error)
-            view?.hideLoading()
+            view?.hideLoadingIndicator()
             view?.showError(errorModel)
         }
     }
@@ -61,6 +70,7 @@ final class StatisticsViewPresenter {
             case .success(let users):
                 for user in users {
                     self?.statisticsViewModel = self?.convertStoreToViewModel(users).sorted {$0.nftCount > $1.nftCount} ?? []
+                    self?.sortViewModel()
                 }
                 print("Data!")
                 self?.state = .data
@@ -78,10 +88,12 @@ final class StatisticsViewPresenter {
             guard let name = user.name else { break }
             guard let nfts = user.nfts?.count else { continue }
             guard let avatar = user.avatar else { continue }
-            print("Name: \(name), avatar: \(avatar), nfts: \(nfts)")
+            guard let rating = user.rating else { continue }
+            print("Name: \(name), avatar: \(avatar), nfts: \(nfts), rating: \(user.rating)")
             let vmUser = StatisticsProfileModel(avatarImage: avatar,
                                                 name: name,
-                                                nftCount: nfts)
+                                                nftCount: nfts,
+                                                rating: Int(rating) ?? 0)
             result.append(vmUser)
         }
         return result
@@ -100,5 +112,13 @@ final class StatisticsViewPresenter {
         return ErrorModel(message: message, actionText: actionText) { [weak self] in
             self?.state = .loading
         }
+    }
+    
+    private func sortViewModel () {
+        switch currentSortMode {
+        case .name: statisticsViewModel.sort { $0.name < $1.name }
+        case .nft: statisticsViewModel.sort { $0.rating > $1.rating }
+        }
+        view?.showStatistics()
     }
 }
