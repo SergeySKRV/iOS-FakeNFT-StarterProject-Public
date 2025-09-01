@@ -3,16 +3,72 @@ import UIKit
 final class ProfileViewController: UIViewController {
     
     // MARK: - UI Elements
-    private var profileImageView: UIImageView!
-    private var nameLabel: UILabel!
-    private var descriptionLabel: UILabel!
-    private var websiteLabel: UILabel!
-    private var editButton: UIButton!
-    private var tableView: UITableView!
+    private lazy var profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 35
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(resource: .userPic)
+        return imageView
+    }()
+    
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.sfProHeadline3
+        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.sfProCaption2
+        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .natural
+        return label
+    }()
+    
+    private lazy var websiteLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.sfProCaption1
+        label.textColor = UIColor(named: "blueUniversal")
+        label.text = "Joaquin Phoenix.com"
+        label.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openWebsite))
+        label.addGestureRecognizer(tapGesture)
+        return label
+    }()
+    
+    private lazy var editButton: UIButton = {
+        let button = UIButton(type: .custom)
+        let image = UIImage(resource: .edit).withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
+        button.tintColor = UIColor(named: "blackDayNight") ?? .label
+        button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .systemBackground
+        tableView.separatorStyle = .none
+        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: "ProfileCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
     
     private var userProfile: UserProfile?
     private var tableData: [ProfileSection] = []
-    
     private var myNFTCount = 112
     private var favoritesNFTCount = 11
     
@@ -26,98 +82,17 @@ final class ProfileViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
-        createProfileImageView()
-        createNameLabel()
-        createDescriptionLabel()
-        createWebsiteLabel()
-        createEditButton()
-        createTableView()
-        
         setupConstraints()
     }
     
-    private func createProfileImageView() {
-        profileImageView = UIImageView(image: UIImage(resource: .userPic))
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.layer.cornerRadius = 35
-        profileImageView.clipsToBounds = true
-        profileImageView.layer.borderWidth = 1
-        profileImageView.layer.borderColor = UIColor.systemGray.cgColor
-        
-        view.addSubview(profileImageView)
-    }
-    
-    private func createNameLabel() {
-        nameLabel = UILabel()
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.font = UIFont.sfProHeadline3
-        nameLabel.textColor = UIColor(named: "blackDayNight") ?? .label
-        nameLabel.textAlignment = .left
-        
-        view.addSubview(nameLabel)
-    }
-    
-    private func createDescriptionLabel() {
-        descriptionLabel = UILabel()
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.font = UIFont.sfProCaption2
-        descriptionLabel.textColor = UIColor(named: "blackDayNight") ?? .label
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .byWordWrapping
-        descriptionLabel.textAlignment = .natural
-        
-        view.addSubview(descriptionLabel)
-    }
-    
-    private func createWebsiteLabel() {
-        websiteLabel = UILabel()
-        websiteLabel.translatesAutoresizingMaskIntoConstraints = false
-        websiteLabel.font = UIFont.sfProCaption1
-        websiteLabel.textColor = UIColor(named: "blueUniversal")
-        websiteLabel.text = "Joaquin Phoenix.com"
-        websiteLabel.isUserInteractionEnabled = true
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openWebsite))
-        websiteLabel.addGestureRecognizer(tapGesture)
-        
-        view.addSubview(websiteLabel)
-    }
-    
-    private func createEditButton() {
-        editButton = UIButton(type: .custom)
-        
-        let image = UIImage(resource: .edit).withRenderingMode(.alwaysTemplate)
-        editButton.setImage(image, for: .normal)
-        editButton.tintColor = UIColor(named: "blackDayNight") ?? .label
-        editButton.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
-        editButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(editButton)
-    }
-    
-    private func createTableView() {
-        tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .systemBackground
-        tableView.separatorStyle = .none
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: "ProfileCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        view.addSubview(tableView)
-    }
-    
-    private func setupTableView() {
-        tableData = [
-            ProfileSection(title: "", items: [
-                ProfileItem(title: "Мои NFT", subtitle: "(\(myNFTCount))"),
-                ProfileItem(title: "Избранные NFT", subtitle: "(\(favoritesNFTCount))")
-            ])
-        ]
-    }
-    
     private func setupConstraints() {
+        view.addSubview(profileImageView)
+        view.addSubview(nameLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(websiteLabel)
+        view.addSubview(editButton)
+        view.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
            
             profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 64),
@@ -147,6 +122,15 @@ final class ProfileViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    private func setupTableView() {
+        tableData = [
+            ProfileSection(title: "", items: [
+                ProfileItem(title: "Мои NFT", subtitle: "(\(myNFTCount))"),
+                ProfileItem(title: "Избранные NFT", subtitle: "(\(favoritesNFTCount))")
+            ])
+        ]
     }
     
     private func loadProfileData() {
@@ -182,12 +166,17 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func editProfileTapped() {
-        print("Редактирование профиля")
-        // TODO: переход к экрану редактирования
+        let editController = EditProfileViewController()
+       
+        if let navController = self.navigationController {
+            navController.pushViewController(editController, animated: true)
+        } else {
+            let navController = UINavigationController(rootViewController: editController)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: true)
+        }
     }
 }
-
-
 
 // MARK: - TableView DataSource and Delegate
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {

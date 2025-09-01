@@ -1,7 +1,14 @@
 import WebKit
 
 final class WebViewController: UIViewController {
-    private var webView: WKWebView!
+    
+    // MARK: - UI Elements
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        return webView
+    }()
+    
     private var urlString: String
     
     init(urlString: String) {
@@ -22,14 +29,10 @@ final class WebViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
-      
-        webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(webView)
         
         NSLayoutConstraint.activate([
-    
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

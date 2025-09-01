@@ -2,8 +2,22 @@ import UIKit
 
 final class ProfileTableViewCell: UITableViewCell {
     
-    private var titleLabel: UILabel!
-    private var chevronImageView: UIImageView!
+    // MARK: - UI Elements
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.sfProBodyBold
+        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        return label
+    }()
+    
+    private lazy var chevronImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(resource: .chevron)
+        imageView.tintColor = UIColor(named: "blackDayNight") ?? .label
+        return imageView
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,15 +33,7 @@ final class ProfileTableViewCell: UITableViewCell {
         backgroundColor = .systemBackground
         selectionStyle = .none
         
-        titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = UIFont.sfProBodyBold
-        titleLabel.textColor = UIColor(named: "blackDayNight") ?? .label
         contentView.addSubview(titleLabel)
-        
-        chevronImageView = UIImageView(image: UIImage(resource: .chevron))
-        chevronImageView.translatesAutoresizingMaskIntoConstraints = false
-        chevronImageView.tintColor = UIColor(named: "blackDayNight") ?? .label
         contentView.addSubview(chevronImageView)
         
         setupConstraints()
@@ -35,7 +41,6 @@ final class ProfileTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
- 
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: chevronImageView.leadingAnchor, constant: -15),
@@ -51,4 +56,3 @@ final class ProfileTableViewCell: UITableViewCell {
         titleLabel.text = "\(item.title) \(item.subtitle)"
     }
 }
-
