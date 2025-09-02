@@ -8,7 +8,9 @@ protocol StatisticsView: AnyObject, ErrorView {
 
 
 final class StatisticsViewController: UIViewController, StatisticsView {
-    internal lazy var activityIndicator = UIActivityIndicatorView()
+    
+    //MARK: private properties
+    
     private let presenter = StatisticsViewPresenter.shared
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
@@ -29,6 +31,8 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         return tableView
     }()
     
+    //MARK: public methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -37,6 +41,20 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         configureView()
         showStatistics()
     }
+    
+    internal func showStatistics () {
+        statisticsTableView.reloadData()
+    }
+    
+    func showLoadingIndicator() {
+        StatisticsUIBlockingProgressHUD.show()
+    }
+    
+    func hideLoadingIndicator() {
+        StatisticsUIBlockingProgressHUD.dismiss()
+    }
+    
+    //MARK: private methods
     
     private func configureView() {
         view.addSubview(sortButton)
@@ -91,24 +109,13 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         present(alert, animated: true)
     }
     
-    
-    func showLoadingIndicator() {
-        StatisticsUIBlockingProgressHUD.show()
-    }
-    
-    func hideLoadingIndicator() {
-        StatisticsUIBlockingProgressHUD.dismiss()
-    }
-    internal func showStatistics () {
-        statisticsTableView.reloadData()
-    }
-    
-    @objc func filtersButtonTouch() {
+    @objc private func filtersButtonTouch() {
         showSortingAlert()
     }
 }
 
 
+//MARK: extensions
 
 extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

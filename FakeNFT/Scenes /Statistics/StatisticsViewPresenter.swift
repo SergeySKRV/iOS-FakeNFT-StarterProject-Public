@@ -17,11 +17,18 @@ enum CurrentSortMode {
 
 
 final class StatisticsViewPresenter {
+    
+    //MARK: public properties
     static let shared = StatisticsViewPresenter()
-    
-    
     weak var view: StatisticsView?
     var statisticsViewModel: [StatisticsProfileModel] = []
+    var currentSortMode = CurrentSortMode.nft {
+        didSet {
+            sortViewModel()
+        }
+    }
+    //MARK: private properties
+    
     private let storage = UsersStorageImpl.shared
     private var state = StatisticsViewState.initial {
         didSet {
@@ -29,16 +36,8 @@ final class StatisticsViewPresenter {
         }
     }
     
-    var currentSortMode = CurrentSortMode.nft {
-        didSet {
-            sortViewModel()
-        }
-    }
     
-    
-    private init() {
-        
-    }
+    //MARK: public methods
     
     func viewDidLoad() {
         
@@ -48,6 +47,11 @@ final class StatisticsViewPresenter {
         default : currentSortMode = .nft
         }
         state = .loading
+    }
+    
+    //MARK: private methods
+    
+    private init() {
     }
     
     private func stateDidChanged() {
@@ -60,7 +64,6 @@ final class StatisticsViewPresenter {
         case .data:
             view?.hideLoadingIndicator()
             view?.showStatistics()
-            
         case .failed(let error):
             let errorModel = makeErrorModel(error)
             view?.hideLoadingIndicator()
@@ -71,10 +74,10 @@ final class StatisticsViewPresenter {
     private func loadStatistics() {
         let networkClient = DefaultNetworkClient()
         let service = UsersServiceImpl(networkClient: networkClient, storage: storage)
-        let result = service.loadUsers() {[weak self] result in
+        let _: () = service.loadUsers() {[weak self] result in
             switch result {
             case .success(let users):
-                for user in users {
+                for _ in users {
                     self?.statisticsViewModel = self?.convertStoreToViewModel(users).sorted {$0.nftCount > $1.nftCount} ?? []
                     self?.sortViewModel()
                 }
@@ -111,7 +114,6 @@ final class StatisticsViewPresenter {
         default:
             message = NSLocalizedString("Error.unknown", comment: "")
         }
-        
         let actionText = NSLocalizedString("Error.repeat", comment: "")
         return ErrorModel(message: message, actionText: actionText) { [weak self] in
             self?.state = .loading

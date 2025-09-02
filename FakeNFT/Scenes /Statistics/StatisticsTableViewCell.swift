@@ -6,7 +6,7 @@ final class StatisticsTableViewCell: UITableViewCell {
     
     //TODO: взять цвета из фигмы
     
-    
+    //MARK: private properties
     
     let numberLabel: UILabel = {
         let label = UILabel()
@@ -50,10 +50,11 @@ final class StatisticsTableViewCell: UITableViewCell {
         return label
     }()
     
+    //MARK: public methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureView()
-    //    configureCellData()
+        //    configureCellData()
     }
     
     required init?(coder: NSCoder) {
@@ -75,7 +76,6 @@ final class StatisticsTableViewCell: UITableViewCell {
             profileRectView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileRectView.heightAnchor.constraint(equalTo: heightAnchor, constant: -8)
         ])
-        
         contentView.addSubview(profileAvatarImageView)
         NSLayoutConstraint.activate([
             profileAvatarImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -95,9 +95,10 @@ final class StatisticsTableViewCell: UITableViewCell {
             profileNFTCountLabel.trailingAnchor.constraint(equalTo: profileRectView.trailingAnchor, constant: -16)
         ])
     }
+    
     func configureCellData(number: Int, avatarImage: String, nameOfUser: String, numberOfNFT: Int) {
         numberLabel.text = "\(number)"
-       
+        
         if avatarImage != ""  {
             profileAvatarImageView.kf.setImage(with: URL(string: avatarImage), placeholder: UIImage(named: "AvatarStub"))
         }
