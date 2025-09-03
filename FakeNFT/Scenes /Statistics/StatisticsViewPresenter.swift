@@ -1,8 +1,7 @@
-import Foundation
 import UIKit
 import Kingfisher
 
-protocol StatisticsViewresenter {
+protocol StatisticsViewPresenterProtocol {
     func viewDidLoad()
 }
 
@@ -41,7 +40,7 @@ final class StatisticsViewPresenter {
     
     func viewDidLoad() {
         
-        switch UserDefaults.standard.string(forKey: statisticsSortingKey) {
+        switch UserDefaults.standard.string(forKey: Constants.statisticsSortingKey) {
         case "name": currentSortMode = .name
         case "rating": currentSortMode = .nft
         default : currentSortMode = .nft

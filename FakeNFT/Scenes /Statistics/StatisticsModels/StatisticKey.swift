@@ -1,1 +1,3 @@
-let statisticsSortingKey = "StatisticsSortingType"
+struct Constants {
+    static let statisticsSortingKey = "StatisticsSortingType"
+}

@@ -96,12 +96,12 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         alert.addAction(UIAlertAction(title: byNameTitle, style: .default , handler: { [weak self] _ in
             guard let self else { return }
             self.presenter.currentSortMode = .name
-            UserDefaults.standard.set("name", forKey: statisticsSortingKey)
+            UserDefaults.standard.set("name", forKey: Constants.statisticsSortingKey)
         }))
         let byRatingTitle =  NSLocalizedString("rating_sort_title", comment: "по рейтингу")
         alert.addAction(UIAlertAction(title: byRatingTitle, style: .default, handler: { [weak self] _ in
             guard let self else { return }
-            UserDefaults.standard.set("rating", forKey: statisticsSortingKey)
+            UserDefaults.standard.set("rating", forKey: Constants.statisticsSortingKey)
             self.presenter.currentSortMode = .nft
         }))
         let cancelTitle =  NSLocalizedString("close_title", comment: "закрыть")
