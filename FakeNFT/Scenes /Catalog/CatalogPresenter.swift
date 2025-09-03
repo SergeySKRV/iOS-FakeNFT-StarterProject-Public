@@ -5,7 +5,6 @@
 //  Created by Dmitry Batorevich on 31.08.2025.
 //
 
-import Foundation
 import UIKit
 
 protocol CatalogPresenterProtocol: AnyObject {
@@ -14,7 +13,7 @@ protocol CatalogPresenterProtocol: AnyObject {
     func getNftCollections()
     func sortByName()
     func sortByNftCount()
-    func setSortType() -> UIAlertController
+    func makeSortTypeModel() -> SortTypeModel
 }
 
 final class CatalogPresenter: CatalogPresenterProtocol {
@@ -68,31 +67,14 @@ final class CatalogPresenter: CatalogPresenterProtocol {
         catalogView?.reloadCatalogTableView()
     }
     
-    func setSortType() -> UIAlertController {
-        
-        let actionSheet = UIAlertController(
+    func makeSortTypeModel() -> SortTypeModel {
+        let sortTypeModel = SortTypeModel(
             title: "Сортировка",
-            message: nil,
-            preferredStyle: .actionSheet
+            byName: "По названию",
+            byNftCount: "По количеству NFT",
+            close: "Закрыть"
         )
-        
-        actionSheet.addAction(UIAlertAction(
-            title: "По названию",
-            style: .default) { _ in self.sortByName()
-            })
-        actionSheet.addAction(UIAlertAction(
-            title: "По количеству NFT",
-            style: .default) { _ in
-                self.sortByNftCount()
-            })
-        
-        actionSheet.addAction(
-            UIAlertAction(
-                title: "Закрыть",
-                style: .cancel)
-        )
-        
-        return actionSheet
+        return sortTypeModel
     }
     
     // MARK: - Private Methods
@@ -107,4 +89,3 @@ final class CatalogPresenter: CatalogPresenterProtocol {
         }
     }
 }
-

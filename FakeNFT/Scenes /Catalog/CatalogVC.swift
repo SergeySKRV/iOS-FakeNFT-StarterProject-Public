@@ -16,18 +16,8 @@ protocol CatalogViewControllerProtocol: AnyObject {
 }
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
-    //let servicesAssembly: ServicesAssembly
+    
     private let presenter: CatalogPresenterProtocol
-    /*
-    init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-     */
     
      // MARK: - Initializers
      init(presenter: CatalogPresenterProtocol) {
@@ -84,7 +74,33 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     // MARK: - Action
     @objc
     private func sortButtonTapped() {
-        present(presenter.setSortType(), animated: true)
+        
+        let sortTypeModel = presenter.makeSortTypeModel()
+        
+        let actionSheet = UIAlertController(
+            title: sortTypeModel.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        actionSheet.addAction(UIAlertAction(
+            title: sortTypeModel.byName,
+            style: .default) { _ in
+                self.presenter.sortByName()
+            })
+        actionSheet.addAction(UIAlertAction(
+            title: sortTypeModel.byNftCount,
+            style: .default) { _ in
+                self.presenter.sortByNftCount()
+            })
+        
+        actionSheet.addAction(
+            UIAlertAction(
+                title: sortTypeModel.close,
+                style: .cancel)
+        )
+        
+        present(actionSheet, animated: true)
     }
     
     // MARK: - Private Methods
@@ -111,13 +127,22 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
             sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
             
-            catalogTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            catalogTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             catalogTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
-             
+            catalogTableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
+            catalogTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+    
         ])
     }
+    
+    private func showNFTCollection(indexPath: IndexPath) {
+        let configuration = CatalogSceneConfiguration()
+        let collection = presenter.collectionsNft[indexPath.row]
+        let viewController = configuration.assemblyCollection(collection)
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
+    }
+    
 }
 
 // MARK: - CatalogViewController
@@ -161,6 +186,7 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: Обработать выбор ячейки (переход на CollectionViewController)
+        showNFTCollection(indexPath: indexPath)
     }
 }
+

@@ -4,17 +4,6 @@
 //
 //  Created by Dmitry Batorevich on 31.08.2025.
 //
-/*
-import Foundation
-
-struct NFTCollectionsRequest: NetworkRequest {
-    var endpoint: URL? {
-        URL(string: "\(RequestConstants.baseURL)/api/v1/collections")
-    }
-    var httpMethod: HttpMethod = .put
-    var dto: Dto?
-}
-*/
 
  import Foundation
 
@@ -32,4 +21,3 @@ struct NFTCollectionsRequest: NetworkRequest {
      }
      var dto: Dto?
  }
-

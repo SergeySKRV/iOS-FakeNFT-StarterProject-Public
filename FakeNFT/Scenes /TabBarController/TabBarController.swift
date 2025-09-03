@@ -2,10 +2,10 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    private let servicesAssembly: ServicesAssembly
+    //private let servicesAssembly: ServicesAssembly
     
-    init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
+    init() {
+       // self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,25 +31,15 @@ final class TabBarController: UITabBarController {
         let sortStorage = SortStorage()
         
         let catalogPresenter = CatalogPresenter(catalogService: catalogService, sortStorage: sortStorage)
-        /*
-        let catalogVC = CatalogViewController(
-            servicesAssembly: servicesAssembly
-        )
-        */
+        
         let catalogVC = CatalogViewController(
             presenter: catalogPresenter
         )
         
-        let shoppingCartVC = ShoppingCartViewController(
-            servicesAssembly: servicesAssembly
-        )
-        let profileVC = ProfileViewController(
-            servicesAssembly: servicesAssembly
-        )
+        let shoppingCartVC = ShoppingCartViewController()
+        let profileVC = ProfileViewController()
         
-        let statisticVC = StatisticViewController(
-            servicesAssembly: servicesAssembly
-        )
+        let statisticVC = StatisticViewController()
         
         
         catalogVC.tabBarItem = UITabBarItem(title: NSLocalizedString("Tab.catalog", comment: ""),

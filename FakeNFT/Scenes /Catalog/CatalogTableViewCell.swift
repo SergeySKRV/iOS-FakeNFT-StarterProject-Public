@@ -15,7 +15,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Private Properties
     private lazy var catalogImage: UIImageView = {
         let image = UIImageView()
-        image.layer.cornerRadius = 12
+        image.layer.cornerRadius = Constants.cornerRadius
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
         return image
@@ -25,7 +25,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
         let label = UILabel()
         label.font = .bodyBold
         label.textColor = .textPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -41,16 +41,25 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: - Public Methods
+    func configCell(for collection: NFTCollection) {
+        guard let collectionCover = URL(string: collection.cover) else { return }
+        
+        setCatalogImage(with: collectionCover)
+        setCatalogLabel(with: collection.name, quantity: collection.nfts.count)
+    }
+    
+    // MARK: - Private Methods
+    //private
     func setCatalogImage(with collectionCover: URL) {
         catalogImage.kf.indicatorType = .activity
         catalogImage.kf.setImage(with: collectionCover)
     }
     
+    //private
     func setCatalogLabel(with name: String, quantity count: Int ) {
-        catalogLabel.text = "\(name) (\(count))"
+        catalogLabel.text = ("\(name) (\(count))").firstUppercased
     }
     
-    // MARK: - Private Methods
     private func setupCatalogTableViewCell() {
         backgroundColor = .clear
         selectionStyle = .none
@@ -67,18 +76,16 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private func setupCatalogTableViewCellConstrains() {
         NSLayoutConstraint.activate([
-            catalogImage.heightAnchor.constraint(equalToConstant: 140),
+            catalogImage.heightAnchor.constraint(equalToConstant: Constants.catalogImageHeigth),
             catalogImage.topAnchor.constraint(equalTo: topAnchor),
-            catalogImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            catalogImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            catalogImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: Constants.catalogImageLeading),
+            catalogImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: Constants.catalogImageTrailing),
             
-            catalogLabel.topAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: 4),
-            catalogLabel.bottomAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: 25),
+            catalogLabel.topAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: Constants.catalogLabelTopIdent),
+            catalogLabel.bottomAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: Constants.catalogLabelBottomIdent),
             catalogLabel.leadingAnchor.constraint(equalTo: catalogImage.leadingAnchor),
             catalogLabel.trailingAnchor.constraint(equalTo: catalogImage.trailingAnchor),
-            catalogLabel.heightAnchor.constraint(equalToConstant: 22)
+            catalogLabel.heightAnchor.constraint(equalToConstant: Constants.catalogLabelHeigth)
         ])
     }
 }
-
-
