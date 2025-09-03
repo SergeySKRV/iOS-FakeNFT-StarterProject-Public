@@ -32,5 +32,8 @@ final class TabBarController: UITabBarController {
         viewControllers = [profileController, catalogController]
         
         view.backgroundColor = .systemBackground
+        
+        tabBar.tintColor = UIColor(named: "blueUniversal") ?? .label
+        tabBar.unselectedItemTintColor = UIColor(named: "blackDayNight") ?? .label
     }
 }

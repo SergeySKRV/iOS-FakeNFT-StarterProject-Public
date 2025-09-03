@@ -9,8 +9,10 @@ final class WebViewController: UIViewController {
         return webView
     }()
     
+    // MARK: - Properties
     private var urlString: String
     
+    // MARK: - Lifecycle
     init(urlString: String) {
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
@@ -27,6 +29,7 @@ final class WebViewController: UIViewController {
         loadWebsite()
     }
     
+    // MARK: - Private Methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
         

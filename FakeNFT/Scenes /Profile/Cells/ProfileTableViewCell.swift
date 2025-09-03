@@ -19,6 +19,7 @@ final class ProfileTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -29,6 +30,7 @@ final class ProfileTableViewCell: UITableViewCell {
         return nil
     }
     
+    // MARK: - Private Methods
     private func setupUI() {
         backgroundColor = .systemBackground
         selectionStyle = .none
@@ -52,6 +54,7 @@ final class ProfileTableViewCell: UITableViewCell {
         ])
     }
     
+    // MARK: - Public Methods
     func configure(with item: ProfileItem) {
         titleLabel.text = "\(item.title) \(item.subtitle)"
     }

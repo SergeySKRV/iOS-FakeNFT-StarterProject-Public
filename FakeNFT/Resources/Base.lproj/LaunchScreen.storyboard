@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -14,22 +14,23 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="Cpe-an-Aab">
-                                <rect key="frame" x="159" y="387.66666666666669" width="75" height="77"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="mFf-zf-GlE">
+                                <rect key="frame" x="169.5" y="409.5" width="75" height="77"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="77" id="Go3-Jr-8Se"/>
-                                    <constraint firstAttribute="width" constant="75" id="xDB-xi-oYc"/>
+                                    <constraint firstAttribute="height" constant="77" id="YRj-tf-CRf"/>
+                                    <constraint firstAttribute="width" constant="75" id="ulk-iH-Lyh"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Cpe-an-Aab" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="bld-Qb-4xd"/>
-                            <constraint firstItem="Cpe-an-Aab" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jIQ-Fc-w3h"/>
+                            <constraint firstItem="mFf-zf-GlE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KO7-Gp-IGu"/>
+                            <constraint firstItem="mFf-zf-GlE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="UZJ-yP-I5o"/>
                         </constraints>
                     </view>
                 </viewController>

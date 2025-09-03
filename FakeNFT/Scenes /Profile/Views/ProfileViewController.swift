@@ -1,5 +1,9 @@
 import UIKit
 
+protocol EditProfileViewControllerDelegate: AnyObject {
+    func didUpdateProfile(_ profile: UserProfile)
+}
+
 final class ProfileViewController: UIViewController {
     
     // MARK: - UI Elements
@@ -17,7 +21,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.sfProHeadline3
-        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.textColor = UIColor(named: "blackDayNight")
         label.textAlignment = .left
         return label
     }()
@@ -26,7 +30,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.sfProCaption2
-        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.textColor = UIColor(named: "blackDayNight")
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .natural
@@ -38,7 +42,7 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.sfProCaption1
         label.textColor = UIColor(named: "blueUniversal")
-        label.text = "Joaquin Phoenix.com"
+        label.text = NSLocalizedString("Profile.websiteTap", comment: "")
         label.isUserInteractionEnabled = true
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openWebsite))
@@ -67,22 +71,27 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    private var userProfile: UserProfile?
-    private var tableData: [ProfileSection] = []
-    private var myNFTCount = 112
-    private var favoritesNFTCount = 11
+    // MARK: - Properties
+    private var presenter: ProfilePresenterProtocol!
+    private let userService = UserProfileServiceImpl()
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        loadProfileData()
-        setupTableView()
+        setupConstraints()
+        setupPresenter()
+        presenter.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.viewWillAppear()
+    }
+    
+    // MARK: - Private Methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        
-        setupConstraints()
     }
     
     private func setupConstraints() {
@@ -94,7 +103,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-           
+            
             profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 64),
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             profileImageView.widthAnchor.constraint(equalToConstant: 70),
@@ -124,50 +133,68 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    private func setupTableView() {
-        tableData = [
-            ProfileSection(title: "", items: [
-                ProfileItem(title: "Мои NFT", subtitle: "(\(myNFTCount))"),
-                ProfileItem(title: "Избранные NFT", subtitle: "(\(favoritesNFTCount))")
-            ])
-        ]
-    }
-    
-    private func loadProfileData() {
-        let user = UserProfile(
-            photo: UIImage(named: "joaquin") ?? UIImage(resource: .userPic),
-            name: "Joaquin Phoenix",
-            description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям.",
-            website: "Joaquin Phoenix.com"
-        )
-        
-        userProfile = user
-        updateUI()
-    }
-    
-    private func updateUI() {
-        guard let user = userProfile else { return }
-        
-        profileImageView.image = user.photo
-        nameLabel.text = user.name
-        descriptionLabel.text = user.description
-        websiteLabel.text = user.website
+    private func setupPresenter() {
+        presenter = ProfilePresenter(view: self, userService: userService)
     }
     
     @objc private func openWebsite() {
-        let webViewController = WebViewController(urlString: "https://practicum.yandex.ru/ios-developer")
+        presenter.openWebsite()
+    }
+    
+    @objc private func editProfileTapped() {
+        presenter.editProfileTapped()
+    }
+    
+    // MARK: - Internal Methods
+    private func refreshProfileData() {
+        presenter.refreshProfileData()
+    }
+}
+
+// MARK: - TableView DataSource and Delegate
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.tableView(tableView, numberOfRowsInSection: section)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return presenter.tableView(tableView, cellForRowAt: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return presenter.tableView(tableView, heightForRowAt: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.tableView(tableView, didSelectRowAt: indexPath)
+    }
+}
+
+// MARK: - ProfilePresenterView
+extension ProfileViewController: ProfilePresenterView {
+    func updateProfileUI(_ profile: UserProfile) {
+        profileImageView.image = profile.getPhoto()
+        nameLabel.text = profile.name
+        descriptionLabel.text = profile.description
+        websiteLabel.text = profile.website
+    }
+    
+    func showWebViewController(urlString: String) {
+        let webViewController = WebViewController(urlString: urlString)
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
     
-    @objc private func closeWebViewController() {
-        dismiss(animated: true)
-    }
-    
-    @objc private func editProfileTapped() {
-        let editController = EditProfileViewController()
-       
+    func showEditProfileViewController(with profile: UserProfile) {
+        let editController = EditProfileViewController(userProfile: profile)
+        editController.delegate = self
+        
         if let navController = self.navigationController {
             navController.pushViewController(editController, animated: true)
         } else {
@@ -176,43 +203,15 @@ final class ProfileViewController: UIViewController {
             self.present(navController, animated: true)
         }
     }
+    
+    func showError(_ error: Error) {
+        print("Ошибка профиля: \(error)")
+    }
 }
 
-// MARK: - TableView DataSource and Delegate
-extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return tableData.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData[section].items.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as! ProfileTableViewCell
-        let item = tableData[indexPath.section].items[indexPath.row]
-        cell.configure(with: item)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let item = tableData[indexPath.section].items[indexPath.row]
-        switch item.title {
-        case "Мои NFT":
-            print("Переход к Моим NFT")
-            // TODO: переход к экрану Мои NFT
-        case "Избранные NFT":
-            print("Переход к Избранным NFT")
-            // TODO: переход к экрану Избранных NFT
-        default:
-            break
-        }
+// MARK: - EditProfileViewControllerDelegate
+extension ProfileViewController: EditProfileViewControllerDelegate {
+    func didUpdateProfile(_ profile: UserProfile) {
+        presenter.handleProfileUpdate(profile)
     }
 }
