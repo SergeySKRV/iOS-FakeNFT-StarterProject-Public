@@ -1,0 +1,36 @@
+// MARK: - Tab Bar Items
+"Tab.catalog" = "Каталог";
+"Tab.profile" = "Профиль";
+
+// MARK: - Catalog
+"Catalog.openNft" = "Открыть Nft";
+
+// MARK: - Error Messages
+"Error.network" = "Произошла ошибка сети";
+"Error.unknown" = "Произошла неизвестная ошибка";
+"Error.repeat" = "Повторить";
+"Error.title" = "Ошибка";
+
+// MARK: - Edit Profile
+"EditProfile.save" = "Сохранить";
+"EditProfile.cancel" = "Остаться";
+"EditProfile.exitButton" = "Выйти";
+"EditProfile.exitTitle" = "Уверены,\nчто хотите выйти?";
+"EditProfile.photoTitle" = "Фото профиля";
+"EditProfile.photoChange" = "Изменить фото";
+"EditProfile.photoDelete" = "Удалить фото";
+"EditProfile.photoCancel" = "Отмена";
+"EditProfile.photoUrlTitle" = "Ссылка на фото";
+"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg  ";
+"EditProfile.nameLabel" = "Имя";
+"EditProfile.descriptionLabel" = "Описание";
+"EditProfile.websiteLabel" = "Сайт";
+"EditProfile.myNFT" = "Мои NFT";
+"EditProfile.favoritesNFT" = "Избранные NFT";
+
+// MARK: - Profile
+"Profile.editButton" = "Редактировать";
+"Profile.websiteTap" = "Посетить сайт";
+
+// MARK: - Web View
+"Webview.backButton" = "Назад";
