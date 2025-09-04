@@ -70,6 +70,7 @@ final class CatalogPresenter: CatalogPresenterProtocol {
     func makeSortTypeModel() -> SortTypeModel {
         let sortTypeModel = SortTypeModel(
             title: "Сортировка",
+            uPdown: "Asc/Desc",
             byName: "По названию",
             byNftCount: "По количеству NFT",
             close: "Закрыть"

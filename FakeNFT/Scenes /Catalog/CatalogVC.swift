@@ -84,10 +84,17 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         )
         
         actionSheet.addAction(UIAlertAction(
+            title: sortTypeModel.uPdown,
+            style: .default) { _ in
+                self.presenter.sortByName()
+            })
+        
+        actionSheet.addAction(UIAlertAction(
             title: sortTypeModel.byName,
             style: .default) { _ in
                 self.presenter.sortByName()
             })
+        
         actionSheet.addAction(UIAlertAction(
             title: sortTypeModel.byNftCount,
             style: .default) { _ in

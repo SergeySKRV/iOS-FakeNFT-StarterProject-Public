@@ -9,6 +9,7 @@ import Foundation
 
 struct SortTypeModel {
     let title: String
+    let uPdown: String
     let byName: String
     let byNftCount: String
     var close: String
