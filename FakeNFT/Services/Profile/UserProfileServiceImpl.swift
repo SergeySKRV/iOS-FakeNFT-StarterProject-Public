@@ -7,7 +7,7 @@ protocol UserProfileService {
     func loadUserProfileLocally() -> UserProfile?
 }
 
-class UserProfileServiceImpl: UserProfileService {
+final class UserProfileServiceImpl: UserProfileService {
     
     // MARK: - Public Methods
     func fetchUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
@@ -16,8 +16,6 @@ class UserProfileServiceImpl: UserProfileService {
             return
         }
         
-        DispatchQueue.global(qos: .background).async {
-            
             let mockProfile = UserProfile(
                 photo: UIImage(named: "userPic") ?? UIImage(systemName: "person.circle") ?? UIImage(),
                 name: "Joaquin Phoenix",
@@ -28,13 +26,11 @@ class UserProfileServiceImpl: UserProfileService {
             DispatchQueue.main.async {
                 completion(.success(mockProfile))
             }
-        }
     }
     
     func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void) {
-        let saved = saveUserProfileLocally(profile)
-        
         DispatchQueue.global(qos: .background).async {
+            let saved = self.saveUserProfileLocally(profile)
             
             DispatchQueue.main.async {
                 if saved {

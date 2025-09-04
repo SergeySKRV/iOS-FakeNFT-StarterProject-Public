@@ -1,7 +1,7 @@
 import UIKit
 import ProgressHUD
 
-class EditProfileViewController: UIViewController {
+final class EditProfileViewController: UIViewController {
     
     // MARK: - UI Properties
     private lazy var profileImageView: UIImageView = {
@@ -40,12 +40,16 @@ class EditProfileViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = UIColor(named: "lightGreyDayNight") ?? .systemGray
         textField.layer.cornerRadius = 12
-        textField.placeholder = "Joaquin Phoenix"
         textField.text = "Joaquin Phoenix"
         textField.font = UIFont.sfProBodyRegular
         textField.layer.masksToBounds = true
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
         textField.leftViewMode = .always
+    
+        textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .done
+        textField.delegate = self
+        
         return textField
     }()
     
@@ -86,12 +90,16 @@ class EditProfileViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = UIColor(named: "lightGreyDayNight") ?? .systemGray
         textField.layer.cornerRadius = 12
-        textField.placeholder = "Joaquin Phoenix.com"
         textField.text = "Joaquin Phoenix.com"
         textField.font = UIFont.sfProBodyRegular
         textField.layer.masksToBounds = true
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
         textField.leftViewMode = .always
+      
+        textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .done
+        textField.delegate = self
+        
         return textField
     }()
     
@@ -129,6 +137,10 @@ class EditProfileViewController: UIViewController {
         setupUI()
         setupPresenter()
         presenter.viewDidLoad()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            tapGesture.cancelsTouchesInView = false
+            view.addGestureRecognizer(tapGesture)
     }
     
     // MARK: - Private Methods
@@ -223,16 +235,20 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc private func handleTextFieldChange() {
-        presenter.handleTextFieldChange()
+        presenter.contentChanged()
     }
     
     @objc private func handleTextViewChange() {
-        presenter.handleTextViewChange()
+        presenter.contentChanged()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
-// MARK: - EditProfilePresenterView
-extension EditProfileViewController: EditProfilePresenterView {
+// MARK: - EditProfilePresenterOutput
+extension EditProfileViewController: EditProfilePresenterOutput {
     
     func updateProfileUI(_ profile: UserProfile) {
         nameTextField.text = profile.name
@@ -330,18 +346,6 @@ extension EditProfileViewController: EditProfilePresenterView {
                             if let loadedImage = image {
                                 self?.profileImageView.image = loadedImage
                                 self?.presenter.photoURLChanged(url)
-                                
-                                if let currentUser = self?.userProfile {
-                                    let updatedProfile = UserProfile(
-                                        photo: loadedImage,
-                                        name: currentUser.name,
-                                        description: currentUser.description,
-                                        website: currentUser.website
-                                    )
-                                    self?.userProfile = updatedProfile
-                                    
-                                    self?.saveUserProfileLocally(updatedProfile)
-                                }
                             }
                         }
                     }
@@ -371,13 +375,7 @@ extension EditProfileViewController: EditProfilePresenterView {
     }
     
     func loadImageFromURL(_ url: URL, completion: @escaping (UIImage?) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, let image = UIImage(data: data) else {
-                completion(nil)
-                return
-            }
-            completion(image)
-        }.resume()
+        presenter.loadImageFromURL(url, completion: completion)
     }
     
     func updateProfileImage(_ image: UIImage) {
@@ -390,8 +388,7 @@ extension EditProfileViewController: EditProfilePresenterView {
     }
     
     func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void) {
-        let userService = UserProfileServiceImpl()
-        userService.updateUserProfile(profile, completion: completion)
+        presenter.updateUserProfile(profile, completion: completion)
     }
     
     func setupNavigationBar() {
@@ -440,6 +437,14 @@ extension EditProfileViewController: EditProfilePresenterView {
 // MARK: - UITextViewDelegate
 extension EditProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        presenter.textViewDidChange(textView)
+        presenter.contentChanged()
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension EditProfileViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

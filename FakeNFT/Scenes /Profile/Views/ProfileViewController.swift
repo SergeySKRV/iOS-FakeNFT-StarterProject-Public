@@ -176,7 +176,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 // MARK: - ProfilePresenterView
-extension ProfileViewController: ProfilePresenterView {
+extension ProfileViewController: ProfilePresenterOutput {
     func updateProfileUI(_ profile: UserProfile) {
         profileImageView.image = profile.getPhoto()
         nameLabel.text = profile.name

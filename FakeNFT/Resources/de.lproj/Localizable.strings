@@ -1,10 +1,17 @@
+// MARK: - Tab Bar Items
 "Tab.catalog" = "Katalog";
 "Tab.profile" = "Profil";
+
+// MARK: - Catalog
 "Catalog.openNft" = "NFT öffnen";
+
+// MARK: - Error Messages
 "Error.network" = "Netzwerkfehler aufgetreten";
 "Error.unknown" = "Unbekannter Fehler aufgetreten";
 "Error.repeat" = "Wiederholen";
 "Error.title" = "Fehler";
+
+// MARK: - Edit Profile
 "EditProfile.save" = "Speichern";
 "EditProfile.cancel" = "Verbleiben";
 "EditProfile.exitButton" = "Beenden";
@@ -14,12 +21,16 @@
 "EditProfile.photoDelete" = "Foto löschen";
 "EditProfile.photoCancel" = "Abbrechen";
 "EditProfile.photoUrlTitle" = "Foto-URL";
-"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg";
+"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg  ";
 "EditProfile.nameLabel" = "Name";
 "EditProfile.descriptionLabel" = "Beschreibung";
 "EditProfile.websiteLabel" = "Website";
 "EditProfile.myNFT" = "Meine NFTs";
 "EditProfile.favoritesNFT" = "Favorisierte NFTs";
+
+// MARK: - Profile
 "Profile.editButton" = "Bearbeiten";
 "Profile.websiteTap" = "Website besuchen";
+
+// MARK: - Web View
 "Webview.backButton" = "Zurück";

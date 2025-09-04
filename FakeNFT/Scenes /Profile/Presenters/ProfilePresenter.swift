@@ -1,29 +1,9 @@
 import UIKit
 
-protocol ProfilePresenterView: AnyObject {
-    func updateProfileUI(_ profile: UserProfile)
-    func showWebViewController(urlString: String)
-    func showEditProfileViewController(with profile: UserProfile)
-    func showError(_ error: Error)
-}
-
-protocol ProfilePresenterProtocol {
-    func viewDidLoad()
-    func viewWillAppear()
-    func openWebsite()
-    func editProfileTapped()
-    func refreshProfileData()
-    func handleProfileUpdate(_ profile: UserProfile)
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-}
-
-class ProfilePresenter: ProfilePresenterProtocol {
+final class ProfilePresenter: ProfilePresenterProtocol {
     
     // MARK: - Properties
-    private weak var view: ProfilePresenterView?
+    private weak var view: ProfilePresenterOutput?
     private let userService: UserProfileService
     private var userProfile: UserProfile?
     private var tableData: [ProfileSection] = []
@@ -31,7 +11,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
     private var favoritesNFTCount = 11
     
     // MARK: - Initialization
-    init(view: ProfilePresenterView, userService: UserProfileService) {
+    required init(view: ProfilePresenterOutput, userService: UserProfileService) {
         self.view = view
         self.userService = userService
     }
