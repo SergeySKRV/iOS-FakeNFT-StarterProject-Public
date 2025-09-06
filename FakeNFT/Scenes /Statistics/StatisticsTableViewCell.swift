@@ -11,14 +11,14 @@ final class StatisticsTableViewCell: UITableViewCell {
     let numberLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.textColor = .label
+        label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let profileRectView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = UIColor.yaLightGray
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -37,7 +37,7 @@ final class StatisticsTableViewCell: UITableViewCell {
     let profileNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .black
+        label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -45,7 +45,7 @@ final class StatisticsTableViewCell: UITableViewCell {
     let profileNFTCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .black
+        label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

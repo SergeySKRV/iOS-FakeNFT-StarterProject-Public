@@ -32,10 +32,12 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor.yaSecondary
+        tabBar.tintColor = UIColor.yaBlueUniversal
+        tabBar.unselectedItemTintColor = UIColor.yaPrimary
+        
         let profileController = ProfileViewController()
         let catalogController = CatalogViewController()
-        
         let cartController = CartViewController()
         let statisticsController = StatisticsViewController()
         profileController.tabBarItem = profileTabBarItem

@@ -15,7 +15,6 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "SortIcon"), for: .normal)
-        button.tintColor = .gray
         button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside)
         return button
     }()
@@ -87,7 +86,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
             string: NSLocalizedString("sort_title", comment: "сортировка"),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 13),
-                .foregroundColor: UIColor.label,
+                .foregroundColor: UIColor.yaAlertTitle,
                 .paragraphStyle: paragraphStyle
             ]
         )
