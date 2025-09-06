@@ -11,13 +11,10 @@ enum StatisticsViewState {
 
 enum CurrentSortMode {
     case name, nft
-    
 }
 
-
 final class StatisticsViewPresenter {
-    
-    //MARK: public properties
+    // MARK: public properties
     static let shared = StatisticsViewPresenter()
     weak var view: StatisticsView?
     var statisticsViewModel: [StatisticsProfileModel] = []
@@ -26,33 +23,25 @@ final class StatisticsViewPresenter {
             sortViewModel()
         }
     }
-    //MARK: private properties
-    
+    // MARK: private properties
     private let storage = UsersStorageImpl.shared
     private var state = StatisticsViewState.initial {
         didSet {
             stateDidChanged()
         }
     }
-    
-    
-    //MARK: public methods
-    
+    // MARK: public methods
     func viewDidLoad() {
-        
         switch UserDefaults.standard.string(forKey: Constants.statisticsSortingKey) {
         case "name": currentSortMode = .name
         case "rating": currentSortMode = .nft
-        default : currentSortMode = .nft
+        default: currentSortMode = .nft
         }
         state = .loading
     }
-    
-    //MARK: private methods
-    
+    // MARK: private methods
     private init() {
     }
-    
     private func stateDidChanged() {
         switch state {
         case .initial:
@@ -69,15 +58,15 @@ final class StatisticsViewPresenter {
             view?.showError(errorModel)
         }
     }
-    
     private func loadStatistics() {
         let networkClient = DefaultNetworkClient()
         let service = UsersServiceImpl(networkClient: networkClient, storage: storage)
-        let _: () = service.loadUsers() {[weak self] result in
+        let _: () = service.loadUsers {[weak self] result in
             switch result {
             case .success(let users):
                 for _ in users {
-                    self?.statisticsViewModel = self?.convertStoreToViewModel(users).sorted {$0.nftCount > $1.nftCount} ?? []
+                    self?.statisticsViewModel = self?.convertStoreToViewModel(users).sorted {
+                        $0.nftCount > $1.nftCount} ?? []
                     self?.sortViewModel()
                 }
                 self?.state = .data
@@ -87,7 +76,6 @@ final class StatisticsViewPresenter {
             }
         }
     }
-    
     private func convertStoreToViewModel(_ store: [User]) -> [StatisticsProfileModel] {
         var result: [StatisticsProfileModel] = []
         guard let users = storage.getUsers() else {return []}
@@ -104,7 +92,6 @@ final class StatisticsViewPresenter {
         }
         return result
     }
-    
     private func makeErrorModel(_ error: Error) -> ErrorModel {
         let message: String
         switch error {
@@ -118,8 +105,7 @@ final class StatisticsViewPresenter {
             self?.state = .loading
         }
     }
-    
-    private func sortViewModel () {
+    private func sortViewModel() {
         switch currentSortMode {
         case .name: statisticsViewModel.sort { $0.name < $1.name }
         case .nft: statisticsViewModel.sort { $0.rating > $1.rating }

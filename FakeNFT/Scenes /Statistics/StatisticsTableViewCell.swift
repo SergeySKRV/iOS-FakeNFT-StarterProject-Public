@@ -1,13 +1,8 @@
-
 import UIKit
 import Kingfisher
 
 final class StatisticsTableViewCell: UITableViewCell {
-    
-    //TODO: взять цвета из фигмы
-    
-    //MARK: private properties
-    
+    // MARK: private properties
     let numberLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
@@ -15,7 +10,6 @@ final class StatisticsTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
     let profileRectView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.yaLightGray
@@ -23,7 +17,6 @@ final class StatisticsTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
     let profileAvatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -33,7 +26,6 @@ final class StatisticsTableViewCell: UITableViewCell {
         imageView.image = UIImage(named: "AvatarStub")
         return imageView
     }()
-    
     let profileNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
@@ -41,7 +33,6 @@ final class StatisticsTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
     let profileNFTCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
@@ -49,21 +40,16 @@ final class StatisticsTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    //MARK: public methods
+    // MARK: public methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureView()
         //    configureCellData()
     }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
     }
-    
-    func configureView()
-    {
+    func configureView() {
         contentView.addSubview(numberLabel)
         NSLayoutConstraint.activate([
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -86,7 +72,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         contentView.addSubview(profileNameLabel)
         NSLayoutConstraint.activate([
             profileNameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            profileNameLabel.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor,constant: 8),
+            profileNameLabel.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 8),
             profileNameLabel.widthAnchor.constraint(equalToConstant: 186)
         ])
         contentView.addSubview(profileNFTCountLabel)
@@ -95,12 +81,11 @@ final class StatisticsTableViewCell: UITableViewCell {
             profileNFTCountLabel.trailingAnchor.constraint(equalTo: profileRectView.trailingAnchor, constant: -16)
         ])
     }
-    
     func configureCellData(number: Int, avatarImage: String, nameOfUser: String, numberOfNFT: Int) {
         numberLabel.text = "\(number)"
-        
-        if avatarImage != ""  {
-            profileAvatarImageView.kf.setImage(with: URL(string: avatarImage), placeholder: UIImage(named: "AvatarStub"))
+        if avatarImage != "" {
+            profileAvatarImageView.kf.setImage(with: URL(string: avatarImage),
+                                               placeholder: UIImage(named: "AvatarStub"))
         }
         profileNameLabel.text = nameOfUser
         profileNFTCountLabel.text = "\(numberOfNFT)"

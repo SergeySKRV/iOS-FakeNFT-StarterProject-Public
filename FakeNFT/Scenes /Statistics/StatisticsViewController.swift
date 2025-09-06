@@ -6,19 +6,15 @@ protocol StatisticsView: AnyObject, ErrorView {
     func hideLoadingIndicator()
 }
 
-
 final class StatisticsViewController: UIViewController, StatisticsView {
-    
-    //MARK: private properties
-    
+    // MARK: private properties
     private let presenter = StatisticsViewPresenter.shared
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "SortIcon"), for: .normal)
-        button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside)
+        button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside) 
         return button
     }()
-    
     private let statisticsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.contentMode = .scaleToFill
@@ -29,9 +25,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         tableView.separatorStyle = .none
         return tableView
     }()
-    
-    //MARK: public methods
-    
+    // MARK: public methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -40,21 +34,16 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         configureView()
         showStatistics()
     }
-    
-    internal func showStatistics () {
+    internal func showStatistics() {
         statisticsTableView.reloadData()
     }
-    
     func showLoadingIndicator() {
         StatisticsUIBlockingProgressHUD.show()
     }
-    
     func hideLoadingIndicator() {
         StatisticsUIBlockingProgressHUD.dismiss()
     }
-    
-    //MARK: private methods
-    
+    // MARK: private methods
     private func configureView() {
         view.addSubview(sortButton)
         sortButton.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +53,6 @@ final class StatisticsViewController: UIViewController, StatisticsView {
             sortButton.widthAnchor.constraint(equalToConstant: 42),
             sortButton.heightAnchor.constraint(equalToConstant: 42)
         ])
-        
         view.addSubview(statisticsTableView)
         statisticsTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -76,14 +64,12 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         statisticsTableView.dataSource = self
         statisticsTableView.delegate = self
     }
-    
     private func showSortingAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        
         let title = NSAttributedString(
-            string: NSLocalizedString("sort_title", comment: "сортировка"),
+            string: NSLocalizedString("Sort.title", comment: "сортировка"),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 13),
                 .foregroundColor: UIColor.yaAlertTitle,
@@ -91,38 +77,33 @@ final class StatisticsViewController: UIViewController, StatisticsView {
             ]
         )
         alert.setValue(title, forKey: "attributedTitle")
-        let byNameTitle =  NSLocalizedString("name_sort_title", comment: "по имени")
-        alert.addAction(UIAlertAction(title: byNameTitle, style: .default , handler: { [weak self] _ in
+        let byNameTitle =  NSLocalizedString("Name.sort.title", comment: "по имени")
+        alert.addAction(UIAlertAction(title: byNameTitle, style: .default, handler: { [weak self] _ in
             guard let self else { return }
             self.presenter.currentSortMode = .name
             UserDefaults.standard.set("name", forKey: Constants.statisticsSortingKey)
         }))
-        let byRatingTitle =  NSLocalizedString("rating_sort_title", comment: "по рейтингу")
+        let byRatingTitle =  NSLocalizedString("Rating.sort.title", comment: "по рейтингу")
         alert.addAction(UIAlertAction(title: byRatingTitle, style: .default, handler: { [weak self] _ in
             guard let self else { return }
             UserDefaults.standard.set("rating", forKey: Constants.statisticsSortingKey)
             self.presenter.currentSortMode = .nft
         }))
-        let cancelTitle =  NSLocalizedString("close_title", comment: "закрыть")
+        let cancelTitle =  NSLocalizedString("Close.title", comment: "закрыть")
         alert.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: nil))
         present(alert, animated: true)
     }
-    
     @objc private func filtersButtonTouch() {
         showSortingAlert()
     }
 }
 
-
-//MARK: extensions
-
+// MARK: extensions
 extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
     }
 }
 
@@ -130,9 +111,9 @@ extension StatisticsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.statisticsViewModel.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatisticsTableViewCell") as? StatisticsTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatisticsTableViewCell") as? StatisticsTableViewCell
+        else { return UITableViewCell() }
         cell.configureCellData(number: indexPath.item+1,
                                avatarImage: presenter.statisticsViewModel[indexPath.item].avatarImage,
                                nameOfUser: presenter.statisticsViewModel[indexPath.item].name,
@@ -140,4 +121,3 @@ extension StatisticsViewController: UITableViewDataSource {
         return cell
     }
 }
-

@@ -1,15 +1,11 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
-    //var servicesAssembly: ServicesAssembly!
-    
-    
+    // var servicesAssembly: ServicesAssembly!
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: ""),
         image: UIImage(named: "ProfileIcon"),
-       
-        tag: 0
+       tag: 0
     )
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
@@ -17,7 +13,7 @@ final class TabBarController: UITabBarController {
         tag: 1
     )
     private let cartTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.сart", comment: ""),
+        title: NSLocalizedString("Tab.cart", comment: ""),
         image: UIImage(named: "CartIcon"),
         tag: 2
     )
@@ -26,16 +22,11 @@ final class TabBarController: UITabBarController {
         image: UIImage(named: "StatisticsIcon"),
         tag: 3
     )
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = UIColor.yaSecondary
         tabBar.tintColor = UIColor.yaBlueUniversal
         tabBar.unselectedItemTintColor = UIColor.yaPrimary
-        
         let profileController = ProfileViewController()
         let catalogController = CatalogViewController()
         let cartController = CartViewController()
@@ -45,7 +36,5 @@ final class TabBarController: UITabBarController {
         cartController.tabBarItem = cartTabBarItem
         statisticsController.tabBarItem = statisticsTabBarItem
         viewControllers = [profileController, catalogController, cartController, statisticsController]
-       
-        
     }
 }
