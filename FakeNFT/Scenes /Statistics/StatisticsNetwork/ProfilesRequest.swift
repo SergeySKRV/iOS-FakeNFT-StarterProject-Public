@@ -6,5 +6,3 @@ struct ProfilesRequest: NetworkRequest {
     }
     var dto: Dto?
 }
-
-

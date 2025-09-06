@@ -24,36 +24,29 @@ extension UIColor {
             alpha: CGFloat(alpha) / 255
         )
     }
-    
     // Primary Colors
     static let yaPrimary = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaBlackDark
         : .yaBlackLight
     }
-    
     static let yaSecondary = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaBlackLight
         : .yaBlackDark
     }
-    
     static let yaLightGray = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaLightGrayDark
         : .yaLightGrayLight
     }
-    
     static let yaAlertTitle = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaAlertTitleDark
         : .yaAlertTitleLight
     }
-    
-    
     // Background Colors
     static let background = UIColor.white
-    
     // Text Colors
     static let textPrimary = UIColor.black
     static let textSecondary = UIColor.gray
@@ -66,30 +59,26 @@ extension UIColor {
     static let yaBlackUniversal = UIColor(hexString: "#1A1B22")
     static let yaWhiteUniversal = UIColor(hexString: "#FFFFFF")
     static let yaYellowUniversal = UIColor(hexString: "#FEEF0D")
-    
     static let segmentActive = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaBlackDark
         : .yaBlackLight
     }
-    
     static let segmentInactive = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaLightGrayDark
         : .yaLightGrayLight
     }
-    
     static let closeButton = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaBlackDark
         : .yaBlackLight
     }
-    
     private static let yaBlackLight = UIColor(hexString: "1A1B22")
     private static let yaBlackDark = UIColor.white
     private static let yaLightGrayLight = UIColor(hexString: "#F7F7F8")
     private static let yaLightGrayDark = UIColor(hexString: "#2C2C2E")
     private static let yaGrayUniversal = UIColor(hexString: "#625C5C")
-    private static let yaAlertTitleDark = UIColor(hexString: "#EBEBF599") ;
+    private static let yaAlertTitleDark = UIColor(hexString: "#EBEBF599")
     private static let yaAlertTitleLight = UIColor(hexString: "#F5F5F5B2")
 }

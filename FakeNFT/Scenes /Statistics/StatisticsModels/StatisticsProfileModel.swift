@@ -1,6 +1,6 @@
 import Foundation
 
-struct StatisticsProfileModel  {
+struct StatisticsProfileModel {
     let avatarImage: String
     let name: String
     let nftCount: Int
