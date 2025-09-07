@@ -16,7 +16,7 @@ protocol CatalogViewControllerProtocol: AnyObject {
 }
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
-    
+    private var isFavorite = false
     private let presenter: CatalogPresenterProtocol
     
      // MARK: - Initializers
@@ -31,15 +31,25 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     // MARK: - Private Properties
-    
-    private lazy var sortButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "sort"), for: .normal)
+    private lazy var sortButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: UIImage(named: "sort"),
+            style: .plain,
+            target: self,
+            action: #selector(sortButtonTapped)
+        )
         button.tintColor = .black
-        button.backgroundColor = .systemBackground
-        button.addTarget(self,
-                         action: #selector(sortButtonTapped),
-                         for: .touchUpInside)
+        return button
+    }()
+   // Направление сортировки
+    private lazy var uPdownButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.down"),
+            style: .plain,
+            target: self,
+            action: #selector(uPdownButtonTapped)
+        )
+        button.tintColor = .black
         return button
     }()
     
@@ -82,13 +92,13 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             message: nil,
             preferredStyle: .actionSheet
         )
-        
+        /*
         actionSheet.addAction(UIAlertAction(
             title: sortTypeModel.uPdown,
             style: .default) { _ in
                 self.presenter.sortByName()
             })
-        
+        */
         actionSheet.addAction(UIAlertAction(
             title: sortTypeModel.byName,
             style: .default) { _ in
@@ -110,11 +120,23 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         present(actionSheet, animated: true)
     }
     
+    @objc
+    private func uPdownButtonTapped() {
+      // TODO: -
+        isFavorite.toggle()
+        // Обновляем иконку в зависимости от состояния
+        let imageName = isFavorite ? "arrow.up" : "arrow.down"
+        // Меняем иконку кнопки
+        uPdownButton.image = UIImage(systemName: imageName)
+    }
+    
+   
     // MARK: - Private Methods
+    
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItems = [sortButton, uPdownButton]
         view.addSubview(catalogTableView)
-        view.addSubview(sortButton)
         setupTableView()
         setupCatalogViewControllerConstrains()
     }
@@ -126,18 +148,13 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     private func setupCatalogViewControllerConstrains() {
-        sortButton.translatesAutoresizingMaskIntoConstraints = false
+    
         NSLayoutConstraint.activate([
-            
-            sortButton.widthAnchor.constraint(equalToConstant: 42),
-            sortButton.heightAnchor.constraint(equalToConstant: 42),
-            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
-            
-            catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+           
+            catalogTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            catalogTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             catalogTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            catalogTableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
-            catalogTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
     
         ])
     }
