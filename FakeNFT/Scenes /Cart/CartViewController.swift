@@ -99,7 +99,6 @@ final class CartViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .systemBackground
-//        title = "Корзина"
         navigationItem.rightBarButtonItem = filterButton
         
         view.addSubview(tableView)

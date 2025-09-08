@@ -17,31 +17,43 @@ final class CartPresenter: CartPresenterProtocol {
     
     func payButtonTapped() {
         print("Кнопка оплаты нажата (заглушка)")
-        // Заглушка для оплаты
     }
     
     func deleteItem(at index: Int) {
-        print("Удаление элемента по индексу: \(index) (заглушка)")
-        // Пока просто удаляем из массива без сетевого запроса
         guard index < cartItems.count else { return }
-        cartItems.remove(at: index)
-        view?.displayCartItems(cartItems)
-        view?.updateTotalPrice()
+        let itemId = cartItems[index].id
+        
+        cartService.deleteItemFromCart(itemId: itemId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.cartItems.remove(at: index)
+                    self?.view?.displayCartItems(self?.cartItems ?? [])
+                    self?.view?.updateTotalPrice()
+                case .failure(let error):
+                    print("Ошибка удаления: \(error)")
+                }
+            }
+        }
     }
     
     private func loadCartItems() {
-        let testItems = [
-            CartItem(id: "1", name: "April", image: "april_image", rating: 4, price: 1.78, currency: "ETH"),
-            CartItem(id: "2", name: "Greena", image: "greena_image", rating: 5, price: 1.78, currency: "ETH"),
-            CartItem(id: "3", name: "Spring", image: "spring_image", rating: 6, price: 1.78, currency: "ETH")
-        ]
-        
-        self.cartItems = testItems
-        if testItems.isEmpty {
-            self.view?.showEmptyState()
-        } else {
-            self.view?.displayCartItems(testItems)
-            self.view?.updateTotalPrice()
+        cartService.loadCartItems { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let items):
+                    self?.cartItems = items
+                    if items.isEmpty {
+                        self?.view?.showEmptyState()
+                    } else {
+                        self?.view?.displayCartItems(items)
+                        self?.view?.updateTotalPrice()
+                    }
+                case .failure(let error):
+                    print("Ошибка загрузки корзины: \(error)")
+                    self?.view?.showEmptyState()
+                }
+            }
         }
     }
 }

@@ -82,7 +82,6 @@ final class CartCell: UITableViewCell {
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             
-//            deleteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             deleteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             deleteButton.widthAnchor.constraint(equalToConstant: 40),
@@ -109,10 +108,39 @@ final class CartCell: UITableViewCell {
     func configure(with item: CartItem) {
         nameLabel.text = item.name
         priceLabel.text = String(format: "%.2f \(item.currency)", item.price)
+        ratingView.setRating(item.rating)
         
         nftImageView.image = UIImage(systemName: "photo")
         nftImageView.backgroundColor = .lightGray
         
-        ratingView.setRating(item.rating)
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.startAnimating()
+        nftImageView.addSubview(activityIndicator)
+        activityIndicator.center = nftImageView.center
+        
+        loadImage(from: item.image)
+    }
+    
+    private func loadImage(from urlString: String) {
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                return
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.nftImageView.image = image
+                self.nftImageView.backgroundColor = .clear
+            }
+        }.resume()
     }
 }
