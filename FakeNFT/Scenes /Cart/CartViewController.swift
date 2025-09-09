@@ -39,7 +39,7 @@ final class CartViewController: UIViewController {
     
     private lazy var nftCountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = UIColor(named: "ypBlack")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -47,7 +47,7 @@ final class CartViewController: UIViewController {
     
     private lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont(name: "SFProText-Bold", size: 17)
         label.textColor = UIColor(named: "ypGreen")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -57,7 +57,7 @@ final class CartViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("К оплате", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        button.titleLabel?.font = UIFont(name: "SFProText-Bold", size: 17)
         button.backgroundColor = UIColor(named: "ypBlack")
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
@@ -148,7 +148,26 @@ final class CartViewController: UIViewController {
     
     @objc private func deleteButtonTapped(_ sender: UIButton) {
         let index = sender.tag
-        presenter?.deleteItem(at: index)
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? CartCell else { return }
+        
+        let item = cartItems[index]
+        let nftImage = cell.getNFTImage()
+        
+        showDeletePopup(for: index, nftImageURL: item.image, nftName: item.name)
+    }
+    
+    private func showDeletePopup(for index: Int, nftImageURL: String?, nftName: String?) {
+        let popupVC = DeletePopupViewController()
+        popupVC.nftImageURL = nftImageURL
+        popupVC.nftName = nftName
+        popupVC.modalPresentationStyle = .overFullScreen
+        popupVC.modalTransitionStyle = .crossDissolve
+        
+        popupVC.onDelete = { [weak self] in
+            self?.presenter?.deleteItem(at: index)
+        }
+        
+        present(popupVC, animated: true)
     }
 }
 
@@ -196,5 +215,15 @@ extension CartViewController: CartViewProtocol {
         
         let totalPrice = cartItems.reduce(0) { $0 + $1.price }
         totalPriceLabel.text = String(format: "%.2f ETH", totalPrice)
+    }
+    
+    func showError(message: String) {
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }

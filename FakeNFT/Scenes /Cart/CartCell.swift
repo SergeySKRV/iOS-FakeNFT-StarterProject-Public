@@ -3,6 +3,8 @@ import UIKit
 final class CartCell: UITableViewCell {
     static let reuseIdentifier = "CartCell"
     
+    private var currentImage: UIImage?
+    
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -15,7 +17,7 @@ final class CartCell: UITableViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont(name: "SFProText-Bold", size: 17)
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -30,7 +32,7 @@ final class CartCell: UITableViewCell {
     private let priceTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Цена"
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = UIFont(name: "SFProText-Regular", size: 13)
         label.textColor = UIColor(named: "ypBlack")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -38,7 +40,7 @@ final class CartCell: UITableViewCell {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = UIFont(name: "SFProText-Bold", size: 17)
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -113,12 +115,17 @@ final class CartCell: UITableViewCell {
         nftImageView.image = UIImage(systemName: "photo")
         nftImageView.backgroundColor = .lightGray
         
-        let activityIndicator = UIActivityIndicatorView(style: .medium)
-        activityIndicator.startAnimating()
-        nftImageView.addSubview(activityIndicator)
-        activityIndicator.center = nftImageView.center
+        //        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        //        activityIndicator.startAnimating()
+        //        nftImageView.addSubview(activityIndicator)
+        //        activityIndicator.center = nftImageView.center
         
         loadImage(from: item.image)
+        currentImage = nftImageView.image
+    }
+    
+    func getNFTImage() -> UIImage? {
+        return currentImage ?? nftImageView.image
     }
     
     private func loadImage(from urlString: String) {

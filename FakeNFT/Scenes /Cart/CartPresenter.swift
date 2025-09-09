@@ -22,16 +22,26 @@ final class CartPresenter: CartPresenterProtocol {
     func deleteItem(at index: Int) {
         guard index < cartItems.count else { return }
         let itemId = cartItems[index].id
+        let itemToDelete = cartItems[index]
+        
+        cartItems.remove(at: index)
+        view?.displayCartItems(cartItems)
+        view?.updateTotalPrice()
         
         cartService.deleteItemFromCart(itemId: itemId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self?.cartItems.remove(at: index)
+                    if self?.cartItems.count == 0 {
+                        self?.view?.showEmptyState()
+                    }
+                    
+                case .failure(let error):
+                    self?.cartItems.insert(itemToDelete, at: index)
                     self?.view?.displayCartItems(self?.cartItems ?? [])
                     self?.view?.updateTotalPrice()
-                case .failure(let error):
-                    print("Ошибка удаления: \(error)")
+                    
+                    self?.view?.showError(message: "Не удалось удалить элемент")
                 }
             }
         }

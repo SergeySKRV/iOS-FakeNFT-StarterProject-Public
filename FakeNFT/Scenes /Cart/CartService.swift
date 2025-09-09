@@ -4,6 +4,8 @@ final class CartService: CartServiceProtocol {
     private let networkClient: NetworkClient
     private let baseURL = RequestConstants.baseURL
     
+    private var currentNFTIds: [String] = []
+    
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
@@ -19,14 +21,17 @@ final class CartService: CartServiceProtocol {
             httpMethod: .get
         )
         
-        networkClient.send(request: request, type: CartResponse.self) { result in
+        networkClient.send(request: request, type: CartResponse.self) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
             switch result {
             case .success(let cartResponse):
                 let nftIds = cartResponse.nfts ?? []
-                print("Загружено NFT: \(nftIds.count)")
+                self.currentNFTIds = nftIds
                 self.loadNFTDetails(nftIds: nftIds, completion: completion)
             case .failure(let error):
-                print("Ошибка загрузки корзины: \(error)")
                 completion(.failure(error))
             }
         }
@@ -57,7 +62,6 @@ final class CartService: CartServiceProtocol {
                     )
                     nftItems.append(cartItem)
                 case .failure(let error):
-                    print("Ошибка загрузки NFT \(nftId): \(error)")
                 }
             }
         }
@@ -68,10 +72,67 @@ final class CartService: CartServiceProtocol {
     }
     
     func deleteItemFromCart(itemId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        print("Удаление элемента \(itemId) (заглушка)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            completion(.success(()))
+        let updatedNFTs = currentNFTIds.filter { $0 != itemId }
+        
+        updateOrder(nfts: updatedNFTs) { [weak self] result in
+            switch result {
+            case .success:
+                self?.currentNFTIds = updatedNFTs
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
+    }
+    
+    private func updateOrder(nfts: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+        let urlString = "\(baseURL)/api/v1/orders/1"
+        
+        guard let url = URL(string: urlString) else {
+            completion(.failure(URLError(.badURL)))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("45c5b907-7b41-4702-bced-d61034c05bae", forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        
+        var components = URLComponents()
+        components.queryItems = nfts.map { nftId in
+            URLQueryItem(name: "nfts", value: nftId)
+        }
+        
+        if nfts.isEmpty {
+            components.queryItems = [URLQueryItem(name: "nfts", value: "")]
+        }
+        
+        if let queryString = components.percentEncodedQuery {
+            request.httpBody = queryString.data(using: .utf8)
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(.failure(URLError(.badServerResponse)))
+                return
+            }
+            
+            if let data = data, let responseString = String(data: data, encoding: .utf8) {
+            }
+            
+            if (200...299).contains(httpResponse.statusCode) {
+                completion(.success(()))
+            } else {
+                let error = NSError(domain: "", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error: \(httpResponse.statusCode)"])
+                completion(.failure(error))
+            }
+        }
+        task.resume()
     }
     // пока не реализовано
     

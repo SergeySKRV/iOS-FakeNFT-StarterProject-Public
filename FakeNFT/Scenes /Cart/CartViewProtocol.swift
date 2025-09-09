@@ -4,6 +4,7 @@ protocol CartViewProtocol: AnyObject {
     func displayCartItems(_ items: [CartItem])
     func updateTotalPrice()
     func showEmptyState()
+    func showError(message: String)
 }
 
 protocol CartPresenterProtocol {
