@@ -12,7 +12,7 @@ final class MyNFTViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .yaSecondary
+        tableView.backgroundColor = .systemBackground
         tableView.separatorStyle = .none
         tableView.register(MyNFTTableViewCell.self)
         tableView.delegate = self
@@ -27,13 +27,25 @@ final class MyNFTViewController: UIViewController {
         return indicator
     }()
     
+    private lazy var sortButton: UIBarButtonItem = {
+        let customButton = UIButton(type: .custom)
+        let sortImage = UIImage(resource: .sort).withRenderingMode(.alwaysTemplate)
+        customButton.setImage(sortImage, for: .normal)
+        customButton.tintColor = .yaPrimary
+        customButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        customButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+      
+        let barButtonItem = UIBarButtonItem(customView: customButton)
+        return barButtonItem
+    }()
+    
     // MARK: - Properties
     private var presenter: MyNFTPresenterProtocol!
-    
-    private let mockImages = [
-        UIImage(resource: .lilo),
-        UIImage(resource: .spring),
-        UIImage(resource: .april)
+    private var displayedNFTs: [NFTItem] = []
+    private let imageMap: [String: UIImage] = [
+        "lilo": UIImage(resource: .lilo),
+        "spring": UIImage(resource: .spring),
+        "april": UIImage(resource: .april)
     ]
     
     // MARK: - Lifecycle
@@ -47,7 +59,7 @@ final class MyNFTViewController: UIViewController {
     
     // MARK: - Private Methods
     private func setupUI() {
-        view.backgroundColor = .yaSecondary
+        view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
         
@@ -63,11 +75,12 @@ final class MyNFTViewController: UIViewController {
         )
         backButton.tintColor = .yaPrimary
         navigationItem.leftBarButtonItem = backButton
+      
+        navigationItem.rightBarButtonItem = sortButton
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -96,26 +109,24 @@ final class MyNFTViewController: UIViewController {
             navigationController?.popViewController(animated: true)
         }
     }
+    
+    @objc private func sortButtonTapped() {
+        presenter.sortButtonTapped()
+    }
 }
 
 // MARK: - UITableViewDataSource and UITableViewDelegate
 extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return displayedNFTs.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MyNFTTableViewCell.defaultReuseIdentifier, for: indexPath) as! MyNFTTableViewCell
         
-        let mockNFT = NFTItem(
-            id: "mock-id-\(indexPath.row)",
-            name: ["Lilo", "Spring", "April"][indexPath.row],
-            rating: 3,
-            author: "John Doe",
-            price: "1,78 ETH",
-            imageUrl: URL(string: "https://example.com/nft\(indexPath.row).jpg")!
-        )
-        cell.configure(with: mockNFT, mockImage: mockImages[indexPath.row % mockImages.count])
+        let nft = displayedNFTs[indexPath.row]
+        let mockImage = imageMap[nft.imageId]
+        cell.configure(with: nft, mockImage: mockImage)
         return cell
     }
     
@@ -127,6 +138,7 @@ extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - MyNFTViewProtocol
 extension MyNFTViewController: MyNFTViewProtocol {
     func displayNFTs(_ nfts: [NFTItem]) {
+        displayedNFTs = nfts
         tableView.reloadData()
     }
     
@@ -142,5 +154,34 @@ extension MyNFTViewController: MyNFTViewProtocol {
         let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
+    }
+    
+    func showSortOptions(_ options: [NFTSortOption], selectedIndex: Int) {
+        let alertController = UIAlertController(
+            title: NSLocalizedString("MyNFT.sortTitle", comment: "Заголовок сортировки"),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        for (index, option) in options.enumerated() {
+            let actionStyle: UIAlertAction.Style = (index == selectedIndex) ? .destructive : .default
+            let action = UIAlertAction(title: option.title, style: actionStyle) { [weak self] _ in
+                self?.presenter.sortOptionSelected(option)
+            }
+            alertController.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("MyNFT.sortCancel", comment: "Отмена сортировки"),
+            style: .cancel,
+            handler: nil
+        )
+        alertController.addAction(cancelAction)
+       
+        if let popoverPresentationController = alertController.popoverPresentationController {
+            popoverPresentationController.barButtonItem = sortButton
+        }
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

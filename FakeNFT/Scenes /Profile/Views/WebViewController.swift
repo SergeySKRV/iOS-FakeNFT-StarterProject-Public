@@ -48,7 +48,7 @@ final class WebViewController: UIViewController {
             target: self,
             action: #selector(backButtonTapped)
         )
-        backButton.tintColor = UIColor(named: "blackDayNight") ?? .label
+        backButton.tintColor = .yaPrimary
         navigationItem.leftBarButtonItem = backButton
     }
     

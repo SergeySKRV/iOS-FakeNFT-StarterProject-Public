@@ -11,5 +11,8 @@ protocol MyNFTPresenterProtocol: AnyObject {
     init(view: MyNFTViewProtocol, nftService: NftService)
     
     func viewDidLoad()
+    func viewWillAppear()
+    func sortButtonTapped()
+    func sortOptionSelected(_ option: NFTSortOption)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 }

@@ -34,7 +34,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProHeadline4
+        label.font = Fonts.sfProBold17
         label.textColor = .yaPrimary
         label.numberOfLines = 1
         return label
@@ -67,7 +67,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProBodyRegular
+        label.font = Fonts.sfProRegular13
         label.textColor = .yaPrimary
         label.textAlignment = .left
         return label
@@ -76,7 +76,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProBodyBold
+        label.font = Fonts.sfProBold17
         label.textColor = .yaPrimary
         label.textAlignment = .left
         return label
@@ -85,7 +85,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProCaption2
+        label.font = Fonts.sfProRegular13
         label.textColor = .yaPrimary
         label.textAlignment = .right
         return label
@@ -121,7 +121,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     
     // MARK: - Private Methods
     private func setupUI() {
-        contentView.backgroundColor = .yaSecondary
+        contentView.backgroundColor = .systemBackground
         contentView.addSubview(nftImageView)
         contentView.addSubview(heartButton)
         contentView.addSubview(nameLabel)
@@ -159,7 +159,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
             authorLabel.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 4),
             authorLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
             
-            priceTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -81),
+            priceTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -83),
             priceTitleLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 33),
             
             priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -42),

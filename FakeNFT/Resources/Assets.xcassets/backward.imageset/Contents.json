@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "chevron.backward.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "chevron.backward@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "chevron.backward@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "Light.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

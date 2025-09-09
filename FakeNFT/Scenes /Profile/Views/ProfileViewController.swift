@@ -20,8 +20,8 @@ final class ProfileViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProHeadline3
-        label.textColor = UIColor(named: "blackDayNight")
+        label.font = Fonts.sfProBold22
+        label.textColor = .yaPrimary
         label.textAlignment = .left
         return label
     }()
@@ -29,8 +29,8 @@ final class ProfileViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProCaption2
-        label.textColor = UIColor(named: "blackDayNight")
+        label.font = Fonts.sfProRegular13
+        label.textColor = .yaPrimary
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .natural
@@ -40,8 +40,8 @@ final class ProfileViewController: UIViewController {
     private lazy var websiteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProCaption1
-        label.textColor = UIColor(named: "blueUniversal")
+        label.font = Fonts.sfProRegular15
+        label.textColor = .yaBlueUniversal
         label.text = NSLocalizedString("Profile.websiteTap", comment: "")
         label.isUserInteractionEnabled = true
         
@@ -54,7 +54,7 @@ final class ProfileViewController: UIViewController {
         let button = UIButton(type: .custom)
         let image = UIImage(resource: .edit).withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
-        button.tintColor = UIColor(named: "blackDayNight")
+        button.tintColor = .yaPrimary
         button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

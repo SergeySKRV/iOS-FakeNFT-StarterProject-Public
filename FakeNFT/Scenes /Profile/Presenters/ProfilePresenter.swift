@@ -63,7 +63,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        return 54
     }
     
     // MARK: - TableView Methods (обновленный didSelectRowAt)

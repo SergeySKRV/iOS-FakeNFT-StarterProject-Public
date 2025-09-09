@@ -6,16 +6,18 @@ final class ProfileTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProBodyBold
-        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.font = Fonts.sfProBold17
+        label.textColor = .yaPrimary
         return label
     }()
     
     private lazy var chevronImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(resource: .chevron)
-        imageView.tintColor = UIColor(named: "blackDayNight") ?? .label
+        let image = UIImage(resource: .chevron).withRenderingMode(.alwaysTemplate)
+        imageView.image = image
+        imageView.tintColor = .yaPrimary
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     

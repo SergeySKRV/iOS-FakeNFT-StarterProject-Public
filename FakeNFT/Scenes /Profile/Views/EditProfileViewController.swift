@@ -18,8 +18,8 @@ final class EditProfileViewController: UIViewController {
         let button = UIButton(type: .custom)
         let cameraImage = UIImage(resource: .cameraPic).withRenderingMode(.alwaysTemplate)
         button.setImage(cameraImage, for: .normal)
-        button.tintColor = UIColor(named: "blackDayNight")
-        button.backgroundColor = UIColor(named: "lightGreyDayNight")
+        button.tintColor = .yaPrimary
+        button.backgroundColor = .yaLightGray
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
@@ -29,8 +29,8 @@ final class EditProfileViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProHeadline3
-        label.textColor = UIColor(named: "blackDayNight")
+        label.font = Fonts.sfProBold22
+        label.textColor = .yaPrimary
         label.text = NSLocalizedString("EditProfile.nameLabel", comment: "")
         return label
     }()
@@ -38,10 +38,10 @@ final class EditProfileViewController: UIViewController {
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = UIColor(named: "lightGreyDayNight") ?? .systemGray
+        textField.backgroundColor = .yaLightGray
         textField.layer.cornerRadius = 12
         textField.text = "Joaquin Phoenix"
-        textField.font = UIFont.sfProBodyRegular
+        textField.font = Fonts.sfProRegular17
         textField.layer.masksToBounds = true
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
         textField.leftViewMode = .always
@@ -56,8 +56,8 @@ final class EditProfileViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProHeadline3
-        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.font = Fonts.sfProBold22
+        label.textColor = .yaPrimary
         label.text = NSLocalizedString("EditProfile.descriptionLabel", comment: "")
         return label
     }()
@@ -65,10 +65,10 @@ final class EditProfileViewController: UIViewController {
     private lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = UIColor(named: "lightGreyDayNight") ?? .systemGray
+        textView.backgroundColor = .yaLightGray
         textView.layer.cornerRadius = 12
         textView.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-        textView.font = UIFont.sfProBodyRegular
+        textView.font = Fonts.sfProRegular17
         textView.isEditable = true
         textView.isScrollEnabled = true
         textView.layer.masksToBounds = true
@@ -79,8 +79,8 @@ final class EditProfileViewController: UIViewController {
     private lazy var websiteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.sfProHeadline3
-        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.font = Fonts.sfProBold22
+        label.textColor = .yaPrimary
         label.text = NSLocalizedString("EditProfile.websiteLabel", comment: "")
         return label
     }()
@@ -88,10 +88,10 @@ final class EditProfileViewController: UIViewController {
     private lazy var websiteTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = UIColor(named: "lightGreyDayNight") ?? .systemGray
+        textField.backgroundColor = .yaLightGray
         textField.layer.cornerRadius = 12
         textField.text = "Joaquin Phoenix.com"
-        textField.font = UIFont.sfProBodyRegular
+        textField.font = Fonts.sfProRegular17
         textField.layer.masksToBounds = true
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
         textField.leftViewMode = .always
@@ -106,9 +106,9 @@ final class EditProfileViewController: UIViewController {
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle(NSLocalizedString("EditProfile.save", comment: ""), for: .normal)
-        button.titleLabel?.font = UIFont.sfProBodyBold
-        button.setTitleColor(UIColor(named: "whiteDayNight"), for: .normal)
-        button.backgroundColor = UIColor(named: "blackDayNight")
+        button.titleLabel?.font = Fonts.sfProBold17
+        button.setTitleColor(.yaSecondary, for: .normal)
+        button.backgroundColor = .yaPrimary
         button.layer.cornerRadius = 12
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -398,7 +398,7 @@ extension EditProfileViewController: EditProfilePresenterOutput {
             target: self,
             action: #selector(backButtonTapped)
         )
-        backButton.tintColor = UIColor(named: "blackDayNight") ?? .label
+        backButton.tintColor = .yaPrimary
         navigationItem.leftBarButtonItem = backButton
     }
     

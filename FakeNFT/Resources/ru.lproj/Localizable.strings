@@ -37,3 +37,12 @@
 
 // MARK: - My NFT
 "MyNFT.title" = "Мои NFT";
+
+// MARK: - My NFT Sorting
+"MyNFT.sortTitle" = "Сортировка";
+"MyNFT.sortCancel" = "Закрыть";
+
+// MARK: - Sorting Options
+"Sort.byPrice" = "По цене";
+"Sort.byRating" = "По рейтингу";
+"Sort.byName" = "По названию";

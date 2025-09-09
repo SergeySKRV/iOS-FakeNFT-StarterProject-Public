@@ -12,4 +12,5 @@ protocol MyNFTViewProtocol: AnyObject {
     func showLoading()
     func hideLoading()
     func showError(_ error: Error)
+    func showSortOptions(_ options: [NFTSortOption], selectedIndex: Int)
 }
