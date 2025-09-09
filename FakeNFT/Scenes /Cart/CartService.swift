@@ -62,6 +62,7 @@ final class CartService: CartServiceProtocol {
                     )
                     nftItems.append(cartItem)
                 case .failure(let error):
+                    print("Ошибка загрузки NFT \(nftId): \(error)")
                 }
             }
         }

@@ -5,6 +5,11 @@ final class CartViewController: UIViewController {
     var presenter: CartPresenterProtocol?
     private var cartItems: [CartItem] = []
     
+    private struct CacheKeys {
+        static let cartItemsCount = "cachedCartItemsCount"
+        static let totalPrice = "cachedTotalPrice"
+    }
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.reuseIdentifier)
@@ -94,6 +99,9 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
+        
+        showCachedData()
+        
         presenter?.viewDidLoad()
     }
     
@@ -136,6 +144,32 @@ final class CartViewController: UIViewController {
             payButton.widthAnchor.constraint(equalToConstant: 240),
             payButton.heightAnchor.constraint(equalToConstant: 44)
         ])
+    }
+    
+    private func showCachedData() {
+        let defaults = UserDefaults.standard
+        let itemCount = defaults.integer(forKey: CacheKeys.cartItemsCount)
+        let totalPrice = defaults.double(forKey: CacheKeys.totalPrice)
+
+        if itemCount > 0 {
+            nftCountLabel.text = "\(itemCount) NFT"
+            totalPriceLabel.text = String(format: "%.2f ETH", totalPrice)
+            totalView.isHidden = false
+            tableView.isHidden = false
+            emptyStateLabel.isHidden = true
+        }
+    }
+    
+    private func cacheCartData(count: Int, price: Double) {
+        let defaults = UserDefaults.standard
+        defaults.set(count, forKey: CacheKeys.cartItemsCount)
+        defaults.set(price, forKey: CacheKeys.totalPrice)
+    }
+    
+    private func clearCache() {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: CacheKeys.cartItemsCount)
+        defaults.removeObject(forKey: CacheKeys.totalPrice)
     }
     
     @objc private func filterButtonTapped() {
@@ -199,6 +233,8 @@ extension CartViewController: CartViewProtocol {
         tableView.isHidden = true
         totalView.isHidden = true
         emptyStateLabel.isHidden = false
+        
+        clearCache()
     }
     
     func displayCartItems(_ items: [CartItem]) {
@@ -208,6 +244,9 @@ extension CartViewController: CartViewProtocol {
         emptyStateLabel.isHidden = true
         tableView.reloadData()
         updateTotalPrice()
+        
+        let totalPrice = items.reduce(0) { $0 + $1.price }
+        cacheCartData(count: items.count, price: totalPrice)
     }
     
     func updateTotalPrice() {
@@ -215,6 +254,8 @@ extension CartViewController: CartViewProtocol {
         
         let totalPrice = cartItems.reduce(0) { $0 + $1.price }
         totalPriceLabel.text = String(format: "%.2f ETH", totalPrice)
+        
+        cacheCartData(count: cartItems.count, price: totalPrice)
     }
     
     func showError(message: String) {
