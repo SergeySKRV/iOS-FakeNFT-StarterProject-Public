@@ -66,14 +66,23 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         return 70
     }
     
+    // MARK: - TableView Methods (обновленный didSelectRowAt)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         let item = tableData[indexPath.section].items[indexPath.row]
         switch item.title {
         case NSLocalizedString("EditProfile.myNFT", comment: ""):
-            print("Переход к Моим NFT")
-            // TODO: переход к экрану Мои NFT
+            let myNFTController = MyNFTViewController()
+            if let profileViewController = self.view as? UIViewController,
+               let navController = profileViewController.navigationController {
+                navController.pushViewController(myNFTController, animated: true)
+            } else {
+                let navController = UINavigationController(rootViewController: myNFTController)
+                navController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+                if let profileViewController = self.view as? UIViewController {
+                    profileViewController.present(navController, animated: true)
+                }
+            }
         case NSLocalizedString("EditProfile.favoritesNFT", comment: ""):
             print("Переход к Избранным NFT")
             // TODO: переход к экрану Избранных NFT

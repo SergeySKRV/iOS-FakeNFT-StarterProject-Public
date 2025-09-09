@@ -21,7 +21,7 @@
 "EditProfile.photoDelete" = "Foto löschen";
 "EditProfile.photoCancel" = "Abbrechen";
 "EditProfile.photoUrlTitle" = "Foto-URL";
-"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg  ";
+"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg";
 "EditProfile.nameLabel" = "Name";
 "EditProfile.descriptionLabel" = "Beschreibung";
 "EditProfile.websiteLabel" = "Website";
@@ -34,3 +34,6 @@
 
 // MARK: - Web View
 "Webview.backButton" = "Zurück";
+
+// MARK: - My NFT
+"MyNFT.title" = "Meine NFTs";

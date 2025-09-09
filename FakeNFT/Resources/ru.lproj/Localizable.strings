@@ -21,7 +21,7 @@
 "EditProfile.photoDelete" = "Удалить фото";
 "EditProfile.photoCancel" = "Отмена";
 "EditProfile.photoUrlTitle" = "Ссылка на фото";
-"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg  ";
+"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg";
 "EditProfile.nameLabel" = "Имя";
 "EditProfile.descriptionLabel" = "Описание";
 "EditProfile.websiteLabel" = "Сайт";
@@ -34,3 +34,6 @@
 
 // MARK: - Web View
 "Webview.backButton" = "Назад";
+
+// MARK: - My NFT
+"MyNFT.title" = "Мои NFT";

@@ -54,7 +54,7 @@ final class ProfileViewController: UIViewController {
         let button = UIButton(type: .custom)
         let image = UIImage(resource: .edit).withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
-        button.tintColor = UIColor(named: "blackDayNight") ?? .label
+        button.tintColor = UIColor(named: "blackDayNight")
         button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
