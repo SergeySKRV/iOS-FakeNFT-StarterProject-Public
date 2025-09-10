@@ -6,14 +6,16 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     private weak var view: ProfilePresenterOutput?
     private let userService: UserProfileService
     private var userProfile: UserProfile?
+    private let servicesAssembly: ServicesAssembly 
     private var tableData: [ProfileSection] = []
     private var myNFTCount = 112
     private var favoritesNFTCount = 11
     
     // MARK: - Initialization
-    required init(view: ProfilePresenterOutput, userService: UserProfileService) {
+    required init(view: ProfilePresenterOutput, userService: UserProfileService, servicesAssembly: ServicesAssembly) {
         self.view = view
         self.userService = userService
+        self.servicesAssembly = servicesAssembly
     }
     
     // MARK: - Public Methods
@@ -66,19 +68,20 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         return 54
     }
     
-    // MARK: - TableView Methods (обновленный didSelectRowAt)
+    // MARK: - TableView Methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = tableData[indexPath.section].items[indexPath.row]
         switch item.title {
         case NSLocalizedString("EditProfile.myNFT", comment: ""):
-            let myNFTController = MyNFTViewController()
+            let myNFTController = MyNFTViewController(servicesAssembly: servicesAssembly)
+            
             if let profileViewController = self.view as? UIViewController,
                let navController = profileViewController.navigationController {
                 navController.pushViewController(myNFTController, animated: true)
             } else {
                 let navController = UINavigationController(rootViewController: myNFTController)
-                navController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+                navController.modalPresentationStyle = .fullScreen
                 if let profileViewController = self.view as? UIViewController {
                     profileViewController.present(navController, animated: true)
                 }

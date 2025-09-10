@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MyNFTPresenterProtocol: AnyObject {
-    init(view: MyNFTViewProtocol, nftService: NftService)
+    init(view: MyNFTViewProtocol, nftService: NftService, servicesAssembly: ServicesAssembly)
     
     func viewDidLoad()
     func viewWillAppear()

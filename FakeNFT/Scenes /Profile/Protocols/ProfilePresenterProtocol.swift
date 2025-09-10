@@ -43,5 +43,5 @@ protocol ProfilePresenterProtocol:
     ProfilePresenterActions,
     ProfilePresenterTableViewOperations {
     
-    init(view: ProfilePresenterOutput, userService: UserProfileService)
+    init(view: ProfilePresenterOutput, userService: UserProfileService, servicesAssembly: ServicesAssembly)
 }

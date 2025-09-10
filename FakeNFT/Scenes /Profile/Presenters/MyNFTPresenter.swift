@@ -5,8 +5,6 @@
 //  Created by Сергей Скориков on 08.09.2025.
 //
 
-// MyNFTPresenter.swift
-
 import UIKit
 
 final class MyNFTPresenter: MyNFTPresenterProtocol {
@@ -14,12 +12,14 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     private weak var view: MyNFTViewProtocol?
     private let nftService: NftService
     private var nftItems: [NFTItem] = []
+    private let servicesAssembly: ServicesAssembly
     private var currentSortOption: NFTSortOption = .byName
 
     // MARK: - Initialization
-    required init(view: MyNFTViewProtocol, nftService: NftService) {
+    required init(view: MyNFTViewProtocol, nftService: NftService, servicesAssembly: ServicesAssembly) {
         self.view = view
         self.nftService = nftService
+        self.servicesAssembly = servicesAssembly
     }
     
     // MARK: - Lifecycle
@@ -42,15 +42,23 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Выбран NFT с индексом: \(indexPath.row)")
-        // TODO: Реализовать переход к деталям NFT или другую логику
-    }
+            guard indexPath.row < nftItems.count else { return }
+      
+            let selectedNFTId = nftItems[indexPath.row].id
+            
+            let nftDetailAssembly = NftDetailAssembly(servicesAssembler: servicesAssembly)
+            let nftDetailInput = NftDetailInput(id: selectedNFTId)
+            
+            let nftDetailViewController = nftDetailAssembly.build(with: nftDetailInput)
+            
+            view?.showNFTDetails(nftDetailViewController)
+        }
     
     // MARK: - Private Methods
     private func loadNFTs() {
-        _ = [
+        let mockNFTs = [
             NFTItem(
-                id: "1",
+                id: "7773e33c-ec15-4230-a102-92426a3a6d5a",
                 name: "Lilo",
                 rating: 5,
                 author: "John Doe",
@@ -59,7 +67,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
                 imageId: "lilo"
             ),
             NFTItem(
-                id: "2",
+                id: "mock-id-1",
                 name: "Spring",
                 rating: 3,
                 author: "Jane Smith",
@@ -68,16 +76,17 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
                 imageId: "spring"
             ),
             NFTItem(
-                id: "3",
+                id: "mock-id-2",
                 name: "April",
                 rating: 4,
                 author: "Alice Johnson",
                 price: "2,30 ETH",
                 imageUrl: URL(string: "https://example.com/nft3.jpg")!,
-                imageId: "april"             )
+                imageId: "april"
+            )
         ]
-        
-        //self.nftItems = mockNFTs
+      
+        self.nftItems = mockNFTs
         self.sortAndDisplayNFTs()
         self.view?.hideLoading()
     }

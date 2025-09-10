@@ -5,7 +5,7 @@
 //  Created by Сергей Скориков on 07.09.2025.
 //
 
-import Foundation
+import UIKit
 
 protocol MyNFTViewProtocol: AnyObject {
     func displayNFTs(_ nfts: [NFTItem])
@@ -13,4 +13,5 @@ protocol MyNFTViewProtocol: AnyObject {
     func hideLoading()
     func showError(_ error: Error)
     func showSortOptions(_ options: [NFTSortOption], selectedIndex: Int)
+    func showNFTDetails(_ viewController: UIViewController)
 }

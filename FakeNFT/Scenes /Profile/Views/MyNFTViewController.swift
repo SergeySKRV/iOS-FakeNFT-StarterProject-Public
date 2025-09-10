@@ -64,12 +64,23 @@ final class MyNFTViewController: UIViewController {
     
     // MARK: - Properties
     private var presenter: MyNFTPresenterProtocol!
+    private var servicesAssembly: ServicesAssembly!
     private var displayedNFTs: [NFTItem] = []
     private let imageMap: [String: UIImage] = [
         "lilo": UIImage(resource: .lilo),
         "spring": UIImage(resource: .spring),
         "april": UIImage(resource: .april)
     ]
+    
+    init(servicesAssembly: ServicesAssembly) {
+            self.servicesAssembly = servicesAssembly
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder: NSCoder) {
+            assertionFailure("init(coder:) has not been implemented")
+            return nil
+        }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -121,12 +132,9 @@ final class MyNFTViewController: UIViewController {
     }
     
     private func setupPresenter() {
-        let servicesAssembly = ServicesAssembly(
-            networkClient: DefaultNetworkClient(),
-            nftStorage: NftStorageImpl()
-        )
-        presenter = MyNFTPresenter(view: self, nftService: servicesAssembly.nftService)
-    }
+            let nftService = servicesAssembly.nftService
+            presenter = MyNFTPresenter(view: self, nftService: nftService, servicesAssembly: servicesAssembly)
+        }
     
     // MARK: - Actions
     @objc private func backButtonTapped() {
@@ -167,12 +175,15 @@ extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - MyNFTViewProtocol
 extension MyNFTViewController: MyNFTViewProtocol {
     func displayNFTs(_ nfts: [NFTItem]) {
+        self.displayedNFTs = nfts
+        
         if nfts.isEmpty {
             tableView.isHidden = true
             emptyStateView.isHidden = false
         } else {
             tableView.isHidden = false
             emptyStateView.isHidden = true
+
             tableView.reloadData()
         }
     }
@@ -190,6 +201,10 @@ extension MyNFTViewController: MyNFTViewProtocol {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
+    func showNFTDetails(_ viewController: UIViewController) {
+            present(viewController, animated: true)
+        }
     
     func showSortOptions(_ options: [NFTSortOption], selectedIndex: Int) {
         let alertController = UIAlertController(

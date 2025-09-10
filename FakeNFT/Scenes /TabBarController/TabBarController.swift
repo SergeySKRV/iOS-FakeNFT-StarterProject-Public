@@ -28,6 +28,7 @@ final class TabBarController: UITabBarController {
         
         let profileController = ProfileViewController()
         profileController.tabBarItem = profileTabBarItem
+        profileController.servicesAssembly = servicesAssembly 
         
         viewControllers = [profileController, catalogController]
         

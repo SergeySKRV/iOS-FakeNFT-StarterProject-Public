@@ -74,6 +74,8 @@ final class ProfileViewController: UIViewController {
     // MARK: - Properties
     private var presenter: ProfilePresenterProtocol!
     private let userService = UserProfileServiceImpl()
+    var servicesAssembly: ServicesAssembly!
+       
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -134,8 +136,8 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupPresenter() {
-        presenter = ProfilePresenter(view: self, userService: userService)
-    }
+           presenter = ProfilePresenter(view: self, userService: userService, servicesAssembly: servicesAssembly)
+       }
     
     @objc private func openWebsite() {
         presenter.openWebsite()
