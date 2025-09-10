@@ -62,13 +62,27 @@ final class CollectionViewController: UIViewController {
         label.numberOfLines = .zero
         return label
     }()
-    
+    /*
     private lazy var collectionAuthorLink: UILabel = {
         let label = UILabel()
         label.font = .caption1
         label.textColor = .yaBlueUniversal
         label.numberOfLines = .zero
         // TODO: - Ссылка на страницу автора
+        return label
+    }()
+    */
+    
+    private lazy var collectionAuthorLink: UILabel = {
+        let label = UILabel()
+        label.font = .caption1
+        label.textColor = .yaBlueUniversal
+        label.numberOfLines = .zero
+        let gesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(collectionAuthorLinkTapped))
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(gesture)
         return label
     }()
     
@@ -129,6 +143,15 @@ final class CollectionViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @objc
+    func collectionAuthorLinkTapped() {
+       
+    }
+    
+    func displayAuthorDetails(_ detailsViewController: AuthorWebViewViewController) {
+        present(detailsViewController, animated: true)
+    }
+    
     // MARK: - Private Methods
     private func setupCollectionViewController() {
         view.backgroundColor = .systemBackground
@@ -166,7 +189,7 @@ final class CollectionViewController: UIViewController {
         nftCollectionView.delegate = self
         nftCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
     }
-    
+   
     private func setupCollectionViewControllerConstrains() {
        
         var navigationBarHeight: CGFloat {
@@ -259,9 +282,14 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
+
 extension CollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width - Constants.eighteen) / Constants.three, height: Constants.oneHundredNinetyTwo)
+        var itemSizeWith: CGFloat = 0
+        var itemSizeHeight: CGFloat = 0
+        itemSizeWith = (collectionView.bounds.width - Constants.eighteen) / Constants.three
+        itemSizeHeight = Constants.oneHundredNinetyTwo
+        return CGSize(width: itemSizeWith, height: itemSizeHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

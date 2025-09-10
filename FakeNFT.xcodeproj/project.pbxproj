@@ -121,6 +121,7 @@
 		27BE093E2E66296300298A9C /* Collection */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Collection; sourceTree = "<group>"; };
 		27BE094B2E662AAE00298A9C /* CatalogModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CatalogModels; sourceTree = "<group>"; };
 		27BE09522E662C5100298A9C /* Constants */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Constants; sourceTree = "<group>"; };
+		27BE0A882E6E89AE00298A9C /* AuthorWebViev */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AuthorWebViev; sourceTree = "<group>"; };
 		27CBAE032E62AEDB00428248 /* UIBlockingProgressHUD */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UIBlockingProgressHUD; sourceTree = "<group>"; };
 		27CBAE082E62AFEF00428248 /* Cart */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cart; sourceTree = "<group>"; };
 		27CBAE092E62B00D00428248 /* Profile */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Profile; sourceTree = "<group>"; };
@@ -197,6 +198,7 @@
 		0CFCB7472A7808870009A829 /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
+				27BE0A882E6E89AE00298A9C /* AuthorWebViev */,
 				27BE09522E662C5100298A9C /* Constants */,
 				27BE094B2E662AAE00298A9C /* CatalogModels */,
 				27BE093E2E66296300298A9C /* Collection */,
@@ -411,6 +413,7 @@
 				27BE093E2E66296300298A9C /* Collection */,
 				27BE094B2E662AAE00298A9C /* CatalogModels */,
 				27BE09522E662C5100298A9C /* Constants */,
+				27BE0A882E6E89AE00298A9C /* AuthorWebViev */,
 				27CBAE032E62AEDB00428248 /* UIBlockingProgressHUD */,
 				27CBAE082E62AFEF00428248 /* Cart */,
 				27CBAE092E62B00D00428248 /* Profile */,

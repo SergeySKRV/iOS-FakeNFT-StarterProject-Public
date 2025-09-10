@@ -49,13 +49,12 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: - Private Methods
-    //private
+   
     func setCatalogImage(with collectionCover: URL) {
         catalogImage.kf.indicatorType = .activity
         catalogImage.kf.setImage(with: collectionCover)
     }
     
-    //private
     func setCatalogLabel(with name: String, quantity count: Int ) {
         catalogLabel.text = ("\(name) (\(count))").firstUppercased
     }

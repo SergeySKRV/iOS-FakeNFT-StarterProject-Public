@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CatalogSceneConfiguration {
+final class CatalogSceneConfiguration {
     // MARK: - Public Properties
     let catalogViewController: UIViewController
     
@@ -37,4 +37,3 @@ class CatalogSceneConfiguration {
         return viewController
     }
 }
-

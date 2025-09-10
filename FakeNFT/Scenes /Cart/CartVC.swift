@@ -7,4 +7,6 @@
 
 import UIKit
 
-final class ShoppingCartViewController: UIViewController { }
+final class ShoppingCartViewController: UIViewController {
+    // TODO: реализация корзины
+}

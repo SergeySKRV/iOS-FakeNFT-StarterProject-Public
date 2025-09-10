@@ -7,5 +7,7 @@
 
 import UIKit
 
-final class ProfileViewController: UIViewController { }
+final class ProfileViewController: UIViewController {
+    // TODO: реализация профиля
+}
 

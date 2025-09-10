@@ -30,6 +30,8 @@ struct Constants {
     static let catalogLabelBottomIdent: CGFloat = 25
     static let catalogLabelHeigth: CGFloat = 22
     
+    static let catalogheightForRowAt: CGFloat = 179
+    
     // MARK: - CollectionViewCell
     static let nftImageViewHeigth: CGFloat = 108
     
@@ -50,8 +52,8 @@ struct Constants {
     
     static let nftPriceTopIdent: CGFloat = 4
     
-    static let cardButtonTopIdent: CGFloat = -20
-    static let cardButtonHeigthWidth: CGFloat = 40
+    static let cartButtonTopIdent: CGFloat = -20
+    static let cartButtonHeigthWidth: CGFloat = 40
     
     // MARK: - CollectionViewController
     static let collectionCoverImageHeight: CGFloat = 310

@@ -152,7 +152,7 @@ extension TabBarController {
     
     private func getCartItemsCount() -> Int {
         // TODO: количество предметов в корзине
-        return 5
+        return 0
     }
 }
 

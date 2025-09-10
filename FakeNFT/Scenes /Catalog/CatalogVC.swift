@@ -135,7 +135,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        navigationItem.rightBarButtonItems = [sortButton, uPdownButton]
+        navigationItem.rightBarButtonItems = [sortButton]
         view.addSubview(catalogTableView)
         setupTableView()
         setupCatalogViewControllerConstrains()
@@ -206,7 +206,7 @@ extension CatalogViewController {
 // MARK: - UITableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 179
+        return Constants.catalogheightForRowAt
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

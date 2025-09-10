@@ -5,11 +5,13 @@
 //  Created by Dmitry Batorevich on 01.09.2025.
 //
 
+
 import Foundation
 
 protocol CollectionPresenterProtocol: AnyObject {
     var nfts: [NFTs] { get }
     var collectionView: CollectionViewControllerProtocol? { get set }
+    var authorURL: String? { get }
     func getNfts()
     func loadCollectionData()
     func getModel(for indexPath: IndexPath) -> NFTCellModel
@@ -19,6 +21,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     // MARK: - Public Properties
     var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
+    var authorURL: String?
     weak var collectionView: CollectionViewControllerProtocol?
     
     // MARK: - Private Properties
@@ -53,6 +56,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     func loadCollectionData() {
         self.prepare()
         self.collectionView?.hideLoadIndicator()
+        loadAuthor()
     }
     
     func getModel(for indexPath: IndexPath) -> NFTCellModel {
@@ -83,8 +87,14 @@ final class CollectionPresenter: CollectionPresenterProtocol {
             name: nft.name.components(separatedBy: " ").first ?? "",
             image: nft.images.first,
             rating: nft.rating,
+            isLiked: false,
+            isInCart: false,
             price: nft.price
         )
+    }
+    
+    private func loadAuthor() {
+        self.authorURL = RequestConstants.stubAuthorUrl
     }
 }
 
