@@ -20,6 +20,29 @@ final class MyNFTViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var emptyStateView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemBackground
+        view.isHidden = true
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = Fonts.sfProBold17
+        label.textColor = .yaPrimary
+        label.text = NSLocalizedString("MyNFT.emptyState", comment: "Сообщение при отсутствии NFT")
+        label.textAlignment = .center
+        
+        view.addSubview(label)
+        
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        return view
+    }()
+    
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.hidesWhenStopped = true
@@ -34,7 +57,7 @@ final class MyNFTViewController: UIViewController {
         customButton.tintColor = .yaPrimary
         customButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         customButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
-      
+        
         let barButtonItem = UIBarButtonItem(customView: customButton)
         return barButtonItem
     }()
@@ -61,6 +84,7 @@ final class MyNFTViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
+        view.addSubview(emptyStateView)
         view.addSubview(activityIndicator)
         
         navigationItem.title = NSLocalizedString("MyNFT.title", comment: "")
@@ -75,7 +99,7 @@ final class MyNFTViewController: UIViewController {
         )
         backButton.tintColor = .yaPrimary
         navigationItem.leftBarButtonItem = backButton
-      
+        
         navigationItem.rightBarButtonItem = sortButton
     }
     
@@ -85,6 +109,11 @@ final class MyNFTViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            emptyStateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyStateView.widthAnchor.constraint(equalToConstant: 343),
+            emptyStateView.heightAnchor.constraint(equalToConstant: 22),
             
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -120,7 +149,7 @@ extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayedNFTs.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MyNFTTableViewCell.defaultReuseIdentifier, for: indexPath) as! MyNFTTableViewCell
         
@@ -138,8 +167,14 @@ extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - MyNFTViewProtocol
 extension MyNFTViewController: MyNFTViewProtocol {
     func displayNFTs(_ nfts: [NFTItem]) {
-        displayedNFTs = nfts
-        tableView.reloadData()
+        if nfts.isEmpty {
+            tableView.isHidden = true
+            emptyStateView.isHidden = false
+        } else {
+            tableView.isHidden = false
+            emptyStateView.isHidden = true
+            tableView.reloadData()
+        }
     }
     
     func showLoading() {
@@ -177,7 +212,7 @@ extension MyNFTViewController: MyNFTViewProtocol {
             handler: nil
         )
         alertController.addAction(cancelAction)
-       
+        
         if let popoverPresentationController = alertController.popoverPresentationController {
             popoverPresentationController.barButtonItem = sortButton
         }

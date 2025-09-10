@@ -48,7 +48,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     
     // MARK: - Private Methods
     private func loadNFTs() {
-        let mockNFTs = [
+        _ = [
             NFTItem(
                 id: "1",
                 name: "Lilo",
@@ -77,7 +77,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
                 imageId: "april"             )
         ]
         
-        self.nftItems = mockNFTs
+        //self.nftItems = mockNFTs
         self.sortAndDisplayNFTs()
         self.view?.hideLoading()
     }

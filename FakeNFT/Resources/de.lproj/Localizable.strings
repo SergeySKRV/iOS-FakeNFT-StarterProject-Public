@@ -46,3 +46,6 @@
 "Sort.byPrice" = "Nach Preis";
 "Sort.byRating" = "Nach Bewertung";
 "Sort.byName" = "Nach Name";
+
+// MARK: - Empty State
+"MyNFT.emptyState" = "Sie haben noch keine NFTs";
