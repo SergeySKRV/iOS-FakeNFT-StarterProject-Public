@@ -16,7 +16,7 @@ enum CurrentSortMode {
 final class StatisticsViewPresenter {
     // MARK: public properties
     static let shared = StatisticsViewPresenter()
-    weak var view: StatisticsView?
+    weak var view: StatisticsViewController?
     var statisticsViewModel: [StatisticsProfileModel] = []
     var currentSortMode = CurrentSortMode.nft {
         didSet {
@@ -38,6 +38,11 @@ final class StatisticsViewPresenter {
         default: currentSortMode = .nft
         }
         state = .loading
+    }
+    func showProfile(indexPath: IndexPath) {
+        let profileViewController = ProfileViewController()
+        profileViewController.modalPresentationStyle = .fullScreen
+        view?.present(profileViewController, animated: true)
     }
     // MARK: private methods
     private init() {

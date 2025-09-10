@@ -5,7 +5,7 @@ final class StatisticsTableViewCell: UITableViewCell {
     // MARK: private properties
     let numberLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.font = Fonts.sfProRegular17
         label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -28,14 +28,14 @@ final class StatisticsTableViewCell: UITableViewCell {
     }()
     let profileNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        label.font = Fonts.sfProBold22
         label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     let profileNFTCountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        label.font = Fonts.sfProBold22
         label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

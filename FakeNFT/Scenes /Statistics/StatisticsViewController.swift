@@ -71,7 +71,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         let title = NSAttributedString(
             string: NSLocalizedString("Sort.title", comment: "сортировка"),
             attributes: [
-                .font: UIFont.systemFont(ofSize: 13),
+                .font: Fonts.sfProRegular13,
                 .foregroundColor: UIColor.yaAlertTitle,
                 .paragraphStyle: paragraphStyle
             ]
@@ -104,6 +104,7 @@ extension StatisticsViewController: UITableViewDelegate {
         return 88
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.showProfile(indexPath: indexPath)
     }
 }
 
@@ -112,7 +113,8 @@ extension StatisticsViewController: UITableViewDataSource {
         return presenter.statisticsViewModel.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatisticsTableViewCell") as? StatisticsTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatisticsTableViewCell")
+                as? StatisticsTableViewCell
         else { return UITableViewCell() }
         cell.configureCellData(number: indexPath.item+1,
                                avatarImage: presenter.statisticsViewModel[indexPath.item].avatarImage,
