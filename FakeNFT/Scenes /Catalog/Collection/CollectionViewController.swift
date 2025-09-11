@@ -15,10 +15,25 @@ protocol CollectionViewControllerProtocol: AnyObject {
     func hideLoadIndicator()
 }
 
+//добавил протокол для вызова вебвью
+ protocol CollectionView: AnyObject {
+     func displayAuthorDetails(_ detailsViewController: WebViewController)
+ }
+
+ /*
+ protocol ProfilePresenterOutput: AnyObject {
+     func updateProfileUI(_ profile: UserProfile)
+     func showWebViewController(urlString: String)
+     func showEditProfileViewController(with profile: UserProfile)
+     func showError(_ error: Error)
+ }
+ */
+
+
 final class CollectionViewController: UIViewController {
     // MARK: - Public Properties
     private let presenter: CollectionPresenterProtocol
-    
+    private let urlString = "https://practicum.yandex.ru/ios-developer"
     // MARK: - Private Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -62,16 +77,6 @@ final class CollectionViewController: UIViewController {
         label.numberOfLines = .zero
         return label
     }()
-    /*
-    private lazy var collectionAuthorLink: UILabel = {
-        let label = UILabel()
-        label.font = .caption1
-        label.textColor = .yaBlueUniversal
-        label.numberOfLines = .zero
-        // TODO: - Ссылка на страницу автора
-        return label
-    }()
-    */
     
     private lazy var collectionAuthorLink: UILabel = {
         let label = UILabel()
@@ -142,14 +147,13 @@ final class CollectionViewController: UIViewController {
     func didTapBackButton() {
         dismiss(animated: true)
     }
-    
+    // вынести в презентер
     @objc
     func collectionAuthorLinkTapped() {
-       
-    }
-    
-    func displayAuthorDetails(_ detailsViewController: AuthorWebViewViewController) {
-        present(detailsViewController, animated: true)
+        let webViewController = WebViewController(urlString: urlString)
+        let navigationController = UINavigationController(rootViewController: webViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
     
     // MARK: - Private Methods
@@ -301,3 +305,21 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - CollectionViewCellDelegate
+extension CollectionViewController: CollectionViewCellDelegate {
+    func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool) {
+        presenter.changeLike(for: indexPath, isLiked: isLiked)
+    }
+    func cartButtonDidChange(for indexPath: IndexPath) {
+        presenter.changeOrder(for: indexPath)
+    }
+}
+
+// MARK: - NftCollectionView
+
+extension CollectionViewController: CollectionView {
+
+    func displayAuthorDetails(_ detailsViewController: WebViewController) {
+        present(detailsViewController, animated: true)
+    }
+}

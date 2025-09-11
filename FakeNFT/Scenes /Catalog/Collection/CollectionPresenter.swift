@@ -15,9 +15,19 @@ protocol CollectionPresenterProtocol: AnyObject {
     func getNfts()
     func loadCollectionData()
     func getModel(for indexPath: IndexPath) -> NFTCellModel
+    func changeLike(for indexPath: IndexPath, isLiked: Bool)
+    func changeOrder(for indexPath: IndexPath)
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
+    func changeLike(for indexPath: IndexPath, isLiked: Bool) {
+       
+    }
+    
+    func changeOrder(for indexPath: IndexPath) {
+        
+    }
+    
     // MARK: - Public Properties
     var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
