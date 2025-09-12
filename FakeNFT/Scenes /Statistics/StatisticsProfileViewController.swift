@@ -1,6 +1,8 @@
 import UIKit
 
 final class StatisticsProfileViewController: UIViewController {
+    
+    private let presenter = StatisticsProfileViewPresenter.shared
     private let backButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
@@ -42,6 +44,7 @@ final class StatisticsProfileViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.yaPrimary.cgColor
+        button.addTarget(self, action: #selector(webButtonTouch), for: .touchUpInside)
         return button
     }()
    private let collectionTableView: UITableView = {
@@ -54,6 +57,7 @@ final class StatisticsProfileViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.view = self
         configureView()
     }
     private func configureView() {
@@ -99,6 +103,11 @@ final class StatisticsProfileViewController: UIViewController {
         collectionTableView.delegate = self
         collectionTableView.dataSource = self
     }
+    
+    @objc private func webButtonTouch() {
+        presenter.showWebView()
+    }
+    
     @objc private func backButtonTouch() {
         self.dismiss(animated: true)
     }
@@ -117,5 +126,6 @@ extension StatisticsProfileViewController: UITableViewDataSource {
 }
 extension StatisticsProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       
     }
 }
