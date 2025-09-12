@@ -13,27 +13,19 @@ protocol CollectionViewControllerProtocol: AnyObject {
     func reloadNftCollectionView()
     func showLoadIndicator()
     func hideLoadIndicator()
+    func showWebView(with url: URL)  // Добавьте этот метод
 }
-
+/*
 //добавил протокол для вызова вебвью
  protocol CollectionView: AnyObject {
      func displayAuthorDetails(_ detailsViewController: WebViewController)
  }
-
- /*
- protocol ProfilePresenterOutput: AnyObject {
-     func updateProfileUI(_ profile: UserProfile)
-     func showWebViewController(urlString: String)
-     func showEditProfileViewController(with profile: UserProfile)
-     func showError(_ error: Error)
- }
- */
-
+*/
 
 final class CollectionViewController: UIViewController {
     // MARK: - Public Properties
     private let presenter: CollectionPresenterProtocol
-    private let urlString = "https://practicum.yandex.ru/ios-developer"
+    //private let urlString = "https://practicum.yandex.ru/ios-developer"
     // MARK: - Private Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -150,10 +142,13 @@ final class CollectionViewController: UIViewController {
     // вынести в презентер
     @objc
     func collectionAuthorLinkTapped() {
+        /*
         let webViewController = WebViewController(urlString: urlString)
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
+         */
+        presenter.authorLinkTapped()
     }
     
     // MARK: - Private Methods
@@ -245,6 +240,11 @@ final class CollectionViewController: UIViewController {
 
 // MARK: - CollectionViewControllerProtocol
 extension CollectionViewController: CollectionViewControllerProtocol {
+    func showWebView(with url: URL) {
+    
+    }
+    
+    
     func collectionViewData(data: CollectionViewData) {
         DispatchQueue.main.async {
             self.collectionCoverImage.kf.setImage(with: URL(string: data.coverImage))
@@ -314,7 +314,7 @@ extension CollectionViewController: CollectionViewCellDelegate {
         presenter.changeOrder(for: indexPath)
     }
 }
-
+/*
 // MARK: - NftCollectionView
 
 extension CollectionViewController: CollectionView {
@@ -323,3 +323,4 @@ extension CollectionViewController: CollectionView {
         present(detailsViewController, animated: true)
     }
 }
+*/

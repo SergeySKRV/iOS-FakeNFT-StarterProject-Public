@@ -17,6 +17,7 @@ protocol CollectionPresenterProtocol: AnyObject {
     func getModel(for indexPath: IndexPath) -> NFTCellModel
     func changeLike(for indexPath: IndexPath, isLiked: Bool)
     func changeOrder(for indexPath: IndexPath)
+    func authorLinkTapped()  // Добавьте этот метод
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
@@ -36,11 +37,16 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     
     // MARK: - Private Properties
     private let catalogService: CatalogServiceProtocol
-    
+    private let authorsURL: URL?  // Добавьте свойство для хранения URL
+    private weak var view: CollectionViewControllerProtocol?
     // MARK: - Initializers
-    init(collectionNft: NFTCollection?, catalogService: CatalogServiceProtocol) {
+    init(collectionNft: NFTCollection?, catalogService: CatalogServiceProtocol,
+         view: CollectionViewControllerProtocol, authorURLString: String) {
+        
         self.collectionNft = collectionNft
         self.catalogService = catalogService
+        self.view = view
+        self.authorsURL = URL(string: authorURLString)
     }
     
     // MARK: - Public Methods
@@ -71,6 +77,11 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     
     func getModel(for indexPath: IndexPath) -> NFTCellModel {
         self.convertToCellModel(nft: nfts[indexPath.row])
+    }
+    
+    func authorLinkTapped() {
+            guard let url = authorsURL else { return }
+            view?.showWebView(with: url)
     }
     
     // MARK: - Private Methods
