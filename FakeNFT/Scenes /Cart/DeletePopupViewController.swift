@@ -35,8 +35,7 @@ final class DeletePopupViewController: UIViewController {
     private let messageLabel: UILabel = {
         let label = UILabel()
         label.text = "Вы уверены, что хотите удалить объект из корзины?"
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.font = UIFont(name: "SFProText-Regular", size: 13)
+        label.font = Fonts.sfProRegular13
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -50,12 +49,7 @@ final class DeletePopupViewController: UIViewController {
         button.backgroundColor = UIColor(named: "ypBlack")
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-        if let font = UIFont(name: "SFProText-Regular", size: 17) {
-            button.titleLabel?.font = font
-        } else {
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        }
+        button.titleLabel?.font = Fonts.sfProRegular17
         return button
     }()
     
@@ -66,12 +60,7 @@ final class DeletePopupViewController: UIViewController {
         button.backgroundColor = UIColor(named: "ypBlack")
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-        if let font = UIFont(name: "SFProText-Regular", size: 17) {
-            button.titleLabel?.font = font
-        } else {
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        }
+        button.titleLabel?.font = Fonts.sfProRegular17
         return button
     }()
     

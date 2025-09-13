@@ -44,7 +44,7 @@ final class CartViewController: UIViewController {
     
     private lazy var nftCountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "SFProText-Regular", size: 15)
+        label.font = Fonts.sfProRegular15
         label.textColor = UIColor(named: "ypBlack")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -52,7 +52,7 @@ final class CartViewController: UIViewController {
     
     private lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "SFProText-Bold", size: 17)
+        label.font = Fonts.sfProBold17
         label.textColor = UIColor(named: "ypGreen")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -62,7 +62,7 @@ final class CartViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("К оплате", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "SFProText-Bold", size: 17)
+        button.titleLabel?.font = Fonts.sfProBold17
         button.backgroundColor = UIColor(named: "ypBlack")
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
@@ -74,7 +74,7 @@ final class CartViewController: UIViewController {
         let label = UILabel()
         label.text = "Корзина пуста"
         label.textAlignment = .center
-        label.font = UIFont(name: "SFProText-Bold", size: 17)
+        label.font = Fonts.sfProBold17
         label.textColor = .textSecondary
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false

@@ -17,7 +17,7 @@ final class CartCell: UITableViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "SFProText-Bold", size: 17)
+        label.font = Fonts.sfProBold17
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -32,7 +32,7 @@ final class CartCell: UITableViewCell {
     private let priceTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Цена"
-        label.font = UIFont(name: "SFProText-Regular", size: 13)
+        label.font = Fonts.sfProRegular13
         label.textColor = UIColor(named: "ypBlack")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -40,7 +40,7 @@ final class CartCell: UITableViewCell {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "SFProText-Bold", size: 17)
+        label.font = Fonts.sfProBold17
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
