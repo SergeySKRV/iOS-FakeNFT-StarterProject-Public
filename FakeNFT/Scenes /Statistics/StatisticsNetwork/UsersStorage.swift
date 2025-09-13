@@ -6,15 +6,15 @@ protocol UsersStorage: AnyObject {
 }
 
 final class UsersStorageImpl: UsersStorage {
-    // MARK: public properties
+    // MARK: - public properties
     static let shared = UsersStorageImpl()
-    // MARK: private properties
+    // MARK: - private properties
     private var storage: [User] = []
     private let syncQueue = DispatchQueue(label: "sync-users-queue")
-    // MARK: private methods
+    // MARK: - private methods
     private init() {
     }
-    // MARK: public methods
+    // MARK: - public methods
     func saveUsers(_ users: [User]) {
         syncQueue.async { [weak self] in
             self?.storage = users

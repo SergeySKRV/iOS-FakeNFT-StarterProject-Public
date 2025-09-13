@@ -2,15 +2,15 @@ import Foundation
 import UIKit
 
 final class StatisticsProfileViewPresenter {
-    // MARK: private properties
+    // MARK: - private properties
     static let shared = StatisticsProfileViewPresenter()
     weak var view: StatisticsProfileViewController?
-    // MARK: public methods
+    // MARK: - public methods
     func viewDidLoad() {
         view?.setupNavigationBar()
     }
     func showWebView() {
-        let webViewController = WebViewController(urlString: "https://practicum.yandex.ru/ios-developer")
+        let webViewController = WebViewController(urlString: StatisticsConstants.webViewURL)
         if let navController = view?.navigationController {
             navController.pushViewController(webViewController, animated: true)
         } else {
@@ -29,7 +29,7 @@ final class StatisticsProfileViewPresenter {
             view?.present(navController, animated: true)
         }
     }
-    // MARK: private methods
+    // MARK: - private methods
     private init() {
     }
 }

@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 final class StatisticsCollectionViewCell: UICollectionViewCell {
-    // MARK: private properties
+    // MARK: - private properties
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -41,7 +41,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    // MARK: public methods
+    // MARK: - public methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
@@ -78,7 +78,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
             cartImage.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 40),
             cartImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)])
     }
-    func configureCellData(nftCart: StatistiscsNFTModel) {
+    func configureCellData(nftCart: StatisticsNFTModel) {
         nftImageView.image = nftCart.image
         likeImage.image = nftCart.isLike ? UIImage(resource: .statisticsLikeActive) :
         UIImage(resource: .statisticsLikeNoActive)

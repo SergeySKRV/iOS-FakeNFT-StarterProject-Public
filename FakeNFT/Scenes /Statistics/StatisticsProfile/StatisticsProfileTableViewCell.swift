@@ -1,9 +1,9 @@
 import UIKit
 
 final class StatisticsProfileTableViewCell: UITableViewCell {
-    // MARK: public properties
+    // MARK: - public properties
     var nftCount: Int?
-    // MARK: private properties
+    // MARK: - private properties
     private let collectionLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.sfProBold17
@@ -17,7 +17,7 @@ final class StatisticsProfileTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    // MARK: public methods
+    // MARK: - public methods
     init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, nftCount: Int) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.nftCount = nftCount
@@ -26,7 +26,7 @@ final class StatisticsProfileTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    // MARK: private methods
+    // MARK: - private methods
     private func configureCell() {
         selectionStyle = .none
         contentView.addSubview(collectionLabel)

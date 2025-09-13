@@ -2,11 +2,11 @@ import Foundation
 import UIKit
 
 final class StatisticsCollectionPresenter {
-    // MARK: public properties:
+    // MARK: - public properties:
     static let shared = StatisticsCollectionPresenter()
-    var statisticsCollectionViewModel: [StatistiscsNFTModel]
-    // MARK: private properties:
-    private let stubNFT1: StatistiscsNFTModel = .init(
+    var statisticsCollectionViewModel: [StatisticsNFTModel]
+    // MARK: - private properties:
+    private let stubNFT1: StatisticsNFTModel = .init(
         image: UIImage(resource: .archie),
         name: "Archie",
         price: 1.72,
@@ -15,7 +15,7 @@ final class StatisticsCollectionPresenter {
         isLike: false,
         isInCart: false
     )
-    private let stubNFT2: StatistiscsNFTModel = .init(
+    private let stubNFT2: StatisticsNFTModel = .init(
         image: UIImage(resource: .emma),
         name: "Emma",
         price: 1.72,
@@ -24,7 +24,7 @@ final class StatisticsCollectionPresenter {
         isLike: false,
         isInCart: false
     )
-    private let stubNFT3: StatistiscsNFTModel = .init(
+    private let stubNFT3: StatisticsNFTModel = .init(
         image: UIImage(resource: .stella),
         name: "Stella",
         price: 1.72,
@@ -33,7 +33,7 @@ final class StatisticsCollectionPresenter {
         isLike: false,
         isInCart: false
     )
-    private let stubNFT4: StatistiscsNFTModel = .init(
+    private let stubNFT4: StatisticsNFTModel = .init(
         image: UIImage(resource: .toast),
         name: "Toast",
         price: 1.72,
@@ -42,7 +42,7 @@ final class StatisticsCollectionPresenter {
         isLike: false,
         isInCart: false
     )
-    private let stubNFT5: StatistiscsNFTModel = .init(
+    private let stubNFT5: StatisticsNFTModel = .init(
         image: UIImage(resource: .zeus),
         name: "Zeus",
         price: 1.72,
@@ -51,7 +51,7 @@ final class StatisticsCollectionPresenter {
         isLike: false,
         isInCart: false
     )
-    // MARK: private methods:
+    // MARK: - private methods:
     private init() {
         statisticsCollectionViewModel = [stubNFT1, stubNFT2, stubNFT3, stubNFT4, stubNFT5]
     }

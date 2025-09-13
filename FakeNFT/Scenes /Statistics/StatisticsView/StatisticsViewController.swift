@@ -7,7 +7,7 @@ protocol StatisticsView: AnyObject, ErrorView {
 }
 
 final class StatisticsViewController: UIViewController, StatisticsView {
-    // MARK: private properties
+    // MARK: - private properties
     private let presenter = StatisticsViewPresenter.shared
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
@@ -25,7 +25,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         tableView.separatorStyle = .none
         return tableView
     }()
-    // MARK: public methods
+    // MARK: - public methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -43,7 +43,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     func hideLoadingIndicator() {
         StatisticsUIBlockingProgressHUD.dismiss()
     }
-    // MARK: private methods
+    // MARK: - private methods
     private func configureView() {
         view.addSubview(sortButton)
         sortButton.translatesAutoresizingMaskIntoConstraints = false
@@ -81,12 +81,12 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         alert.addAction(UIAlertAction(title: byNameTitle, style: .default, handler: { [weak self] _ in
             guard let self else { return }
             self.presenter.currentSortMode = .name
-            UserDefaults.standard.set("name", forKey: Constants.statisticsSortingKey)
+            UserDefaults.standard.set("name", forKey: StatisticsConstants.statisticsSortingKey)
         }))
         let byRatingTitle =  NSLocalizedString("Rating.sort.title", comment: "по рейтингу")
         alert.addAction(UIAlertAction(title: byRatingTitle, style: .default, handler: { [weak self] _ in
             guard let self else { return }
-            UserDefaults.standard.set("rating", forKey: Constants.statisticsSortingKey)
+            UserDefaults.standard.set("rating", forKey: StatisticsConstants.statisticsSortingKey)
             self.presenter.currentSortMode = .nft
         }))
         let cancelTitle =  NSLocalizedString("Close.title", comment: "закрыть")
@@ -98,7 +98,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     }
 }
 
-// MARK: extensions
+// MARK: - extensions
 extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88

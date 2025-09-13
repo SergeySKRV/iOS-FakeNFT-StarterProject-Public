@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 final class StatisticsTableViewCell: UITableViewCell {
-    // MARK: private properties
+    // MARK: - private properties
     let numberLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.sfProRegular17
@@ -40,12 +40,11 @@ final class StatisticsTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    // MARK: public methods
+    // MARK: - public methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureView()
-        //    configureCellData()
-    }
+        }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }

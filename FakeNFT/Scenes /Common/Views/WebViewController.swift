@@ -1,16 +1,25 @@
+import WebKit
 import UIKit
-import ProgressHUD
-@preconcurrency import WebKit
 
+// MARK: - WebViewController
 final class WebViewController: UIViewController {
-    // MARK: private properties
+    // MARK: - Private properties
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.navigationDelegate = self
         return webView
     }()
+   private lazy var progressView: UIProgressView = {
+        let progressView = UIProgressView(progressViewStyle: .default)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.progressTintColor = .yaBlueUniversal
+        progressView.trackTintColor = .clear
+        progressView.isHidden = true
+        return progressView
+    }()
     private var urlString: String
-    // MARK: public methods
+    // MARK: - Public methods
     init(urlString: String) {
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
@@ -24,15 +33,34 @@ final class WebViewController: UIViewController {
         setupUI()
         loadWebsite()
     }
-    // MARK: private methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+    }
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?,
+                               change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(WKWebView.estimatedProgress) {
+            updateProgress()
+        }
+    }
+// MARK: - Private Methods
     private func setupUI() {
-        view.backgroundColor = UIColor.yaSecondary
+        view.backgroundColor = .systemBackground
         view.addSubview(webView)
+        view.addSubview(progressView)
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            progressView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            progressView.heightAnchor.constraint(equalToConstant: 2)
         ])
         let backButton = UIBarButtonItem(
             image: UIImage(resource: .chevronBackward),
@@ -40,7 +68,7 @@ final class WebViewController: UIViewController {
             target: self,
             action: #selector(backButtonTapped)
         )
-        backButton.tintColor = UIColor.yaPrimary
+        backButton.tintColor = .yaPrimary
         navigationItem.leftBarButtonItem = backButton
     }
     private func loadWebsite() {
@@ -51,5 +79,45 @@ final class WebViewController: UIViewController {
     }
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    private func updateProgress() {
+        let progress = Float(webView.estimatedProgress)
+        if !progressView.isHidden {
+            progressView.setProgress(progress, animated: true)
+        }
+        if webView.estimatedProgress >= 1.0 {
+            hideProgressIndicator()
+        }
+    }
+    private func showProgressIndicator() {
+        progressView.isHidden = false
+        progressView.setProgress(0.0, animated: false)
+    }
+    private func hideProgressIndicator() {
+        progressView.setProgress(1.0, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.progressView.isHidden = true
+            self.progressView.setProgress(0.0, animated: false)
+        }
+    }
+}
+// MARK: - Extensions
+extension WebViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        showProgressIndicator()
+    }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.hideProgressIndicator()
+        }
+    }
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
+    }
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
+    }
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        hideProgressIndicator()
     }
 }

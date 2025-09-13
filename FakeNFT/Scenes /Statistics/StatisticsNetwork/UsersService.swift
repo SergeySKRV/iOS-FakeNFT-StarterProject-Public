@@ -7,10 +7,10 @@ protocol UsersService {
 }
 
 final class UsersServiceImpl: UsersService {
-    // MARK: private properties
+    // MARK: - private properties
     private let networkClient: NetworkClient
     private let storage: UsersStorage
-    // MARK: public methods
+    // MARK: - public methods
     init(networkClient: NetworkClient, storage: UsersStorage) {
         self.storage = storage
         self.networkClient = networkClient

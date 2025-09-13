@@ -1,7 +1,7 @@
 import UIKit
 
 final class StatisticsCollectionViewController: UIViewController {
-    // MARK: private properties
+    // MARK: - private properties
     private let presenter = StatisticsCollectionPresenter.shared
     private let navigationBarTitle: UILabel = {
         let label = UILabel()
@@ -18,7 +18,7 @@ final class StatisticsCollectionViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    // MARK: public methods
+    // MARK: - public methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -36,7 +36,7 @@ final class StatisticsCollectionViewController: UIViewController {
             nftCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32)
         ])
     }
-    // MARK: private methods
+    // MARK: - private methods
     private func setupNavigationBar() {
         navigationItem.titleView = navigationBarTitle
         let backButton = UIBarButtonItem(
@@ -52,7 +52,7 @@ final class StatisticsCollectionViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 }
-// MARK: extensions
+// MARK: - extensions
 extension StatisticsCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter.statisticsCollectionViewModel.count
@@ -67,7 +67,8 @@ extension StatisticsCollectionViewController: UICollectionViewDataSource {
 }
 
 extension StatisticsCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (collectionView.bounds.width - 18) / 3, height: 192)
     }
 }

@@ -14,7 +14,7 @@ enum CurrentSortMode {
 }
 
 final class StatisticsViewPresenter {
-    // MARK: public properties
+    // MARK: - public properties
     static let shared = StatisticsViewPresenter()
     weak var view: StatisticsViewController?
     var statisticsViewModel: [StatisticsProfileModel] = []
@@ -30,9 +30,9 @@ final class StatisticsViewPresenter {
             stateDidChanged()
         }
     }
-    // MARK: public methods
+    // MARK: - public methods
     func viewDidLoad() {
-        switch UserDefaults.standard.string(forKey: Constants.statisticsSortingKey) {
+        switch UserDefaults.standard.string(forKey: StatisticsConstants.statisticsSortingKey) {
         case "name": currentSortMode = .name
         case "rating": currentSortMode = .nft
         default: currentSortMode = .nft
@@ -45,7 +45,7 @@ final class StatisticsViewPresenter {
         navController.modalPresentationStyle = .fullScreen
         view?.present(navController, animated: true)
     }
-    // MARK: private methods
+    // MARK: - private methods
     private init() {
     }
     private func stateDidChanged() {

@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 final class StatisticsProfileViewController: UIViewController {
-    // MARK: peivate properties
+    // MARK: - private properties
     private var profile: StatisticsProfileModel
     private let presenter = StatisticsProfileViewPresenter.shared
     private let avatarImage: UIImageView = {
@@ -49,7 +49,7 @@ final class StatisticsProfileViewController: UIViewController {
         tableView.separatorStyle  = .none
         return tableView
     }()
-    // MARK: public methods
+    // MARK: - public methods
     init(profile: StatisticsProfileModel) {
         self.profile = profile
         super.init(nibName: nil, bundle: nil)
@@ -73,7 +73,7 @@ final class StatisticsProfileViewController: UIViewController {
         backButton.tintColor = UIColor.yaPrimary
         navigationItem.leftBarButtonItem = backButton
     }
-    // MARK: private methods
+    // MARK: - private methods
     private func configureView() {
         view.backgroundColor = UIColor.yaSecondary
         view.addSubview(avatarImage)
@@ -83,7 +83,6 @@ final class StatisticsProfileViewController: UIViewController {
             avatarImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             avatarImage.widthAnchor.constraint(equalToConstant: 70),
             avatarImage.heightAnchor.constraint(equalToConstant: 70)])
-        avatarImage.layer.cornerRadius = 35
         view.addSubview(profileNameLabel)
         profileNameLabel.text = profile.name
         NSLayoutConstraint.activate([
@@ -121,7 +120,7 @@ final class StatisticsProfileViewController: UIViewController {
         self.dismiss(animated: true)
     }
 }
-// MARK: extensions
+// MARK: - extensions
 extension StatisticsProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
