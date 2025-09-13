@@ -5,7 +5,6 @@
 //  Created by Dmitry Batorevich on 01.09.2025.
 //
 
-
 import Foundation
 
 protocol CollectionPresenterProtocol: AnyObject {
@@ -17,36 +16,35 @@ protocol CollectionPresenterProtocol: AnyObject {
     func getModel(for indexPath: IndexPath) -> NFTCellModel
     func changeLike(for indexPath: IndexPath, isLiked: Bool)
     func changeOrder(for indexPath: IndexPath)
-    func authorLinkTapped()  // Добавьте этот метод
+    func openWebsite()
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
-    func changeLike(for indexPath: IndexPath, isLiked: Bool) {
-       
-    }
+    func changeLike(for indexPath: IndexPath, isLiked: Bool) {}
     
-    func changeOrder(for indexPath: IndexPath) {
-        
-    }
+    func changeOrder(for indexPath: IndexPath) {}
     
     // MARK: - Public Properties
     var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
     var authorURL: String?
     weak var collectionView: CollectionViewControllerProtocol?
+    private weak var view: ProfilePresenterOutput? // webview
     
     // MARK: - Private Properties
     private let catalogService: CatalogServiceProtocol
-    private let authorsURL: URL?  // Добавьте свойство для хранения URL
-    private weak var view: CollectionViewControllerProtocol?
+
+    
     // MARK: - Initializers
-    init(collectionNft: NFTCollection?, catalogService: CatalogServiceProtocol,
-         view: CollectionViewControllerProtocol, authorURLString: String) {
-        
+    
+    init(collectionNft: NFTCollection?, catalogService: CatalogServiceProtocol) {
         self.collectionNft = collectionNft
         self.catalogService = catalogService
-        self.view = view
-        self.authorsURL = URL(string: authorURLString)
+    }
+    
+    // Метод для установки view после инициализации
+    func setProfilePresenterOutput(_ output: ProfilePresenterOutput) {
+        self.view = output
     }
     
     // MARK: - Public Methods
@@ -79,9 +77,8 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         self.convertToCellModel(nft: nfts[indexPath.row])
     }
     
-    func authorLinkTapped() {
-            guard let url = authorsURL else { return }
-            view?.showWebView(with: url)
+    func openWebsite() {
+        view?.showWebViewController(urlString: "https://practicum.yandex.ru/ios-developer")
     }
     
     // MARK: - Private Methods

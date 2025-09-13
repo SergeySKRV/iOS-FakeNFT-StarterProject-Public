@@ -13,19 +13,13 @@ protocol CollectionViewControllerProtocol: AnyObject {
     func reloadNftCollectionView()
     func showLoadIndicator()
     func hideLoadIndicator()
-    func showWebView(with url: URL)  // Добавьте этот метод
+    //func showWebView(with url: URL)  // Добавьте этот метод
 }
-/*
-//добавил протокол для вызова вебвью
- protocol CollectionView: AnyObject {
-     func displayAuthorDetails(_ detailsViewController: WebViewController)
- }
-*/
 
 final class CollectionViewController: UIViewController {
     // MARK: - Public Properties
-    private let presenter: CollectionPresenterProtocol
-    //private let urlString = "https://practicum.yandex.ru/ios-developer"
+    private var presenter: CollectionPresenterProtocol!
+
     // MARK: - Private Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -77,7 +71,7 @@ final class CollectionViewController: UIViewController {
         label.numberOfLines = .zero
         let gesture = UITapGestureRecognizer(
             target: self,
-            action: #selector(collectionAuthorLinkTapped))
+            action: #selector(openWebsite))
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(gesture)
         return label
@@ -95,7 +89,6 @@ final class CollectionViewController: UIViewController {
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "backward"), for: .normal)
-        //button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
         button.tintColor = .black
         button.backgroundColor = .clear
         button.addTarget(self,
@@ -124,6 +117,7 @@ final class CollectionViewController: UIViewController {
     }
     
     // MARK: - Initializers
+   
     init(presenter: CollectionPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -133,6 +127,7 @@ final class CollectionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - Action
     
     @objc
@@ -140,16 +135,13 @@ final class CollectionViewController: UIViewController {
         dismiss(animated: true)
     }
     // вынести в презентер
-    @objc
-    func collectionAuthorLinkTapped() {
-        /*
-        let webViewController = WebViewController(urlString: urlString)
-        let navigationController = UINavigationController(rootViewController: webViewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        present(navigationController, animated: true)
-         */
-        presenter.authorLinkTapped()
+    
+    @objc private func openWebsite() {
+        presenter.openWebsite()
     }
+    
+    @objc
+    func collectionAuthorLinkTapped() {}
     
     // MARK: - Private Methods
     private func setupCollectionViewController() {
@@ -243,8 +235,6 @@ extension CollectionViewController: CollectionViewControllerProtocol {
     func showWebView(with url: URL) {
     
     }
-    
-    
     func collectionViewData(data: CollectionViewData) {
         DispatchQueue.main.async {
             self.collectionCoverImage.kf.setImage(with: URL(string: data.coverImage))
@@ -314,13 +304,16 @@ extension CollectionViewController: CollectionViewCellDelegate {
         presenter.changeOrder(for: indexPath)
     }
 }
-/*
-// MARK: - NftCollectionView
 
-extension CollectionViewController: CollectionView {
-
-    func displayAuthorDetails(_ detailsViewController: WebViewController) {
-        present(detailsViewController, animated: true)
+// MARK: - ShowWebView это для вызова веб вью
+extension CollectionViewController: ProfilePresenterOutput {
+    
+    func showWebViewController(urlString: String) {
+        let webViewController = WebViewController(urlString: urlString)
+        let navigationController = UINavigationController(rootViewController: webViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalTransitionStyle = .crossDissolve // Плавный переход
+        present(navigationController, animated: true)
     }
 }
-*/
+
