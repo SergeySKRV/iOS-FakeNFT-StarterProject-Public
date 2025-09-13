@@ -7,7 +7,9 @@
 
 import UIKit
 
+// MARK: - MyNFTViewProtocol
 protocol MyNFTViewProtocol: AnyObject {
+    // MARK: - Public Methods
     func displayNFTs(_ nfts: [NFTItem])
     func showLoading()
     func hideLoading()

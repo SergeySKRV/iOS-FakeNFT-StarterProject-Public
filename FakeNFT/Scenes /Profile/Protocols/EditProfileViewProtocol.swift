@@ -4,7 +4,6 @@
 //
 //  Created by Сергей Скориков on 04.09.2025.
 //
-
 import UIKit
 
 // MARK: - View Contract
@@ -29,6 +28,7 @@ protocol EditProfilePresenterOutput: AnyObject {
     func getWebsiteText() -> String?
     func setHasChanges(_ hasChanges: Bool)
     func getHasChanges() -> Bool
+    func getAvatarURLString() -> String?
 }
 
 // MARK: - Presenter Lifecycle
@@ -75,6 +75,5 @@ protocol EditProfilePresenterProtocol:
     EditProfilePresenterActions,
     EditProfilePresenterUIOperations,
     EditProfilePresenterDataOperations {
-    
     init(view: EditProfilePresenterOutput, userProfile: UserProfile, userService: UserProfileService, imageLoaderService: ImageLoaderService)
 }

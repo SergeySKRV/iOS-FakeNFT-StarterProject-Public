@@ -1,11 +1,9 @@
 import UIKit
+import Kingfisher
+import ProgressHUD
 
-protocol EditProfileViewControllerDelegate: AnyObject {
-    func didUpdateProfile(_ profile: UserProfile)
-}
-
+// MARK: - ProfileViewController
 final class ProfileViewController: UIViewController {
-    
     // MARK: - UI Elements
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -13,7 +11,7 @@ final class ProfileViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 35
         imageView.clipsToBounds = true
-        imageView.image = UIImage(resource: .userPic)
+        imageView.image = UIImage(resource: .placeholderAvatar)
         return imageView
     }()
     
@@ -44,7 +42,6 @@ final class ProfileViewController: UIViewController {
         label.textColor = .yaBlueUniversal
         label.text = NSLocalizedString("Profile.websiteTap", comment: "")
         label.isUserInteractionEnabled = true
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openWebsite))
         label.addGestureRecognizer(tapGesture)
         return label
@@ -65,17 +62,15 @@ final class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .systemBackground
         tableView.separatorStyle = .none
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: "ProfileCell")
+        tableView.register(ProfileTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
     
     // MARK: - Properties
-    private var presenter: ProfilePresenterProtocol!
-    private let userService = UserProfileServiceImpl()
     var servicesAssembly: ServicesAssembly!
-       
+    private var presenter: ProfilePresenterProtocol!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -90,7 +85,7 @@ final class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         presenter.viewWillAppear()
     }
-    
+   
     // MARK: - Private Methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -105,7 +100,6 @@ final class ProfileViewController: UIViewController {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            
             profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 64),
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             profileImageView.widthAnchor.constraint(equalToConstant: 70),
@@ -136,8 +130,13 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupPresenter() {
-           presenter = ProfilePresenter(view: self, userService: userService, servicesAssembly: servicesAssembly)
-       }
+        guard let servicesAssembly = self.servicesAssembly else {
+            assertionFailure("ServicesAssembly is not set")
+            return
+        }
+        let userService = servicesAssembly.userService
+        presenter = ProfilePresenter(view: self, userService: userService, servicesAssembly: servicesAssembly)
+    }
     
     @objc private func openWebsite() {
         presenter.openWebsite()
@@ -151,11 +150,33 @@ final class ProfileViewController: UIViewController {
     private func refreshProfileData() {
         presenter.refreshProfileData()
     }
+    
+    // MARK: - Loading State Management
+    private func showLoadingState() {
+        profileImageView.isHidden = true
+        nameLabel.isHidden = true
+        descriptionLabel.isHidden = true
+        websiteLabel.isHidden = true
+        editButton.isHidden = true
+        tableView.isHidden = true
+        
+        ProgressHUD.show()
+    }
+    
+    private func hideLoadingState() {
+        ProgressHUD.dismiss()
+    
+        profileImageView.isHidden = false
+        nameLabel.isHidden = false
+        descriptionLabel.isHidden = false
+        websiteLabel.isHidden = false
+        editButton.isHidden = false
+        tableView.isHidden = false
+    }
 }
 
 // MARK: - TableView DataSource and Delegate
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -180,10 +201,61 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - ProfilePresenterView
 extension ProfileViewController: ProfilePresenterOutput {
     func updateProfileUI(_ profile: UserProfile) {
-        profileImageView.image = profile.getPhoto()
+        hideLoadingState()
+        
         nameLabel.text = profile.name
         descriptionLabel.text = profile.description
         websiteLabel.text = profile.website
+
+        if let avatarURL = profile.avatar, !avatarURL.absoluteString.isEmpty {
+            let loadingView = UIView()
+            loadingView.tag = 999
+            loadingView.translatesAutoresizingMaskIntoConstraints = false
+            loadingView.backgroundColor = UIColor.yaPrimary.withAlphaComponent(0.7)
+            loadingView.layer.cornerRadius = 35
+            loadingView.clipsToBounds = true
+            
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            activityIndicator.color = .white
+            activityIndicator.startAnimating()
+            
+            loadingView.addSubview(activityIndicator)
+            view.addSubview(loadingView)
+    
+            NSLayoutConstraint.activate([
+                loadingView.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor),
+                loadingView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
+                loadingView.widthAnchor.constraint(equalToConstant: 70),
+                loadingView.heightAnchor.constraint(equalToConstant: 70),
+                
+                activityIndicator.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)
+            ])
+            
+            profileImageView.kf.setImage(
+                with: avatarURL,
+                placeholder: UIImage(resource: .placeholderAvatar),
+                options: [
+                    .transition(.fade(0.2)),
+                    .keepCurrentImageWhileLoading
+                ])
+            { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.view.subviews.first { $0.tag == 999 }?.removeFromSuperview()
+                    
+                    switch result {
+                    case .success(_):
+                        break
+                    case .failure(_):
+                        self?.profileImageView.image = UIImage(resource: .placeholderAvatar)
+                    }
+                }
+            }
+        } else {
+            view.subviews.first { $0.tag == 999 }?.removeFromSuperview()
+            profileImageView.image = UIImage(resource: .placeholderAvatar)
+        }
     }
     
     func showWebViewController(urlString: String) {
@@ -195,8 +267,8 @@ extension ProfileViewController: ProfilePresenterOutput {
     
     func showEditProfileViewController(with profile: UserProfile) {
         let editController = EditProfileViewController(userProfile: profile)
+        editController.servicesAssembly = self.servicesAssembly
         editController.delegate = self
-        
         if let navController = self.navigationController {
             navController.pushViewController(editController, animated: true)
         } else {
@@ -207,7 +279,23 @@ extension ProfileViewController: ProfilePresenterOutput {
     }
     
     func showError(_ error: Error) {
-        print("Ошибка профиля: \(error)")
+        hideLoadingState()
+    
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: "Не удалось загрузить данные профиля",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    func showLoading() {
+        showLoadingState()
+    }
+    
+    func hideLoading() {
+        hideLoadingState()
     }
 }
 

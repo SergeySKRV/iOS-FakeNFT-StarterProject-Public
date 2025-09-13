@@ -7,11 +7,14 @@
 
 import Foundation
 
+// MARK: - NFTSortOption
 enum NFTSortOption: CaseIterable {
+    // MARK: - Cases
     case byPrice
     case byRating
-    case byName 
+    case byName
     
+    // MARK: - Computed Properties
     var title: String {
         switch self {
         case .byPrice:

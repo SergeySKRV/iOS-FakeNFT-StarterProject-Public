@@ -7,22 +7,25 @@
 
 import UIKit
 
+// MARK: - MyNFTPresenter
 final class MyNFTPresenter: MyNFTPresenterProtocol {
     // MARK: - Properties
     private weak var view: MyNFTViewProtocol?
     private let nftService: NftService
-    private var nftItems: [NFTItem] = []
+    private let userService: UserProfileService
+    private var originalNftItems: [NFTItem] = []
+    private var sortedNftItems: [NFTItem] = []
     private let servicesAssembly: ServicesAssembly
     private var currentSortOption: NFTSortOption = .byName
-
-    // MARK: - Initialization
-    required init(view: MyNFTViewProtocol, nftService: NftService, servicesAssembly: ServicesAssembly) {
+    
+    // MARK: - Lifecycle
+    required init(view: MyNFTViewProtocol, nftService: NftService, userService: UserProfileService, servicesAssembly: ServicesAssembly) {
         self.view = view
         self.nftService = nftService
+        self.userService = userService
         self.servicesAssembly = servicesAssembly
     }
     
-    // MARK: - Lifecycle
     func viewDidLoad() {
         view?.showLoading()
         loadNFTs()
@@ -42,58 +45,108 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            guard indexPath.row < nftItems.count else { return }
-      
-            let selectedNFTId = nftItems[indexPath.row].id
-            
-            let nftDetailAssembly = NftDetailAssembly(servicesAssembler: servicesAssembly)
-            let nftDetailInput = NftDetailInput(id: selectedNFTId)
-            
-            let nftDetailViewController = nftDetailAssembly.build(with: nftDetailInput)
-            
-            view?.showNFTDetails(nftDetailViewController)
+        guard indexPath.row < sortedNftItems.count else {
+            return
         }
+        let selectedNFTId = sortedNftItems[indexPath.row].id
     
+        let nftDetailAssembly = NftDetailAssembly(servicesAssembler: servicesAssembly)
+        let nftDetailInput = NftDetailInput(id: selectedNFTId)
+        let nftDetailViewController = nftDetailAssembly.build(with: nftDetailInput)
+        view?.showNFTDetails(nftDetailViewController)
+    }
+
     // MARK: - Private Methods
     private func loadNFTs() {
-        let mockNFTs = [
-            NFTItem(
-                id: "7773e33c-ec15-4230-a102-92426a3a6d5a",
-                name: "Lilo",
-                rating: 5,
-                author: "John Doe",
-                price: "1,78 ETH",
-                imageUrl: URL(string: "https://example.com/nft1.jpg")!,
-                imageId: "lilo"
-            ),
-            NFTItem(
-                id: "mock-id-1",
-                name: "Spring",
-                rating: 3,
-                author: "Jane Smith",
-                price: "0,95 ETH",
-                imageUrl: URL(string: "https://example.com/nft2.jpg")!,
-                imageId: "spring"
-            ),
-            NFTItem(
-                id: "mock-id-2",
-                name: "April",
-                rating: 4,
-                author: "Alice Johnson",
-                price: "2,30 ETH",
-                imageUrl: URL(string: "https://example.com/nft3.jpg")!,
-                imageId: "april"
-            )
-        ]
-      
-        self.nftItems = mockNFTs
-        self.sortAndDisplayNFTs()
-        self.view?.hideLoading()
+        userService.fetchUserProfile { [weak self] userProfileResult in
+            guard let self = self else { return }
+            
+            switch userProfileResult {
+            case .success(let userProfile):
+                let userNftIds = userProfile.nfts
+                
+                if userNftIds.isEmpty {
+                    DispatchQueue.main.async {
+                        self.originalNftItems = []
+                        self.sortedNftItems = []
+                        self.view?.displayNFTs([])
+                        self.view?.hideLoading()
+                    }
+                    return
+                }
+                
+                self.loadNftDetails(for: userNftIds) { [weak self] nftItems in
+                    guard let self = self else { return }
+                    DispatchQueue.main.async {
+                        self.originalNftItems = nftItems
+                        self.sortAndDisplayNFTs()
+                        self.view?.hideLoading()
+                    }
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.originalNftItems = []
+                    self.sortedNftItems = []
+                    self.view?.displayNFTs([])
+                    self.view?.hideLoading()
+                    self.view?.showError(error)
+                }
+            }
+        }
+    }
+    
+    private func loadNftDetails(for ids: [String], completion: @escaping ([NFTItem]) -> Void) {
+        let group = DispatchGroup()
+        var loadedNfts: [Nft] = []
+        var loadingErrors: [Error] = []
+        
+        let syncQueue = DispatchQueue(label: "nft.loading.sync")
+        
+        for id in ids {
+            group.enter()
+            nftService.loadNft(id: id) { result in
+                defer { group.leave() }
+                syncQueue.sync {
+                    switch result {
+                    case .success(let nft):
+                        loadedNfts.append(nft)
+                    case .failure(let error):
+                        loadingErrors.append(error)
+                    }
+                }
+            }
+        }
+        
+        group.notify(queue: .global(qos: .userInitiated)) {
+            let nftItems: [NFTItem] = loadedNfts.compactMap { nft in
+                let formattedAuthor = self.formatAuthor(from: nft.author)
+                
+                guard let defaultURL = URL(string: "https://example.com/default-nft.jpg") else {
+                    return nil
+                }
+                
+                let imageURL = nft.images.first ?? defaultURL
+                
+                return NFTItem(
+                    id: nft.id,
+                    name: nft.name,
+                    rating: nft.rating,
+                    author: formattedAuthor,
+                    price: "\(String(format: "%.2f", nft.price)) ETH",
+                    imageUrl: imageURL
+                )
+            }
+            
+            DispatchQueue.main.async {
+                completion(nftItems)
+            }
+        }
     }
     
     private func sortAndDisplayNFTs() {
-        let sortedItems = sortNFTs(nftItems, by: currentSortOption)
-        view?.displayNFTs(sortedItems)
+        self.sortedNftItems = sortNFTs(originalNftItems, by: currentSortOption)
+        view?.displayNFTs(sortedNftItems)
     }
     
     private func sortNFTs(_ items: [NFTItem], by option: NFTSortOption) -> [NFTItem] {
@@ -114,5 +167,35 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     private func extractPrice(from priceString: String) -> Double {
         let cleanString = priceString.replacingOccurrences(of: " ETH", with: "").replacingOccurrences(of: ",", with: ".")
         return Double(cleanString) ?? 0.0
+    }
+    
+    private func formatAuthor(from authorString: String) -> String {
+        if let url = URL(string: authorString),
+           url.scheme != nil,
+           let host = url.host {
+            
+            let hostComponents = host.components(separatedBy: ".")
+            if !hostComponents.isEmpty {
+                let displayName = hostComponents[0]
+                
+                let formattedName = displayName
+                    .replacingOccurrences(of: "_", with: " ")
+                    .replacingOccurrences(of: "-", with: " ")
+                    .split(separator: " ")
+                    .map { $0.capitalized }
+                    .joined(separator: " ")
+                
+                return "от \(formattedName)"
+            }
+        }
+        
+        let formattedName = authorString
+            .replacingOccurrences(of: "_", with: " ")
+            .replacingOccurrences(of: "-", with: " ")
+            .split(separator: " ")
+            .map { $0.capitalized }
+            .joined(separator: " ")
+        
+        return "от \(formattedName)"
     }
 }

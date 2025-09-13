@@ -1,7 +1,8 @@
 import UIKit
 
+// MARK: - TabBarController
 final class TabBarController: UITabBarController {
-    
+    // MARK: - Properties
     var servicesAssembly: ServicesAssembly!
     
     private let profileTabBarItem = UITabBarItem(
@@ -16,10 +17,19 @@ final class TabBarController: UITabBarController {
         tag: 1
     )
     
-    
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViewControllers()
+        setupUI()
+    }
+  
+    // MARK: - Private Methods
+    private func setupViewControllers() {
+        guard let servicesAssembly = self.servicesAssembly else {
+            assertionFailure("ServicesAssembly is not set")
+            return
+        }
         
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
@@ -28,12 +38,13 @@ final class TabBarController: UITabBarController {
         
         let profileController = ProfileViewController()
         profileController.tabBarItem = profileTabBarItem
-        profileController.servicesAssembly = servicesAssembly 
+        profileController.servicesAssembly = servicesAssembly
         
         viewControllers = [profileController, catalogController]
-        
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .systemBackground
-        
         tabBar.tintColor = .yaBlueUniversal
         tabBar.unselectedItemTintColor = .yaPrimary
     }

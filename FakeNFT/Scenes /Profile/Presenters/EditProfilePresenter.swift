@@ -1,8 +1,8 @@
 import UIKit
 import ProgressHUD
 
+// MARK: - EditProfilePresenter
 final class EditProfilePresenter: EditProfilePresenterProtocol {
-    
     // MARK: - Properties
     private weak var view: EditProfilePresenterOutput?
     private let userService: UserProfileService
@@ -10,20 +10,23 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
     private var userProfile: UserProfile?
     private var hasChanges = false
     
-    // MARK: - Initialization
+    // MARK: - Lifecycle
     required init(view: EditProfilePresenterOutput,
-                 userProfile: UserProfile,
-                 userService: UserProfileService,
-                 imageLoaderService: ImageLoaderService = ImageLoaderServiceImpl()) {
+                  userProfile: UserProfile,
+                  userService: UserProfileService,
+                  imageLoaderService: ImageLoaderService = ImageLoaderServiceImpl()) {
         self.view = view
         self.userProfile = userProfile
         self.userService = userService
         self.imageLoaderService = imageLoaderService
     }
     
-    // MARK: - Lifecycle
     func viewDidLoad() {
-        view?.updateProfileUI(userProfile!)
+        guard let profile = userProfile else {
+            assertionFailure("UserProfile is nil in EditProfilePresenter")
+            return
+        }
+        view?.updateProfileUI(profile)
         view?.setupNavigationBar()
         view?.observeTextFieldsForChanges()
     }
@@ -34,7 +37,7 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
     func viewWillDisappear() {
     }
     
-    // MARK: - Actions
+    // MARK: - Public Methods (Actions)
     func backButtonTapped() {
         if view?.getHasChanges() ?? false {
             view?.showExitConfirmationAlert()
@@ -45,17 +48,19 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
     
     func saveButtonTapped() {
         guard let currentUser = userProfile else { return }
-        
+        let avatarURLString = view?.getAvatarURLString()
         let updatedProfile = UserProfile(
-            photo: view?.getProfileImage() ?? currentUser.getPhoto() ?? UIImage(),
+            id: currentUser.id,
             name: view?.getNameText() ?? currentUser.name,
             description: view?.getDescriptionText() ?? currentUser.description,
-            website: view?.getWebsiteText() ?? currentUser.website
+            website: view?.getWebsiteText() ?? currentUser.website,
+            avatarURLString: avatarURLString,
+            nfts: currentUser.nfts,
+            likes: currentUser.likes
         )
-      
         userService.updateUserProfile(updatedProfile) { [weak self] result in
             switch result {
-            case .success:
+            case .success(_):
                 DispatchQueue.main.async {
                     self?.view?.showLoader()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -65,9 +70,10 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
                     }
                 }
             case .failure(let error):
-                print("Ошибка сохранения профиля: \(error)")
+                // print("Ошибка сохранения профиля: \(error)")
                 DispatchQueue.main.async {
                     self?.view?.hideLoader()
+                    self?.view?.showAlert(title: "Ошибка", message: "Не удалось сохранить профиль: \(error.localizedDescription)")
                 }
             }
         }
@@ -76,7 +82,7 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
     func cameraButtonTapped() {
         view?.showPhotoOptionsAlert()
     }
- 
+    
     func contentChanged() {
         view?.setHasChanges(true)
     }

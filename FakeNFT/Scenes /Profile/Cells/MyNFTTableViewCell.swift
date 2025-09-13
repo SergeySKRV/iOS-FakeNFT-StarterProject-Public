@@ -8,6 +8,7 @@
 import UIKit
 import Kingfisher
 
+// MARK: - MyNFTTableViewCell
 final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     // MARK: - UI Elements
     private lazy var nftImageView: UIImageView = {
@@ -31,33 +32,39 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         return button
     }()
     
+    private lazy var textStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 4
+        return stackView
+    }()
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Fonts.sfProBold17
         label.textColor = .yaPrimary
-        label.numberOfLines = 1
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
     // MARK: - Rating Stars
     private lazy var ratingStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 2
         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.setContentHuggingPriority(.required, for: .horizontal)
-   
+        
         for _ in 0..<5 {
             let starImageView = UIImageView()
-            starImageView.translatesAutoresizingMaskIntoConstraints = false
             starImageView.contentMode = .scaleAspectFit
-
             starImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
             starImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
-            
             stackView.addArrangedSubview(starImageView)
         }
         
@@ -66,16 +73,26 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Fonts.sfProRegular13
         label.textColor = .yaPrimary
         label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
+    }()
+    
+    private lazy var priceStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 4
+        return stackView
     }()
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Fonts.sfProBold17
         label.textColor = .yaPrimary
         label.textAlignment = .left
@@ -84,13 +101,12 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Fonts.sfProRegular13
         label.textColor = .yaPrimary
-        label.textAlignment = .right
+        label.textAlignment = .left
         return label
     }()
-    
+
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -101,34 +117,32 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         assertionFailure("init(coder:) has not been implemented")
         return nil
     }
-    
+
     // MARK: - Public Methods
-    func configure(with nft: NFTItem, mockImage: UIImage? = nil) {
-        if let mockImage = mockImage {
-            nftImageView.image = mockImage
-        } else {
-            nftImageView.kf.setImage(with: nft.imageUrl)
-        }
-        
+    func configure(with nft: NFTItem) {
+        nftImageView.kf.setImage(with: nft.imageUrl)
         nameLabel.text = nft.name
-        
         setupRatingStars(rating: nft.rating)
-        
-        authorLabel.text = "от \(nft.author)"
+        authorLabel.text = nft.author
         priceLabel.text = nft.price
         priceTitleLabel.text = "Цена"
     }
-    
+
     // MARK: - Private Methods
     private func setupUI() {
         contentView.backgroundColor = .systemBackground
         contentView.addSubview(nftImageView)
         contentView.addSubview(heartButton)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(ratingStackView)
-        contentView.addSubview(authorLabel)
-        contentView.addSubview(priceLabel)
-        contentView.addSubview(priceTitleLabel)
+        contentView.addSubview(textStackView)
+        
+        textStackView.addArrangedSubview(nameLabel)
+        textStackView.addArrangedSubview(ratingStackView)
+        textStackView.addArrangedSubview(authorLabel)
+        
+        contentView.addSubview(priceStackView)
+        
+        priceStackView.addArrangedSubview(priceTitleLabel)
+        priceStackView.addArrangedSubview(priceLabel)
         
         heartButton.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
         
@@ -147,23 +161,16 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
             heartButton.widthAnchor.constraint(equalToConstant: 24),
             heartButton.heightAnchor.constraint(equalToConstant: 24),
             
-            nameLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-            nameLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 23),
-            nameLabel.trailingAnchor.constraint(equalTo: priceTitleLabel.leadingAnchor, constant: -8),
+            textStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
+            textStackView.widthAnchor.constraint(equalToConstant: 78),
+            textStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            textStackView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 10),
+            textStackView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),
             
-            ratingStackView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            ratingStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
-            ratingStackView.heightAnchor.constraint(equalToConstant: 16),
-            
-            authorLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            authorLabel.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 4),
-            authorLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            
-            priceTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -83),
-            priceTitleLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 33),
-            
-            priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -42),
-            priceLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 53),
+            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -39),
+            priceStackView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 33),
+            priceStackView.widthAnchor.constraint(equalToConstant: 91),
+            priceStackView.heightAnchor.constraint(equalToConstant: 42),
         ])
         
         contentView.heightAnchor.constraint(equalToConstant: 140).isActive = true
@@ -189,7 +196,6 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     @objc private func heartButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         sender.tintColor = sender.isSelected ? .yaRedUniversal : .textOnPrimary
-        print("Кнопка сердца нажата. Выбрано: \(sender.isSelected)")
         // TODO: Добавить логику для обработки добавления/удаления из избранного
     }
 }

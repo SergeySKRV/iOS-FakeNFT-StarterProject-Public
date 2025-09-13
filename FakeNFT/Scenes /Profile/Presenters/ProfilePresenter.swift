@@ -1,25 +1,23 @@
 import UIKit
 
+// MARK: - ProfilePresenter
 final class ProfilePresenter: ProfilePresenterProtocol {
-    
     // MARK: - Properties
     private weak var view: ProfilePresenterOutput?
     private let userService: UserProfileService
     private var userProfile: UserProfile?
-    private let servicesAssembly: ServicesAssembly 
+    private let servicesAssembly: ServicesAssembly
     private var tableData: [ProfileSection] = []
-    private var myNFTCount = 112
-    private var favoritesNFTCount = 11
     
-    // MARK: - Initialization
+    // MARK: - Lifecycle
     required init(view: ProfilePresenterOutput, userService: UserProfileService, servicesAssembly: ServicesAssembly) {
         self.view = view
         self.userService = userService
         self.servicesAssembly = servicesAssembly
     }
     
-    // MARK: - Public Methods
     func viewDidLoad() {
+        view?.showLoading()
         setupTableView()
         loadProfileDataFromService()
     }
@@ -28,8 +26,13 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         refreshProfileData()
     }
     
+    // MARK: - Public Methods
     func openWebsite() {
-        view?.showWebViewController(urlString: "https://practicum.yandex.ru/ios-developer")
+        guard let websiteURL = userProfile?.website,
+              URL(string: websiteURL) != nil else {
+            return
+        }
+        view?.showWebViewController(urlString: websiteURL)
     }
     
     func editProfileTapped() {
@@ -38,21 +41,36 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
     
     func refreshProfileData() {
+        view?.showLoading()
         loadProfileDataFromService()
     }
     
     func handleProfileUpdate(_ profile: UserProfile) {
         self.userProfile = profile
+        setupTableView()
+        DispatchQueue.main.async { [weak self] in
+            if let profileViewController = self?.view as? UIViewController,
+               let tableView = profileViewController.view.subviews.first(where: { $0 is UITableView }) as? UITableView {
+                tableView.reloadData()
+            }
+        }
         view?.updateProfileUI(profile)
     }
     
-    // MARK: - TableView Methods
+    // MARK: - TableView Methods (ProfilePresenterTableViewOperations)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard section < tableData.count else { return 0 }
         return tableData[section].items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as! ProfileTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.defaultReuseIdentifier, for: indexPath) as? ProfileTableViewCell else {
+            assertionFailure("Could not dequeue ProfileTableViewCell")
+            return UITableViewCell()
+        }
+        guard indexPath.section < tableData.count else { return cell }
+        guard indexPath.row < tableData[indexPath.section].items.count else { return cell }
+        
         let item = tableData[indexPath.section].items[indexPath.row]
         let localizedItem = ProfileItem(
             title: item.title == "Мои NFT" ? NSLocalizedString("EditProfile.myNFT", comment: "") :
@@ -68,9 +86,12 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         return 54
     }
     
-    // MARK: - TableView Methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard indexPath.section < tableData.count else { return }
+        guard indexPath.row < tableData[indexPath.section].items.count else { return }
+        
         let item = tableData[indexPath.section].items[indexPath.row]
         switch item.title {
         case NSLocalizedString("EditProfile.myNFT", comment: ""):
@@ -87,45 +108,48 @@ final class ProfilePresenter: ProfilePresenterProtocol {
                 }
             }
         case NSLocalizedString("EditProfile.favoritesNFT", comment: ""):
-            print("Переход к Избранным NFT")
+            break
             // TODO: переход к экрану Избранных NFT
         default:
             break
         }
     }
-    
+
     // MARK: - Private Methods
     private func setupTableView() {
+        let myNFTsCount = userProfile?.nfts.count ?? 0
+        let favoritesNFTsCount = userProfile?.likes.count ?? 0
+        
         tableData = [
             ProfileSection(title: "", items: [
-                ProfileItem(title: NSLocalizedString("EditProfile.myNFT", comment: ""), subtitle: "(\(myNFTCount))"),
-                ProfileItem(title: NSLocalizedString("EditProfile.favoritesNFT", comment: ""), subtitle: "(\(favoritesNFTCount))")
+                ProfileItem(title: NSLocalizedString("EditProfile.myNFT", comment: ""), subtitle: "(\(myNFTsCount))"),
+                ProfileItem(title: NSLocalizedString("EditProfile.favoritesNFT", comment: ""), subtitle: "(\(favoritesNFTsCount))")
             ])
         ]
     }
     
     private func loadProfileDataFromService() {
         userService.fetchUserProfile { [weak self] result in
+            DispatchQueue.main.async {
+                self?.view?.hideLoading()
+            }
+            
             switch result {
             case .success(let profile):
                 self?.userProfile = profile
-                self?.view?.updateProfileUI(profile)
+                self?.setupTableView()
+                DispatchQueue.main.async { [weak self] in
+                    if let profileViewController = self?.view as? UIViewController,
+                       let tableView = profileViewController.view.subviews.first(where: { $0 is UITableView }) as? UITableView {
+                        tableView.reloadData()
+                    }
+                    self?.view?.updateProfileUI(profile)
+                }
             case .failure(let error):
-                print("Ошибка получения профиля: \(error)")
-                self?.view?.showError(error)
+                DispatchQueue.main.async {
+                    self?.view?.showError(error)
+                }
             }
         }
-    }
-    
-    private func loadProfileData() {
-        let user = UserProfile(
-            photo: UIImage(named: "joaquin") ?? UIImage(resource: .userPic),
-            name: "Joaquin Phoenix",
-            description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям.",
-            website: "Joaquin Phoenix.com"
-        )
-        
-        userProfile = user
-        view?.updateProfileUI(user)
     }
 }

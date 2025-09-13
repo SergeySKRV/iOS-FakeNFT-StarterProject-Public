@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - MyNFTViewController
 final class MyNFTViewController: UIViewController {
     // MARK: - UI Elements
     private lazy var tableView: UITableView = {
@@ -66,23 +67,18 @@ final class MyNFTViewController: UIViewController {
     private var presenter: MyNFTPresenterProtocol!
     private var servicesAssembly: ServicesAssembly!
     private var displayedNFTs: [NFTItem] = []
-    private let imageMap: [String: UIImage] = [
-        "lilo": UIImage(resource: .lilo),
-        "spring": UIImage(resource: .spring),
-        "april": UIImage(resource: .april)
-    ]
-    
-    init(servicesAssembly: ServicesAssembly) {
-            self.servicesAssembly = servicesAssembly
-            super.init(nibName: nil, bundle: nil)
-        }
-        
-        required init?(coder: NSCoder) {
-            assertionFailure("init(coder:) has not been implemented")
-            return nil
-        }
     
     // MARK: - Lifecycle
+    init(servicesAssembly: ServicesAssembly) {
+        self.servicesAssembly = servicesAssembly
+        super.init(nibName: nil, bundle: nil)
+    }
+        
+    required init?(coder: NSCoder) {
+        assertionFailure("init(coder:) has not been implemented")
+        return nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -90,7 +86,6 @@ final class MyNFTViewController: UIViewController {
         setupPresenter()
         presenter.viewDidLoad()
     }
-    
     // MARK: - Private Methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -130,11 +125,21 @@ final class MyNFTViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
+
     private func setupPresenter() {
-            let nftService = servicesAssembly.nftService
-            presenter = MyNFTPresenter(view: self, nftService: nftService, servicesAssembly: servicesAssembly)
+        guard let servicesAssembly = self.servicesAssembly else {
+            assertionFailure("ServicesAssembly is not set")
+            return
         }
+        let nftService = servicesAssembly.nftService
+        let userService = servicesAssembly.userService
+        presenter = MyNFTPresenter(
+            view: self,
+            nftService: nftService,
+            userService: userService,
+            servicesAssembly: servicesAssembly
+        )
+    }
     
     // MARK: - Actions
     @objc private func backButtonTapped() {
@@ -159,16 +164,25 @@ extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MyNFTTableViewCell.defaultReuseIdentifier, for: indexPath) as! MyNFTTableViewCell
-        
+        let cell: MyNFTTableViewCell = tableView.dequeueReusableCell()
         let nft = displayedNFTs[indexPath.row]
-        let mockImage = imageMap[nft.imageId]
-        cell.configure(with: nft, mockImage: mockImage)
+        cell.configure(with: nft)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.tableView(tableView, didSelectRowAt: indexPath)
+        guard indexPath.row < displayedNFTs.count else { return }
+        let selectedNFTId = displayedNFTs[indexPath.row].id
+        
+        guard let servicesAssembly = self.servicesAssembly else {
+            assertionFailure("ServicesAssembly is not set")
+            return
+        }
+        
+        let nftDetailAssembly = NftDetailAssembly(servicesAssembler: servicesAssembly)
+        let nftDetailInput = NftDetailInput(id: selectedNFTId)
+        let nftDetailViewController = nftDetailAssembly.build(with: nftDetailInput)
+        showNFTDetails(nftDetailViewController)
     }
 }
 
@@ -183,7 +197,6 @@ extension MyNFTViewController: MyNFTViewProtocol {
         } else {
             tableView.isHidden = false
             emptyStateView.isHidden = true
-
             tableView.reloadData()
         }
     }
@@ -203,8 +216,8 @@ extension MyNFTViewController: MyNFTViewProtocol {
     }
     
     func showNFTDetails(_ viewController: UIViewController) {
-            present(viewController, animated: true)
-        }
+        present(viewController, animated: true)
+    }
     
     func showSortOptions(_ options: [NFTSortOption], selectedIndex: Int) {
         let alertController = UIAlertController(

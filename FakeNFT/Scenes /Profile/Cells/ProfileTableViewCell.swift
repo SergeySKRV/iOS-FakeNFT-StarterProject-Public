@@ -1,7 +1,7 @@
 import UIKit
 
-final class ProfileTableViewCell: UITableViewCell {
-    
+// MARK: - ProfileTableViewCell
+final class ProfileTableViewCell: UITableViewCell, ReuseIdentifying {
     // MARK: - UI Elements
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -32,6 +32,11 @@ final class ProfileTableViewCell: UITableViewCell {
         return nil
     }
     
+    // MARK: - Public Methods
+    func configure(with item: ProfileItem) {
+        titleLabel.text = "\(item.title) \(item.subtitle)"
+    }
+  
     // MARK: - Private Methods
     private func setupUI() {
         backgroundColor = .systemBackground
@@ -54,10 +59,5 @@ final class ProfileTableViewCell: UITableViewCell {
             chevronImageView.widthAnchor.constraint(equalToConstant: 8),
             chevronImageView.heightAnchor.constraint(equalToConstant: 14)
         ])
-    }
-    
-    // MARK: - Public Methods
-    func configure(with item: ProfileItem) {
-        titleLabel.text = "\(item.title) \(item.subtitle)"
     }
 }
