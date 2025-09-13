@@ -36,6 +36,7 @@ final class DeletePopupViewController: UIViewController {
         let label = UILabel()
         label.text = "Вы уверены, что хотите удалить объект из корзины?"
         label.font = Fonts.sfProRegular13
+        label.textColor = UIColor(resource: .ypBlack)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +46,8 @@ final class DeletePopupViewController: UIViewController {
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Вернуться", for: .normal)
-        button.setTitleColor(UIColor(named: "ypWhite"), for: .normal)
-        button.backgroundColor = UIColor(named: "ypBlack")
+        button.setTitleColor(UIColor(resource: .ypWhite), for: .normal)
+        button.backgroundColor = UIColor(resource: .ypBlack)
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = Fonts.sfProRegular17
@@ -56,8 +57,8 @@ final class DeletePopupViewController: UIViewController {
     private let deleteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Удалить", for: .normal)
-        button.setTitleColor(UIColor(named: "ypRed"), for: .normal)
-        button.backgroundColor = UIColor(named: "ypBlack")
+        button.setTitleColor(UIColor(resource: .ypRed), for: .normal)
+        button.backgroundColor = UIColor(resource: .ypBlack)
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = Fonts.sfProRegular17

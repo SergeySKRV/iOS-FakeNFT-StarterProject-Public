@@ -18,7 +18,7 @@ final class CartCell: UITableViewCell {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.sfProBold17
-        label.textColor = .textPrimary
+        label.textColor = UIColor(resource: .ypBlack)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -33,7 +33,7 @@ final class CartCell: UITableViewCell {
         let label = UILabel()
         label.text = "Цена"
         label.font = Fonts.sfProRegular13
-        label.textColor = UIColor(named: "ypBlack")
+        label.textColor = UIColor(resource: .ypBlack)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,7 +41,7 @@ final class CartCell: UITableViewCell {
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.sfProBold17
-        label.textColor = .textPrimary
+        label.textColor = UIColor(resource: .ypBlack)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,7 +49,7 @@ final class CartCell: UITableViewCell {
     let deleteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "cartDelete"), for: .normal)
-        button.tintColor = UIColor(named: "ypBlack")
+        button.tintColor = UIColor(resource: .ypBlack)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
