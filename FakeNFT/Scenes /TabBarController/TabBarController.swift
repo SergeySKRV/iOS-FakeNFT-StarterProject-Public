@@ -31,7 +31,7 @@ final class TabBarController: UITabBarController {
         let catalogController = CatalogViewController()
         let cartController = CartViewController()
         // TODO:  Вернуть обратно перед ревью let statisticsController = StatisticsViewController()
-        let statisticsController = StatisticsCollectionViewController()
+        let statisticsController = StatisticsProfileViewController()
         profileController.tabBarItem = profileTabBarItem
         catalogController.tabBarItem = catalogTabBarItem
         cartController.tabBarItem = cartTabBarItem
