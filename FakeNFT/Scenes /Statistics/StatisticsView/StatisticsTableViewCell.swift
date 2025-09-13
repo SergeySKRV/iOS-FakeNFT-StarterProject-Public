@@ -50,6 +50,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         super.init(coder: coder)
     }
     func configureView() {
+        selectionStyle = .none
         contentView.addSubview(numberLabel)
         NSLayoutConstraint.activate([
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),

@@ -1,21 +1,17 @@
 import UIKit
+import Kingfisher
 
 final class StatisticsProfileViewController: UIViewController {
-    
+    // MARK: peivate properties
+    private var profile: StatisticsProfileModel
     private let presenter = StatisticsProfileViewPresenter.shared
-    private let backButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.tintColor = UIColor.yaPrimary
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(backButtonTouch), for: .touchUpInside)
-        return button
-    }()
     private let avatarImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(resource: .avatarStub)
+        imageView.layer.cornerRadius = 35
         return imageView
     }()
     private let profileNameLabel: UILabel = {
@@ -23,16 +19,14 @@ final class StatisticsProfileViewController: UIViewController {
         label.font = Fonts.sfProBold22
         label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Joaquin Phoeninx"
         return label
     }()
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.sfProRegular13
         label.textColor = UIColor.yaPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = 4
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Дизайнер из Казани, люблю цифровое искусство \n и бейглы. В моей коллекции уже 100+ NFT,\n и еще больше — на моём сайте. Открыт \n к коллаборациям."
         return label
     }()
     private let webSiteButton: UIButton = {
@@ -55,33 +49,50 @@ final class StatisticsProfileViewController: UIViewController {
         tableView.separatorStyle  = .none
         return tableView
     }()
+    // MARK: public methods
+    init(profile: StatisticsProfileModel) {
+        self.profile = profile
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.view = self
+        presenter.viewDidLoad()
         configureView()
     }
+    func setupNavigationBar() {
+        let backButton = UIBarButtonItem(
+            image: UIImage(resource: .chevronBackward),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTouch)
+        )
+        backButton.tintColor = UIColor.yaPrimary
+        navigationItem.leftBarButtonItem = backButton
+    }
+    // MARK: private methods
     private func configureView() {
         view.backgroundColor = UIColor.yaSecondary
-        view.addSubview(backButton)
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
-            backButton.heightAnchor.constraint(equalToConstant: 24),
-            backButton.widthAnchor.constraint(equalToConstant: 24)
-        ])
         view.addSubview(avatarImage)
+        avatarImage.kf.setImage(with: URL(string: profile.avatarImage), placeholder: UIImage(resource: .avatarStub))
         NSLayoutConstraint.activate([
             avatarImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            avatarImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 62),
+            avatarImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             avatarImage.widthAnchor.constraint(equalToConstant: 70),
             avatarImage.heightAnchor.constraint(equalToConstant: 70)])
+        avatarImage.layer.cornerRadius = 35
         view.addSubview(profileNameLabel)
+        profileNameLabel.text = profile.name
         NSLayoutConstraint.activate([
             profileNameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
             profileNameLabel.centerYAnchor.constraint(equalTo: avatarImage.centerYAnchor),
             profileNameLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
         view.addSubview(descriptionLabel)
+        descriptionLabel.text = profile.description
         NSLayoutConstraint.activate([
             descriptionLabel.leadingAnchor.constraint(equalTo: avatarImage.leadingAnchor),
             descriptionLabel.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 20),
@@ -103,16 +114,14 @@ final class StatisticsProfileViewController: UIViewController {
         collectionTableView.delegate = self
         collectionTableView.dataSource = self
     }
-    
     @objc private func webButtonTouch() {
         presenter.showWebView()
     }
-    
     @objc private func backButtonTouch() {
         self.dismiss(animated: true)
     }
 }
-
+// MARK: extensions
 extension StatisticsProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -120,12 +129,14 @@ extension StatisticsProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = StatisticsProfileTableViewCell(style: .default,
                                                   reuseIdentifier: "StatisticsProfileTableViewCell",
-                                                  titleString: "Коллекция NFT (112)")
+                                                  nftCount: profile.nftCount)
        return cell
     }
 }
 extension StatisticsProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.showNFTCollection()
+        if profile.nftCount>0 {
+            presenter.showNFTCollection()
+        }
     }
 }

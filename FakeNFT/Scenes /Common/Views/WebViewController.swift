@@ -1,12 +1,16 @@
-import WebKit
+import UIKit
+import ProgressHUD
+@preconcurrency import WebKit
 
 final class WebViewController: UIViewController {
+    // MARK: private properties
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
         return webView
     }()
     private var urlString: String
+    // MARK: public methods
     init(urlString: String) {
         self.urlString = urlString
         super.init(nibName: nil, bundle: nil)
@@ -20,25 +24,23 @@ final class WebViewController: UIViewController {
         setupUI()
         loadWebsite()
     }
+    // MARK: private methods
     private func setupUI() {
-        view.backgroundColor = .systemBackground
-        
+        view.backgroundColor = UIColor.yaSecondary
         view.addSubview(webView)
-        
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
         let backButton = UIBarButtonItem(
-            image: UIImage(resource: .chevronForward),
+            image: UIImage(resource: .chevronBackward),
             style: .plain,
             target: self,
             action: #selector(backButtonTapped)
         )
-        backButton.tintColor = UIColor(named: "blackDayNight") ?? .label
+        backButton.tintColor = UIColor.yaPrimary
         navigationItem.leftBarButtonItem = backButton
     }
     private func loadWebsite() {
@@ -48,6 +50,6 @@ final class WebViewController: UIViewController {
         }
     }
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }

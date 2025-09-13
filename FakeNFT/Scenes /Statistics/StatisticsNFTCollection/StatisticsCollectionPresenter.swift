@@ -2,8 +2,10 @@ import Foundation
 import UIKit
 
 final class StatisticsCollectionPresenter {
+    // MARK: public properties:
     static let shared = StatisticsCollectionPresenter()
     var statisticsCollectionViewModel: [StatistiscsNFTModel]
+    // MARK: private properties:
     private let stubNFT1: StatistiscsNFTModel = .init(
         image: UIImage(resource: .archie),
         name: "Archie",
@@ -49,7 +51,7 @@ final class StatisticsCollectionPresenter {
         isLike: false,
         isInCart: false
     )
-    
+    // MARK: private methods:
     private init() {
         statisticsCollectionViewModel = [stubNFT1, stubNFT2, stubNFT3, stubNFT4, stubNFT5]
     }

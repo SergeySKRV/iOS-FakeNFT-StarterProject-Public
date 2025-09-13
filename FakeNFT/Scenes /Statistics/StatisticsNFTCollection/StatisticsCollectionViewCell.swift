@@ -2,6 +2,7 @@ import UIKit
 import Kingfisher
 
 final class StatisticsCollectionViewCell: UICollectionViewCell {
+    // MARK: private properties
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -40,7 +41,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+    // MARK: public methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
@@ -48,7 +49,6 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     func configureView() {
         backgroundColor = .clear
         contentView.addSubview(nftImageView)
@@ -78,10 +78,10 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
             cartImage.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 40),
             cartImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)])
     }
-    
     func configureCellData(nftCart: StatistiscsNFTModel) {
         nftImageView.image = nftCart.image
-        likeImage.image = nftCart.isLike ? UIImage(resource: .statisticsLikeActive) : UIImage(resource: .statisticsLikeNoActive)
+        likeImage.image = nftCart.isLike ? UIImage(resource: .statisticsLikeActive) :
+        UIImage(resource: .statisticsLikeNoActive)
         switch nftCart.rating {
         case 0: ratingImage.image = UIImage(resource: .statisticsRating0)
         case 1: ratingImage.image = UIImage(resource: .statisticsRating1)
@@ -93,6 +93,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         }
         nameLabel.text = nftCart.name
         priceLabel.text = "\(nftCart.price) ETH"
-        cartImage.image  = nftCart.isInCart ? UIImage(resource: .statisticsCartActive) : UIImage(resource: .statisticsCartNoActive)
+        cartImage.image  = nftCart.isInCart ? UIImage(resource: .statisticsCartActive) :
+        UIImage(resource: .statisticsCartNoActive)
     }
 }
