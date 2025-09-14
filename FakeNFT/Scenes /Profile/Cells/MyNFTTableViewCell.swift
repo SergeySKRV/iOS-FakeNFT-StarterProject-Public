@@ -168,15 +168,20 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         contentView.heightAnchor.constraint(equalToConstant: 140).isActive = true
     }
 
-    private func setupRatingStars(rating: Int) {
-        let clampedRating = max(0, min(5, rating))
+    private func setupRatingStars(rating: Double) {
+        let clampedRating = max(0.0, min(5.0, rating))
         let stars = ratingStackView.arrangedSubviews.compactMap { $0 as? UIImageView }
+
         for (index, starImageView) in stars.enumerated() {
-            if index < clampedRating {
+            let starIndex = Double(index)
+            if clampedRating >= starIndex + 1 {
                 starImageView.image = UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysTemplate)
                 starImageView.tintColor = .yaYellowUniversal
+            } else if clampedRating > starIndex {
+                starImageView.image = UIImage(systemName: "star.leadinghalf.filled")?.withRenderingMode(.alwaysTemplate)
+                starImageView.tintColor = .yaYellowUniversal
             } else {
-                starImageView.image = UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysTemplate)
+                starImageView.image = UIImage(systemName: "star")?.withRenderingMode(.alwaysTemplate)
                 starImageView.tintColor = .yaLightGray
             }
         }

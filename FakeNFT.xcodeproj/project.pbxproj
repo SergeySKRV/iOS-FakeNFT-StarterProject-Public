@@ -72,6 +72,13 @@
 		90B789E22E7342230027656C /* UpdateUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B789E12E7342230027656C /* UpdateUserProfileRequest.swift */; };
 		90B789E62E7357270027656C /* EditProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B789E52E7357270027656C /* EditProfileViewControllerDelegate.swift */; };
 		90B78A482E75F2BE0027656C /* NFTItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78A472E75F2BE0027656C /* NFTItem.swift */; };
+		90B78AFD2E76E1040027656C /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78AFC2E76E1040027656C /* OnboardingSlide.swift */; };
+		90B78B052E76E2000027656C /* OnboardingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78B042E76E2000027656C /* OnboardingViewProtocol.swift */; };
+		90B78B082E76E21F0027656C /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78B072E76E21F0027656C /* OnboardingPresenter.swift */; };
+		90B78B0B2E76E2620027656C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78B0A2E76E2620027656C /* OnboardingViewController.swift */; };
+		90B78B0D2E76FC430027656C /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78B0C2E76FC430027656C /* GradientView.swift */; };
+		90B78B0F2E76FD040027656C /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78B0E2E76FD040027656C /* SlideView.swift */; };
+		90B78B112E77034C0027656C /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B78B102E77034C0027656C /* OnboardingModel.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 /* End PBXBuildFile section */
@@ -164,6 +171,13 @@
 		90B789E52E7357270027656C /* EditProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewControllerDelegate.swift; sourceTree = "<group>"; };
 		90B78A472E75F2BE0027656C /* NFTItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTItem.swift; sourceTree = "<group>"; };
 		90B78AF52E761C800027656C /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		90B78AFC2E76E1040027656C /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
+		90B78B042E76E2000027656C /* OnboardingViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewProtocol.swift; sourceTree = "<group>"; };
+		90B78B072E76E21F0027656C /* OnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
+		90B78B0A2E76E2620027656C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		90B78B0C2E76FC430027656C /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		90B78B0E2E76FD040027656C /* SlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
+		90B78B102E77034C0027656C /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D82A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -328,6 +342,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				90B78AFE2E76E1230027656C /* Onboarding */,
 				9021BE7B2E6346DF00BA000C /* Profile */,
 				E1A1B9D82AA01C9700C3AFBC /* TabBarController */,
 				0CF2C2D92A783C1600FDC837 /* Common */,
@@ -489,6 +504,52 @@
 				90577EE42E709953002B707B /* NFTSortOption.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		90B78AFE2E76E1230027656C /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				90B78B062E76E2110027656C /* Presenters */,
+				90B78B032E76E1F20027656C /* Protocols */,
+				90B78B002E76E1430027656C /* VIews */,
+				90B78AFF2E76E1300027656C /* Models */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		90B78AFF2E76E1300027656C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				90B78AFC2E76E1040027656C /* OnboardingSlide.swift */,
+				90B78B102E77034C0027656C /* OnboardingModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		90B78B002E76E1430027656C /* VIews */ = {
+			isa = PBXGroup;
+			children = (
+				90B78B0A2E76E2620027656C /* OnboardingViewController.swift */,
+				90B78B0C2E76FC430027656C /* GradientView.swift */,
+				90B78B0E2E76FD040027656C /* SlideView.swift */,
+			);
+			path = VIews;
+			sourceTree = "<group>";
+		};
+		90B78B032E76E1F20027656C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				90B78B042E76E2000027656C /* OnboardingViewProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		90B78B062E76E2110027656C /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				90B78B072E76E21F0027656C /* OnboardingPresenter.swift */,
+			);
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
@@ -671,19 +732,24 @@
 				9021BE962E66003000BA000C /* UserProfileServiceImpl.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
+				90B78B0B2E76E2620027656C /* OnboardingViewController.swift in Sources */,
 				90577EF92E71F9EC002B707B /* AllNFTsRequest.swift in Sources */,
 				9052C67E2E69F83600730416 /* EditProfileViewProtocol.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				9052C6782E69EDAD00730416 /* ProfileSection.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				90577ED02E6F5BB7002B707B /* MyNFTPresenter.swift in Sources */,
+				90B78B082E76E21F0027656C /* OnboardingPresenter.swift in Sources */,
+				90B78B052E76E2000027656C /* OnboardingViewProtocol.swift in Sources */,
 				9021BE802E634BEC00BA000C /* UserProfile.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
+				90B78B0F2E76FD040027656C /* SlideView.swift in Sources */,
 				9021BE7D2E63470900BA000C /* ProfileViewController.swift in Sources */,
 				9052C67A2E69EDD600730416 /* ProfileItem.swift in Sources */,
 				9021BE942E63956C00BA000C /* EditProfileViewController.swift in Sources */,
 				9052C6802E69FC0700730416 /* ImageLoaderServiceImpl.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				90B78B0D2E76FC430027656C /* GradientView.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				9021BE822E6356CD00BA000C /* ProfileTableViewCell.swift in Sources */,
@@ -698,6 +764,7 @@
 				9021BE922E6388F500BA000C /* WebViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				90B78B112E77034C0027656C /* OnboardingModel.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				90577ECC2E6F5B4C002B707B /* MyNFTPresenterProtocol.swift in Sources */,
@@ -714,6 +781,7 @@
 				90B789E22E7342230027656C /* UpdateUserProfileRequest.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
+				90B78AFD2E76E1040027656C /* OnboardingSlide.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				90577ECA2E6F5B32002B707B /* MyNFTViewProtocol.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,

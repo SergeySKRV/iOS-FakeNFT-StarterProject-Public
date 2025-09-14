@@ -3,7 +3,14 @@ import UIKit
 // MARK: - TabBarController
 final class TabBarController: UITabBarController {
     // MARK: - Properties
-    var servicesAssembly: ServicesAssembly!
+    var servicesAssembly: ServicesAssembly! {
+        didSet {
+            // Когда servicesAssembly установлен, настраиваем контроллеры
+            if isViewLoaded {
+                setupViewControllers()
+            }
+        }
+    }
 
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: ""),
@@ -20,14 +27,21 @@ final class TabBarController: UITabBarController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViewControllers()
         setupUI()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Настройка контроллеров перед появлением
+        if viewControllers == nil {
+            setupViewControllers()
+        }
     }
 
     // MARK: - Private Methods
     private func setupViewControllers() {
         guard let servicesAssembly = self.servicesAssembly else {
-            assertionFailure("ServicesAssembly is not set")
+            print("ServicesAssembly is not set yet")
             return
         }
 

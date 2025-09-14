@@ -8,8 +8,21 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         nftStorage: NftStorageImpl()
     )
 
-    func scene(_: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
-        let tabBarController = window?.rootViewController as? TabBarController
-        tabBarController?.servicesAssembly = servicesAssembly
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        window = UIWindow(windowScene: windowScene)
+
+        let shouldShowOnboarding = !UserDefaults.standard.bool(forKey: "hasSeenOnboarding")
+
+        if shouldShowOnboarding {
+            let onboardingVC = OnboardingViewController()
+            window?.rootViewController = onboardingVC
+        } else {
+            let tabBarController = TabBarController()
+            tabBarController.servicesAssembly = servicesAssembly
+            window?.rootViewController = tabBarController
+        }
+        window?.makeKeyAndVisible()
     }
 }

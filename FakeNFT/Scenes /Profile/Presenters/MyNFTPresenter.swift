@@ -119,19 +119,15 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
         }
 
         group.notify(queue: .global(qos: .userInitiated)) {
-            let nftItems: [NFTItem] = loadedNfts.compactMap { nft in
+            let defaultImageURL = URL(string: "https://example.com/default-nft.jpg")!
+            let nftItems: [NFTItem] = loadedNfts.map { nft in
                 let formattedAuthor = self.formatAuthor(from: nft.author)
-
-                guard let defaultURL = URL(string: "https://example.com/default-nft.jpg") else {
-                    return nil
-                }
-
-                let imageURL = nft.images.first ?? defaultURL
+                let imageURL = nft.images.first ?? defaultImageURL
 
                 return NFTItem(
                     id: nft.id,
                     name: nft.name,
-                    rating: nft.rating,
+                    rating: Double(nft.rating),
                     author: formattedAuthor,
                     price: "\(String(format: "%.2f", nft.price)) ETH",
                     imageUrl: imageURL

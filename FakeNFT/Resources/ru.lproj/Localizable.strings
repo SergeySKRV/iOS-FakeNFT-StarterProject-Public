@@ -52,3 +52,12 @@
 
 // MARK: - Price
 "price" = "Цена";
+
+// MARK: - Onboarding
+"Onboarding.nextButton" = "Что внутри?";
+"Onboarding.slide1.title" = "Исследуйте";
+"Onboarding.slide1.subtitle" = "Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров";
+"Onboarding.slide2.title" = "Коллекционируйте";
+"Onboarding.slide2.subtitle" = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!";
+"Onboarding.slide3.title" = "Состязайтесь";
+"Onboarding.slide3.subtitle" = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция";

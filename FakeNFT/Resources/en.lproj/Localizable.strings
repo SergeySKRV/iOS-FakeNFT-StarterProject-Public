@@ -52,3 +52,12 @@
 
 // MARK: - Price
 "price" = "Price";
+
+// MARK: - Onboarding
+"Onboarding.nextButton" = "What's inside?";
+"Onboarding.slide1.title" = "Explore";
+"Onboarding.slide1.subtitle" = "Join and discover a new world of unique NFTs for collectors";
+"Onboarding.slide2.title" = "Collect";
+"Onboarding.slide2.subtitle" = "Enrich your collection with exclusive artworks created by AI!";
+"Onboarding.slide3.title" = "Compete";
+"Onboarding.slide3.subtitle" = "View other users' stats and show everyone that you have the most valuable collection";

@@ -12,7 +12,7 @@ struct NFTItem {
     // MARK: - Properties
     let id: String
     let name: String
-    let rating: Int
+    let rating: Double
     let author: String
     let price: String
     let imageUrl: URL
