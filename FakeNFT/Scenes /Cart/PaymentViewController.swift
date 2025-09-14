@@ -1,16 +1,5 @@
 import UIKit
 
-//protocol PaymentViewProtocol: AnyObject {
-//    func displayPaymentMethods(_ methods: [PaymentMethod])
-//    func showError(message: String)
-//}
-//
-//protocol PaymentPresenterProtocol {
-//    func viewDidLoad()
-//    func payButtonTapped(with method: PaymentMethod?)
-//    func userAgreementTapped()
-//}
-
 final class PaymentViewController: UIViewController {
     
     var presenter: PaymentPresenterProtocol?
