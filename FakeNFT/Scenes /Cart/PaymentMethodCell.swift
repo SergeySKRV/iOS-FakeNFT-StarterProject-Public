@@ -110,14 +110,14 @@ final class PaymentMethodCell: UICollectionViewCell {
     
     private func loadImage(from urlString: String) {
         guard let url = URL(string: urlString) else {
-            iconImageView.image = UIImage(named: "placeholder_icon")
+            iconImageView.image = UIImage(systemName: "photo")
             return
         }
         
         URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let data = data, error == nil else {
                 DispatchQueue.main.async {
-                    self?.iconImageView.image = UIImage(named: "placeholder_icon")
+                    self?.iconImageView.image = UIImage(systemName: "photo")
                 }
                 return
             }

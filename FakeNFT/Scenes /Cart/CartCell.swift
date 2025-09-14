@@ -48,7 +48,7 @@ final class CartCell: UITableViewCell {
     
     let deleteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "cartDelete"), for: .normal)
+        button.setImage(UIImage(resource: .cartDelete), for: .normal)
         button.tintColor = UIColor(resource: .ypBlack)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

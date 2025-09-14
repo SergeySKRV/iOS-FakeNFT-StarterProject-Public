@@ -24,7 +24,7 @@ final class CartViewController: UIViewController {
     
     private lazy var filterButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
-            image: UIImage(named: "filterButton"),
+            image: UIImage(resource: .filterButton),
             style: .plain,
             target: self,
             action: #selector(filterButtonTapped)
@@ -102,6 +102,11 @@ final class CartViewController: UIViewController {
         
         showCachedData()
         
+        presenter?.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         presenter?.viewDidLoad()
     }
     

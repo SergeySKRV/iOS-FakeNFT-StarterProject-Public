@@ -100,16 +100,17 @@ final class CartService: CartServiceProtocol {
         request.setValue("45c5b907-7b41-4702-bced-d61034c05bae", forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
         var components = URLComponents()
-        components.queryItems = nfts.map { nftId in
-            URLQueryItem(name: "nfts", value: nftId)
-        }
         
         if nfts.isEmpty {
-            components.queryItems = [URLQueryItem(name: "nfts", value: "")]
-        }
-        
-        if let queryString = components.percentEncodedQuery {
-            request.httpBody = queryString.data(using: .utf8)
+            request.httpBody = nil
+        } else {
+            components.queryItems = nfts.map { nftId in
+                URLQueryItem(name: "nfts", value: nftId)
+            }
+            
+            if let queryString = components.percentEncodedQuery {
+                request.httpBody = queryString.data(using: .utf8)
+            }
         }
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -123,13 +124,14 @@ final class CartService: CartServiceProtocol {
                 return
             }
             
-            if let data = data, let responseString = String(data: data, encoding: .utf8) {
-            }
-            
             if (200...299).contains(httpResponse.statusCode) {
                 completion(.success(()))
             } else {
-                let error = NSError(domain: "", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP Error: \(httpResponse.statusCode)"])
+                let error = NSError(
+                    domain: "",
+                    code: httpResponse.statusCode,
+                    userInfo: [NSLocalizedDescriptionKey: "HTTP Error: \(httpResponse.statusCode)"]
+                )
                 completion(.failure(error))
             }
         }
@@ -142,31 +144,53 @@ final class CartService: CartServiceProtocol {
             return
         }
         
-        let request = CartNetworkRequest(
-            endpoint: url,
-            httpMethod: .get
-        )
+        let request = CartNetworkRequest(endpoint: url, httpMethod: .get)
         
         networkClient.send(request: request, type: [Currency].self) { result in
+            completion(result)
+        }
+    }
+    
+    func proceedToPayment(currencyId: String, completion: @escaping (Result<PaymentResponse, Error>) -> Void) {
+        guard let url = URL(string: "\(baseURL)/api/v1/orders/1/payment/\(currencyId)") else {
+            completion(.failure(URLError(.badURL)))
+            return
+        }
+        
+        let request = CartNetworkRequest(endpoint: url, httpMethod: .get)
+        
+        networkClient.send(request: request, type: PaymentResponse.self) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
-            case .success(let currencies):
-                completion(.success(currencies))
+            case .success(let paymentResponse):
+                if paymentResponse.success {
+                    self.clearCartAfterPayment()
+                    completion(.success(paymentResponse))
+                } else {
+                    let error = NSError(
+                        domain: "PaymentError",
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: "Payment failed"]
+                    )
+                    completion(.failure(error))
+                }
+                
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    // пока не реализовано
-    
-    //    func proceedToPayment(completion: @escaping (Result<PaymentResponse, Error>) -> Void) {
-    //        let request = CartNetworkRequest(
-    //            endpoint: URL(string: "\(baseURL)/orders/1/payment/1"),
-    //            httpMethod: .get
-    //        )
-    //
-    //        networkClient.send(request: request, type: PaymentResponse.self) { result in
-    //            completion(result)
-    //        }
-    //    }
+    private func clearCartAfterPayment() {
+        updateOrder(nfts: []) { result in
+            switch result {
+            case .success:
+                self.currentNFTIds = []
+            case .failure:
+                break
+            }
+        }
+    }
 }
+

@@ -1,15 +1,15 @@
 import UIKit
 
-protocol PaymentViewProtocol: AnyObject {
-    func displayPaymentMethods(_ methods: [PaymentMethod])
-    func showError(message: String)
-}
-
-protocol PaymentPresenterProtocol {
-    func viewDidLoad()
-    func payButtonTapped(with method: PaymentMethod?)
-    func userAgreementTapped()
-}
+//protocol PaymentViewProtocol: AnyObject {
+//    func displayPaymentMethods(_ methods: [PaymentMethod])
+//    func showError(message: String)
+//}
+//
+//protocol PaymentPresenterProtocol {
+//    func viewDidLoad()
+//    func payButtonTapped(with method: PaymentMethod?)
+//    func userAgreementTapped()
+//}
 
 final class PaymentViewController: UIViewController {
     
@@ -202,6 +202,47 @@ extension PaymentViewController: UICollectionViewDataSource, UICollectionViewDel
 }
 
 extension PaymentViewController: PaymentViewProtocol {
+    func showLoading() {
+        view.isUserInteractionEnabled = false
+        payButton.isEnabled = false
+        payButton.backgroundColor = .gray
+        
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.startAnimating()
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+    }
+    
+    func hideLoading() {
+        view.isUserInteractionEnabled = true
+        payButton.isEnabled = true
+        payButton.backgroundColor = UIColor(resource: .ypBlack)
+        
+        view.subviews.forEach {
+            if let indicator = $0 as? UIActivityIndicatorView {
+                indicator.removeFromSuperview()
+            }
+        }
+    }
+    
+    func showPaymentSuccess(message: String) {
+        let alert = UIAlertController(
+            title: "Успех!",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        })
+        present(alert, animated: true)
+        //пока не сверстал экраны ошибки и успеха для оплаты возвращаю на предыдущий экран, в итерации эпика 3/3 буду реализовывать эти экраны
+    }
+    
+    func setPayButtonEnabled(_ enabled: Bool) {
+        payButton.isEnabled = enabled
+        payButton.backgroundColor = enabled ? UIColor(resource: .ypBlack) : .gray
+    }
+    
     func displayPaymentMethods(_ methods: [PaymentMethod]) {
         paymentMethods = methods
         collectionView.reloadData()
