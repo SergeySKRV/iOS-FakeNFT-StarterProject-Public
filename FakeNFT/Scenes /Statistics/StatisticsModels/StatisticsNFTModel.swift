@@ -1,7 +1,7 @@
 import UIKit
 
 struct StatisticsNFTModel {
-    let image: UIImage
+    let image: String
     let name: String
     let price: Float
     let rating: Int

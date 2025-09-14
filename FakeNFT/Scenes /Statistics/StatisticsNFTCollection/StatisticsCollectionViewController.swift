@@ -1,6 +1,13 @@
 import UIKit
 
-final class StatisticsCollectionViewController: UIViewController {
+protocol StatisticsCollectionView: AnyObject, ErrorView {
+    func showNFTs()
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
+}
+
+final class StatisticsCollectionViewController: UIViewController, StatisticsCollectionView {
+    var userProfile: StatisticsProfileModel
     // MARK: - private properties
     private let presenter = StatisticsCollectionPresenter.shared
     private let navigationBarTitle: UILabel = {
@@ -19,8 +26,17 @@ final class StatisticsCollectionViewController: UIViewController {
         return collectionView
     }()
     // MARK: - public methods
+    init(profile: StatisticsProfileModel) {
+        self.userProfile = profile
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.view = self
+        presenter.viewDidLoad()
         setupNavigationBar()
         view.backgroundColor = UIColor.yaSecondary
         nftCollectionView.register(StatisticsCollectionViewCell.self,
@@ -35,6 +51,15 @@ final class StatisticsCollectionViewController: UIViewController {
             nftCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nftCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32)
         ])
+    }
+    func showLoadingIndicator() {
+        StatisticsUIBlockingProgressHUD.show()
+    }
+    func hideLoadingIndicator() {
+        StatisticsUIBlockingProgressHUD.dismiss()
+    }
+    func showNFTs() {
+        nftCollectionView.reloadData()
     }
     // MARK: - private methods
     private func setupNavigationBar() {

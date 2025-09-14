@@ -5,5 +5,7 @@ struct StatisticsProfileModel {
     let description: String
     let name: String
     let nftCount: Int
+    let nfts: [String]
+    let likes: [String]
     let rating: Int
 }

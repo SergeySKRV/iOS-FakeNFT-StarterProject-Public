@@ -2,8 +2,9 @@ import UIKit
 import Kingfisher
 
 final class StatisticsProfileViewController: UIViewController {
+    // MARK:  - public properties
+    var profile: StatisticsProfileModel
     // MARK: - private properties
-    private var profile: StatisticsProfileModel
     private let presenter = StatisticsProfileViewPresenter.shared
     private let avatarImage: UIImageView = {
         let imageView = UIImageView()

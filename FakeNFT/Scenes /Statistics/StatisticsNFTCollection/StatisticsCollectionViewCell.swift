@@ -79,7 +79,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
             cartImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)])
     }
     func configureCellData(nftCart: StatisticsNFTModel) {
-        nftImageView.image = nftCart.image
+        nftImageView.kf.setImage(with: URL(string: nftCart.image))
         likeImage.image = nftCart.isLike ? UIImage(resource: .statisticsLikeActive) :
         UIImage(resource: .statisticsLikeNoActive)
         switch nftCart.rating {

@@ -47,8 +47,8 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
             loadNft()
         case .data(let nft):
             view?.hideLoading()
-            let cellModels = nft.images.map { NftDetailCellModel(url: $0) }
-            view?.displayCells(cellModels)
+            //let cellModels = nft.images.map { NftDetailCellModel(url: $0) }
+            //view?.displayCells(cellModels)
         case .failed(let error):
             let errorModel = makeErrorModel(error)
             view?.hideLoading()
