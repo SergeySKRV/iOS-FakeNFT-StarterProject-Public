@@ -113,6 +113,7 @@
 /* End PBXFileReference section */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		4A1929742E664D2200A3C1DE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -130,6 +131,8 @@
 		4A19298A2E677B4A00A3C1DE /* Cart */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cart; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
+=======
+>>>>>>> parent of 5ff4f0c (комит1)
 =======
 >>>>>>> parent of 5ff4f0c (комит1)
 /* Begin PBXFrameworksBuildPhase section */
