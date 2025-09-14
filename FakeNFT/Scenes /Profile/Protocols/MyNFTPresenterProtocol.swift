@@ -11,10 +11,9 @@ import UIKit
 protocol MyNFTPresenterProtocol: AnyObject {
     // MARK: - Lifecycle
     init(view: MyNFTViewProtocol, nftService: NftService, userService: UserProfileService, servicesAssembly: ServicesAssembly)
-    
     func viewDidLoad()
     func viewWillAppear()
-    
+
     // MARK: - Public Methods
     func sortButtonTapped()
     func sortOptionSelected(_ option: NFTSortOption)

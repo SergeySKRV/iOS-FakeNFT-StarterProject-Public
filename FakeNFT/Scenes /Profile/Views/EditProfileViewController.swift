@@ -1,6 +1,8 @@
-import UIKit
-import ProgressHUD
 import Kingfisher
+import ProgressHUD
+import UIKit
+
+
 
 // MARK: - EditProfileViewController
 final class EditProfileViewController: UIViewController {
@@ -143,7 +145,7 @@ final class EditProfileViewController: UIViewController {
 
     // MARK: - Private Methods
     private func setupUI() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .yaSecondary
         setupConstraints()
     }
 
@@ -177,6 +179,11 @@ final class EditProfileViewController: UIViewController {
     }
 
     private func setupConstraints() {
+        addSubviews()
+        activateConstraints()
+    }
+
+    private func addSubviews() {
         view.addSubview(profileImageView)
         view.addSubview(cameraButton)
         view.addSubview(nameLabel)
@@ -186,7 +193,9 @@ final class EditProfileViewController: UIViewController {
         view.addSubview(websiteLabel)
         view.addSubview(websiteTextField)
         view.addSubview(saveButton)
+    }
 
+    private func activateConstraints() {
         NSLayoutConstraint.activate([
             profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -225,32 +234,38 @@ final class EditProfileViewController: UIViewController {
             saveButton.topAnchor.constraint(equalTo: websiteTextField.bottomAnchor, constant: 152),
             saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            saveButton.heightAnchor.constraint(equalToConstant: 60),
+            saveButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 
     // MARK: - Actions
-    @objc private func backButtonTapped() {
+    @objc
+    private func backButtonTapped() {
         presenter.backButtonTapped()
     }
 
-    @objc private func saveButtonTapped() {
+    @objc
+    private func saveButtonTapped() {
         presenter.saveButtonTapped()
     }
 
-    @objc private func cameraButtonTapped() {
+    @objc
+    private func cameraButtonTapped() {
         presenter.cameraButtonTapped()
     }
 
-    @objc private func handleTextFieldChange() {
+    @objc
+    private func handleTextFieldChange() {
         presenter.contentChanged()
     }
 
-    @objc private func handleTextViewChange() {
+    @objc
+    private func handleTextViewChange() {
         presenter.contentChanged()
     }
 
-    @objc private func dismissKeyboard() {
+    @objc
+    private func dismissKeyboard() {
         view.endEditing(true)
     }
 }
@@ -416,19 +431,19 @@ extension EditProfileViewController: EditProfilePresenterOutput {
     }
 
     func getProfileImage() -> UIImage? {
-        return profileImageView.image
+        profileImageView.image
     }
 
     func getNameText() -> String? {
-        return nameTextField.text
+        nameTextField.text
     }
 
     func getDescriptionText() -> String? {
-        return descriptionTextView.text
+        descriptionTextView.text
     }
 
     func getWebsiteText() -> String? {
-        return websiteTextField.text
+        websiteTextField.text
     }
 
     func setHasChanges(_ hasChanges: Bool) {
@@ -436,11 +451,11 @@ extension EditProfileViewController: EditProfilePresenterOutput {
     }
 
     func getHasChanges() -> Bool {
-        return hasChanges
+        hasChanges
     }
-    
+
     func getAvatarURLString() -> String? {
-        return self.avatarURLString
+        self.avatarURLString
     }
 }
 

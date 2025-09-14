@@ -17,7 +17,7 @@ final class LinePageControl: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: height)
+        CGSize(width: UIView.noIntrinsicMetric, height: height)
     }
 
     // MARK: - Private properties
@@ -39,6 +39,7 @@ final class LinePageControl: UIView {
         stackView.constraintEdges(to: self)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

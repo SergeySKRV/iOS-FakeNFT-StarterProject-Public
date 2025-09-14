@@ -12,7 +12,7 @@ struct UpdateUserProfileRequest: NetworkRequest {
     // MARK: - Properties
     private let profileId: String
     private let updateData: UserProfileUpdateDTO
-    
+
     // MARK: - Initialization
     init(profileId: String = "1", updateData: UserProfileUpdateDTO) {
         self.profileId = profileId
@@ -23,10 +23,10 @@ struct UpdateUserProfileRequest: NetworkRequest {
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/profile/\(profileId)")
     }
-    
+
     var httpMethod: HttpMethod = .put
-    
+
     var dto: Dto? {
-        return updateData
+        updateData
     }
 }

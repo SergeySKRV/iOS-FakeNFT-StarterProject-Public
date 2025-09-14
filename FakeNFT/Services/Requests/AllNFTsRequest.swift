@@ -13,7 +13,7 @@ struct AllNFTsRequest: NetworkRequest {
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/nft")
     }
-  
+
     var httpMethod: HttpMethod = .get
-    var dto: Dto? = nil
+    var dto: Dto?
 }

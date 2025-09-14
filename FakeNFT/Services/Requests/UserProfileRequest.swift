@@ -16,7 +16,7 @@ struct UserProfileRequest: NetworkRequest {
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/profile/\(profileId)")
     }
-    
+
     var httpMethod: HttpMethod = .get
-    var dto: Dto? = nil
+    var dto: Dto?
 }

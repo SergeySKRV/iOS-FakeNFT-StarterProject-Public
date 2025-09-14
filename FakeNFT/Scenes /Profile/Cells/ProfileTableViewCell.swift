@@ -10,7 +10,7 @@ final class ProfileTableViewCell: UITableViewCell, ReuseIdentifying {
         label.textColor = .yaPrimary
         return label
     }()
-    
+
     private lazy var chevronImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -20,40 +20,37 @@ final class ProfileTableViewCell: UITableViewCell, ReuseIdentifying {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
+
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
-    
+
     required init?(coder: NSCoder) {
         assertionFailure("init(coder:) has not been implemented")
         return nil
     }
-    
+
     // MARK: - Public Methods
     func configure(with item: ProfileItem) {
         titleLabel.text = "\(item.title) \(item.subtitle)"
     }
-  
+
     // MARK: - Private Methods
     private func setupUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = .yaSecondary
         selectionStyle = .none
-        
         contentView.addSubview(titleLabel)
         contentView.addSubview(chevronImageView)
-        
         setupConstraints()
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: chevronImageView.leadingAnchor, constant: -15),
-            
             chevronImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             chevronImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chevronImageView.widthAnchor.constraint(equalToConstant: 8),

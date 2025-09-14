@@ -2,7 +2,6 @@ import UIKit
 
 // MARK: - UserProfile
 struct UserProfile: Codable {
-    
     // MARK: - Properties from API
     let id: String
     let name: String
@@ -17,7 +16,8 @@ struct UserProfile: Codable {
         guard let avatarString = avatarString else { return nil }
         return URL(string: avatarString)
     }
-    private var avatarImage: UIImage? = nil
+
+    private var avatarImage: UIImage?
 
     // MARK: - Lifecycle (Initializers)
     init(id: String, name: String, description: String?, website: String, avatarURLString: String?, nfts: [String], likes: [String]) {
@@ -28,9 +28,8 @@ struct UserProfile: Codable {
         self.avatarString = avatarURLString
         self.nfts = nfts
         self.likes = likes
-        self.avatarImage = nil
     }
-    
+
     init(id: String, name: String, description: String?, website: String, avatar: UIImage?, nfts: [String], likes: [String]) {
         self.id = id
         self.name = name
@@ -70,31 +69,31 @@ struct UserProfile: Codable {
             completion(cachedImage)
             return
         }
-        
-        guard let avatarURL = self.avatar else {
+        guard let avatarURL = avatar else {
             completion(nil)
             return
         }
 
-        URLSession.shared.dataTask(with: avatarURL) { data, _, error in
-            guard let data = data, error == nil else {
-                DispatchQueue.main.async {
-                    completion(nil)
+        URLSession.shared
+            .dataTask(with: avatarURL) { data, _, error in
+                guard let data = data, error == nil else {
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                    return
                 }
-                return
+                let image = UIImage(data: data)
+                DispatchQueue.main.async {
+                    completion(image)
+                }
             }
-            
-            let image = UIImage(data: data)
-            DispatchQueue.main.async {
-                completion(image)
-            }
-        }.resume()
+            .resume()
     }
-    
+
     func getCachedAvatarImage() -> UIImage? {
-        return self.avatarImage
+        avatarImage
     }
-    
+
     func settingAvatarImage(_ image: UIImage) -> UserProfile {
         var updatedProfile = self
         updatedProfile.avatarImage = image
@@ -104,10 +103,9 @@ struct UserProfile: Codable {
 
 // MARK: - UIImage Extension for compatibility
 extension UIImage {
-
     // MARK: - Public Methods
     func pngDataURL() -> URL? {
-        guard let data = self.pngData() else { return nil }
+        guard let data = pngData() else { return nil }
         return URL(string: "data:image/png;base64,\(data.base64EncodedString())")
     }
 }

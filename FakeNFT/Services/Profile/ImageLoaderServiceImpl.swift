@@ -18,23 +18,25 @@ final class ImageLoaderServiceImpl: ImageLoaderService {
 
     // MARK: - Public Methods
     func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if error != nil {
-                DispatchQueue.main.async {
-                    completion(nil)
+        URLSession.shared
+            .dataTask(with: url) { data, _, error in
+                if error != nil {
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                    return
                 }
-                return
-            }
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(nil)
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                    return
                 }
-                return
+                let image = UIImage(data: data)
+                DispatchQueue.main.async {
+                    completion(image)
+                }
             }
-            let image = UIImage(data: data)
-            DispatchQueue.main.async {
-                completion(image)
-            }
-        }.resume()
+            .resume()
     }
 }

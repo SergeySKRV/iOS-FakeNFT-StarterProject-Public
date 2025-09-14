@@ -7,7 +7,7 @@ struct Fonts {
     static let sfProBold22 = UIFont(name: "SFProText-Bold", size: 22) ?? UIFont.systemFont(ofSize: 22, weight: .bold)
     static let sfProBold20 = UIFont(name: "SFProText-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)
     static let sfProBold17 = UIFont(name: "SFProText-Bold", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: .bold)
-    
+
     // MARK: - Regular Fonts
     static let sfProRegular17 = UIFont(name: "SFProText-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: .regular)
     static let sfProRegular15 = UIFont(name: "SFProText-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .regular)

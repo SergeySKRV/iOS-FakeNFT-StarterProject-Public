@@ -9,7 +9,6 @@ import Foundation
 
 // MARK: - NFTItem
 struct NFTItem {
-    
     // MARK: - Properties
     let id: String
     let name: String

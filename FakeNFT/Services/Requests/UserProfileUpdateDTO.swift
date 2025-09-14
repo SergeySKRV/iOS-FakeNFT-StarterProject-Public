@@ -19,7 +19,7 @@ struct UserProfileUpdateDTO: Dto {
     // MARK: - Public Methods
     func asDictionary() -> [String: String] {
         var params: [String: String] = [:]
-        
+
         if let name = self.name {
             params["name"] = name
         }

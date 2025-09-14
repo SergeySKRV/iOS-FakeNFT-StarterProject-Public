@@ -1,5 +1,5 @@
-import UIKit
 import ProgressHUD
+import UIKit
 
 // MARK: - EditProfilePresenter
 final class EditProfilePresenter: EditProfilePresenterProtocol {
@@ -9,18 +9,20 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
     private let imageLoaderService: ImageLoaderService
     private var userProfile: UserProfile?
     private var hasChanges = false
-    
+
     // MARK: - Lifecycle
-    required init(view: EditProfilePresenterOutput,
-                  userProfile: UserProfile,
-                  userService: UserProfileService,
-                  imageLoaderService: ImageLoaderService = ImageLoaderServiceImpl()) {
+    required init(
+        view: EditProfilePresenterOutput,
+        userProfile: UserProfile,
+        userService: UserProfileService,
+        imageLoaderService: ImageLoaderService = ImageLoaderServiceImpl()
+    ) {
         self.view = view
         self.userProfile = userProfile
         self.userService = userService
         self.imageLoaderService = imageLoaderService
     }
-    
+
     func viewDidLoad() {
         guard let profile = userProfile else {
             assertionFailure("UserProfile is nil in EditProfilePresenter")
@@ -30,13 +32,13 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
         view?.setupNavigationBar()
         view?.observeTextFieldsForChanges()
     }
-    
+
     func viewWillAppear() {
     }
-    
+
     func viewWillDisappear() {
     }
-    
+
     // MARK: - Public Methods (Actions)
     func backButtonTapped() {
         if view?.getHasChanges() ?? false {
@@ -45,7 +47,7 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
             view?.dismissViewController()
         }
     }
-    
+
     func saveButtonTapped() {
         guard let currentUser = userProfile else { return }
         let avatarURLString = view?.getAvatarURLString()
@@ -60,7 +62,7 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
         )
         userService.updateUserProfile(updatedProfile) { [weak self] result in
             switch result {
-            case .success(_):
+            case .success:
                 DispatchQueue.main.async {
                     self?.view?.showLoader()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -70,7 +72,6 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
                     }
                 }
             case .failure(let error):
-                // print("Ошибка сохранения профиля: \(error)")
                 DispatchQueue.main.async {
                     self?.view?.hideLoader()
                     self?.view?.showAlert(title: "Ошибка", message: "Не удалось сохранить профиль: \(error.localizedDescription)")
@@ -78,74 +79,74 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
             }
         }
     }
-    
+
     func cameraButtonTapped() {
         view?.showPhotoOptionsAlert()
     }
-    
+
     func contentChanged() {
         view?.setHasChanges(true)
     }
-    
+
     func photoDeleted() {
         view?.setHasChanges(true)
     }
-    
+
     func photoURLChanged(_ url: URL) {
         view?.setHasChanges(true)
     }
-    
+
     // MARK: - UI Operations
     func showExitConfirmationAlert() {
         view?.showExitConfirmationAlert()
     }
-    
+
     func showPhotoOptionsAlert() {
         view?.showPhotoOptionsAlert()
     }
-    
+
     func showPhotoURLAlert() {
         view?.showPhotoURLAlert()
     }
-    
+
     func showLoader() {
         view?.showLoader()
     }
-    
+
     func hideLoader() {
         view?.hideLoader()
     }
-    
+
     func dismissViewController() {
         view?.dismissViewController()
     }
-    
+
     func showAlert(title: String, message: String?) {
         view?.showAlert(title: title, message: message)
     }
-    
+
     func updateProfileImage(_ image: UIImage) {
         view?.updateProfileImage(image)
         view?.setHasChanges(true)
     }
-    
+
     func setupNavigationBar() {
         view?.setupNavigationBar()
     }
-    
+
     func observeTextFieldsForChanges() {
         view?.observeTextFieldsForChanges()
     }
-    
+
     // MARK: - Data Operations
     func loadImageFromURL(_ url: URL, completion: @escaping (UIImage?) -> Void) {
         imageLoaderService.loadImage(from: url, completion: completion)
     }
-    
+
     func saveUserProfileLocally(_ profile: UserProfile) {
         view?.saveUserProfileLocally(profile)
     }
-    
+
     func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void) {
         view?.updateUserProfile(profile, completion: completion)
     }

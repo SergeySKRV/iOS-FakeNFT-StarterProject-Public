@@ -2,12 +2,12 @@ import Foundation
 
 // MARK: - ServicesAssembly
 final class ServicesAssembly {
-    
+
     // MARK: - Properties
     private let networkClient: NetworkClient
     private let nftStorage: NftStorage
     private let userProfileService: UserProfileService
-    
+
     // MARK: - Initialization
     init(
         networkClient: NetworkClient,
@@ -17,7 +17,7 @@ final class ServicesAssembly {
         self.nftStorage = nftStorage
         self.userProfileService = UserProfileServiceImpl(networkClient: networkClient)
     }
-    
+
     // MARK: - Public Methods
     var nftService: NftService {
         NftServiceImpl(
@@ -25,7 +25,7 @@ final class ServicesAssembly {
             storage: nftStorage
         )
     }
-    
+
     var userService: UserProfileService {
         userProfileService
     }

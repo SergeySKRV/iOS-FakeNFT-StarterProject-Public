@@ -48,7 +48,6 @@ protocol ProfilePresenterProtocol:
     ProfilePresenterLifecycle,
     ProfilePresenterActions,
     ProfilePresenterTableViewOperations {
-    
     // MARK: - Lifecycle
     init(view: ProfilePresenterOutput, userService: UserProfileService, servicesAssembly: ServicesAssembly)
 }

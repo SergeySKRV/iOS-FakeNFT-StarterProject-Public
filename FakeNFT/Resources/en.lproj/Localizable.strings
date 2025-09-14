@@ -49,3 +49,6 @@
 
 // MARK: - Empty State
 "MyNFT.emptyState" = "You don't have any NFTs yet";
+
+// MARK: - Price
+"price" = "Price";

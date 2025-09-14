@@ -13,7 +13,7 @@ enum NFTSortOption: CaseIterable {
     case byPrice
     case byRating
     case byName
-    
+
     // MARK: - Computed Properties
     var title: String {
         switch self {

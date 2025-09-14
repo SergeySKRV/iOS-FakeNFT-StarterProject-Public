@@ -2,7 +2,6 @@ import Foundation
 
 // MARK: - Nft
 struct Nft: Decodable {
-    
     // MARK: - Properties
     let id: String
     let name: String
