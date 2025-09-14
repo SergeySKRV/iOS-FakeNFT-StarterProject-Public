@@ -135,6 +135,28 @@ final class CartService: CartServiceProtocol {
         }
         task.resume()
     }
+    
+    func loadCurrencies(completion: @escaping (Result<[Currency], Error>) -> Void) {
+        guard let url = URL(string: "\(baseURL)/api/v1/currencies") else {
+            completion(.failure(URLError(.badURL)))
+            return
+        }
+        
+        let request = CartNetworkRequest(
+            endpoint: url,
+            httpMethod: .get
+        )
+        
+        networkClient.send(request: request, type: [Currency].self) { result in
+            switch result {
+            case .success(let currencies):
+                completion(.success(currencies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     // пока не реализовано
     
     //    func proceedToPayment(completion: @escaping (Result<PaymentResponse, Error>) -> Void) {

@@ -5,6 +5,7 @@ protocol CartViewProtocol: AnyObject {
     func updateTotalPrice()
     func showEmptyState()
     func showError(message: String)
+    func navigateToPaymentScreen()
 }
 
 protocol CartPresenterProtocol {

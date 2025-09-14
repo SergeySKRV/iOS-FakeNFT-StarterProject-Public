@@ -150,7 +150,7 @@ final class CartViewController: UIViewController {
         let defaults = UserDefaults.standard
         let itemCount = defaults.integer(forKey: CacheKeys.cartItemsCount)
         let totalPrice = defaults.double(forKey: CacheKeys.totalPrice)
-
+        
         if itemCount > 0 {
             nftCountLabel.text = "\(itemCount) NFT"
             totalPriceLabel.text = String(format: "%.2f ETH", totalPrice)
@@ -256,6 +256,14 @@ extension CartViewController: CartViewProtocol {
         totalPriceLabel.text = String(format: "%.2f ETH", totalPrice)
         
         cacheCartData(count: cartItems.count, price: totalPrice)
+    }
+    
+    func navigateToPaymentScreen() {
+        let paymentVC = PaymentViewController()
+        let paymentPresenter = PaymentPresenter(view: paymentVC, cartService: CartService())
+        paymentVC.presenter = paymentPresenter
+        
+        navigationController?.pushViewController(paymentVC, animated: true)
     }
     
     func showError(message: String) {
