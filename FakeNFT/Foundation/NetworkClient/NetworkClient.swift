@@ -74,9 +74,10 @@ struct DefaultNetworkClient: NetworkClient {
             }
 
             if let data = data {
-                onResponse(.success(data))
+               onResponse(.success(data))
                 return
             } else if let error = error {
+                print("error: \(error)")
                 onResponse(.failure(NetworkClientError.urlRequestError(error)))
                 return
             } else {

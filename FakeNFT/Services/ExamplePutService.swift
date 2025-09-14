@@ -12,11 +12,9 @@ protocol ExamplePutService {
 
 final class ExamplePutServiceImpl: ExamplePutService {
     private let networkClient: NetworkClient
-    
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
-    
     func sendExamplePutRequest(
         param1: String,
         param2: String,
