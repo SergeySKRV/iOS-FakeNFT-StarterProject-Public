@@ -17,6 +17,7 @@ final class UsersServiceImpl: UsersService {
     }
     func loadUsers(completion: @escaping UsersCompletion) {
         let request = ProfilesRequest()
+        
         networkClient.send(request: request, type: [User].self) { [weak storage] result in
             switch result {
             case .success(let users):

@@ -1,5 +1,4 @@
 import UIKit
-import SwiftUICore
 
 struct Fonts {
     // MARK: - Bold Fonts
@@ -15,7 +14,7 @@ struct Fonts {
                             ?? UIFont.systemFont(ofSize: 15, weight: .regular)
     static let sfProRegular13 = UIFont(name: "SFProText-Regular", size: 13)
                             ?? UIFont.systemFont(ofSize: 13, weight: .regular)
-    // MARK: - Medun Fonts
+    // MARK: - Medium Fonts
     static let sfProMedium10 = UIFont(name: "SFProText-Medium", size: 10)
                                 ?? UIFont.systemFont(ofSize: 10, weight: .medium)
 }

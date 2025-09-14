@@ -11,7 +11,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     private let presenter = StatisticsViewPresenter.shared
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "SortIcon"), for: .normal)
+        button.setImage(UIImage(resource: .sortIcon), for: .normal)
         button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside) 
         return button
     }()
@@ -34,7 +34,7 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         configureView()
         showStatistics()
     }
-    internal func showStatistics() {
+    func showStatistics() {
         statisticsTableView.reloadData()
     }
     func showLoadingIndicator() {

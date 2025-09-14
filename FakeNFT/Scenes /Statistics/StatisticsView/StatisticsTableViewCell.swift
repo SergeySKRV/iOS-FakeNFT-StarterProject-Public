@@ -23,7 +23,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 14
-        imageView.image = UIImage(named: "AvatarStub")
+        imageView.image = UIImage(resource: .avatarStub)
         return imageView
     }()
     let profileNameLabel: UILabel = {
@@ -85,7 +85,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         numberLabel.text = "\(number)"
         if avatarImage != "" {
             profileAvatarImageView.kf.setImage(with: URL(string: avatarImage),
-                                               placeholder: UIImage(named: "AvatarStub"))
+                                               placeholder: UIImage(resource: .avatarStub))
         }
         profileNameLabel.text = nameOfUser
         profileNFTCountLabel.text = "\(numberOfNFT)"

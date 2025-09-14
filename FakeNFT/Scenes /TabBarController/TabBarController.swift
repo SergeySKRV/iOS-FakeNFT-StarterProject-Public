@@ -4,22 +4,22 @@ final class TabBarController: UITabBarController {
     // var servicesAssembly: ServicesAssembly!
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: ""),
-        image: UIImage(named: "ProfileIcon"),
+        image: UIImage(resource: .profileIcon),
        tag: 0
     )
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(named: "CatalogIcon"),
+        image: UIImage(resource: .catalogIcon),
         tag: 1
     )
     private let cartTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.cart", comment: ""),
-        image: UIImage(named: "CartIcon"),
+        image: UIImage(resource: .cartIcon),
         tag: 2
     )
     private let statisticsTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.statistics", comment: ""),
-        image: UIImage(named: "StatisticsIcon"),
+        image: UIImage(resource: .statisticsIcon),
         tag: 3
     )
     override func viewDidLoad() {
