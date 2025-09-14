@@ -180,53 +180,98 @@ final class CollectionViewController: UIViewController {
         nftCollectionView.delegate = self
         nftCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
     }
-   
+    
     private func setupCollectionViewControllerConstrains() {
-       
-        var navigationBarHeight: CGFloat {
-            (navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? Constants.floatZero) +
-            (self.navigationController?.navigationBar.frame.height ?? Constants.floatZero)
-        }
+        setupBackButtonConstraints()
+        setupScrollViewConstraints()
+        setupCollectionCoverImageConstraints()
+        setupDescriptionStackViewConstraints()
+        setupCollectionNameConstraints()
+        setupCollectionAuthorConstraints()
+        setupCollectionAuthorLinkConstraints()
+        setupCollectionDescriptionConstraints()
+        setupNFTCollectionViewConstraints()
+    }
+
+    private func setupBackButtonConstraints() {
         NSLayoutConstraint.activate([
             backButton.widthAnchor.constraint(equalToConstant: 24),
             backButton.heightAnchor.constraint(equalToConstant: 24),
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
-            backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 9),
-            
+            backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 9)
+        ])
+    }
+
+    private func setupScrollViewConstraints() {
+        let navigationBarHeight = calculateNavigationBarHeight()
+        NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: -navigationBarHeight),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+
+    private func setupCollectionCoverImageConstraints() {
+        NSLayoutConstraint.activate([
             collectionCoverImage.topAnchor.constraint(equalTo: scrollView.topAnchor),
             collectionCoverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionCoverImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionCoverImage.heightAnchor.constraint(equalToConstant: Constants.collectionCoverImageHeight),
-            
+            collectionCoverImage.heightAnchor.constraint(equalToConstant: Constants.collectionCoverImageHeight)
+        ])
+    }
+
+    private func setupDescriptionStackViewConstraints() {
+        NSLayoutConstraint.activate([
             descriptionStackView.topAnchor.constraint(equalTo: collectionCoverImage.bottomAnchor, constant: Constants.descriptionStackViewTopIdent),
             descriptionStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            descriptionStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
+            descriptionStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
+    private func setupCollectionNameConstraints() {
+        NSLayoutConstraint.activate([
             collectionName.topAnchor.constraint(equalTo: descriptionStackView.topAnchor),
             collectionName.leadingAnchor.constraint(equalTo: descriptionStackView.leadingAnchor, constant: Constants.collectionNameLeading),
-            collectionName.trailingAnchor.constraint(equalTo: descriptionStackView.trailingAnchor, constant: Constants.collectionNameTrailing),
-            
+            collectionName.trailingAnchor.constraint(equalTo: descriptionStackView.trailingAnchor, constant: Constants.collectionNameTrailing)
+        ])
+    }
+
+    private func setupCollectionAuthorConstraints() {
+        NSLayoutConstraint.activate([
             collectionAuthor.topAnchor.constraint(equalTo: collectionName.bottomAnchor, constant: Constants.collectionAuthorTopIdent),
-            collectionAuthor.leadingAnchor.constraint(equalTo: collectionName.leadingAnchor),
-            
+            collectionAuthor.leadingAnchor.constraint(equalTo: collectionName.leadingAnchor)
+        ])
+    }
+
+    private func setupCollectionAuthorLinkConstraints() {
+        NSLayoutConstraint.activate([
             collectionAuthorLink.leadingAnchor.constraint(equalTo: collectionAuthor.trailingAnchor, constant: Constants.collectionAuthorLinkLeading),
-            collectionAuthorLink.centerYAnchor.constraint(equalTo: collectionAuthor.centerYAnchor),
-            
+            collectionAuthorLink.centerYAnchor.constraint(equalTo: collectionAuthor.centerYAnchor)
+        ])
+    }
+
+    private func setupCollectionDescriptionConstraints() {
+        NSLayoutConstraint.activate([
             collectionDescription.topAnchor.constraint(equalTo: collectionAuthor.bottomAnchor, constant: Constants.collectionDescriptionTopIdent),
             collectionDescription.leadingAnchor.constraint(equalTo: collectionName.leadingAnchor),
             collectionDescription.trailingAnchor.constraint(equalTo: collectionName.trailingAnchor),
-            collectionDescription.bottomAnchor.constraint(equalTo: descriptionStackView.bottomAnchor),
-            
+            collectionDescription.bottomAnchor.constraint(equalTo: descriptionStackView.bottomAnchor)
+        ])
+    }
+
+    private func setupNFTCollectionViewConstraints() {
+        NSLayoutConstraint.activate([
             nftCollectionView.topAnchor.constraint(equalTo: descriptionStackView.bottomAnchor, constant: Constants.nftCollectionViewTopIdent),
             nftCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.nftCollectionViewLeading),
             nftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constants.nftCollectionViewTrailing),
             nftCollectionView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
+    }
+
+    private func calculateNavigationBarHeight() -> CGFloat {
+        return (navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? Constants.floatZero) +
+               (self.navigationController?.navigationBar.frame.height ?? Constants.floatZero)
     }
 }
 

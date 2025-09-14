@@ -17,7 +17,7 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
         webView.isOpaque = false
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear
-        webView.alpha = 0 // Изначально скрываем WebView
+        webView.alpha = 0 // скрываем WebView
         return webView
     }()
     
@@ -141,7 +141,7 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
             webView.alpha = 1
         }
         
-        // Можно добавить обработку ошибки, например, показать alert
+        // обработка ошибки
         print("Ошибка загрузки: \(error.localizedDescription)")
     }
     
