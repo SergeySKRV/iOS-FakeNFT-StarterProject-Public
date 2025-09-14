@@ -7,19 +7,17 @@ protocol UsersService {
 }
 
 final class UsersServiceImpl: UsersService {
-    
-    //MARK: private properties
+    // MARK: - private properties
     private let networkClient: NetworkClient
     private let storage: UsersStorage
-    
-    //MARK: public methods
+    // MARK: - public methods
     init(networkClient: NetworkClient, storage: UsersStorage) {
         self.storage = storage
         self.networkClient = networkClient
     }
-    
     func loadUsers(completion: @escaping UsersCompletion) {
         let request = ProfilesRequest()
+        
         networkClient.send(request: request, type: [User].self) { [weak storage] result in
             switch result {
             case .success(let users):

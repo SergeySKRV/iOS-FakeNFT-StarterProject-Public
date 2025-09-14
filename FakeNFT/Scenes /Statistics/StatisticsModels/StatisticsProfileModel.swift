@@ -1,7 +1,8 @@
-import UIKit
+import Foundation
 
-struct StatisticsProfileModel  {
+struct StatisticsProfileModel {
     let avatarImage: String
+    let description: String
     let name: String
     let nftCount: Int
     let rating: Int
