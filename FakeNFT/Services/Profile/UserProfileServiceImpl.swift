@@ -2,10 +2,10 @@ import UIKit
 
 final class UserProfileServiceImpl: UserProfileService {
     // MARK: - Properties
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
 
     // MARK: - Initialization
-    init(networkClient: NetworkClient) {
+    init(networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient
     }
 

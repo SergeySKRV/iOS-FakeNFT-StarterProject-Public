@@ -18,6 +18,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
         imageView.backgroundColor = .yaSecondary
+        imageView.kf.indicatorType = .activity
         return imageView
     }()
 

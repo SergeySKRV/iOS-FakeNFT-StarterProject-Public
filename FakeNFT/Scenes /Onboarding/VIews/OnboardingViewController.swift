@@ -52,7 +52,7 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 
     private lazy var nextButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle(NSLocalizedString("Onboarding.nextButton", comment: "Next button title"), for: .normal)
+        button.setTitle(OnboardingLocalizationHelper.nextButtonTitle(), for: .normal)
         button.titleLabel?.font = Fonts.sfProBold17
         button.setTitleColor(.yaWhiteUniversal, for: .normal)
         button.backgroundColor = .yaBlackUniversal

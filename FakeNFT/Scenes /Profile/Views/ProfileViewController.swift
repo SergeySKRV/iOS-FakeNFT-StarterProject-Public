@@ -1,6 +1,7 @@
 import Kingfisher
 import ProgressHUD
 import UIKit
+
 // MARK: - ProfileViewController
 final class ProfileViewController: UIViewController {
     // MARK: - UI Elements
@@ -11,6 +12,7 @@ final class ProfileViewController: UIViewController {
         imageView.layer.cornerRadius = 35
         imageView.clipsToBounds = true
         imageView.image = UIImage(resource: .placeholderAvatar)
+        imageView.kf.indicatorType = .activity
         return imageView
     }()
 
@@ -147,11 +149,6 @@ final class ProfileViewController: UIViewController {
         presenter.editProfileTapped()
     }
 
-    // MARK: - Internal Methods
-    private func refreshProfileData() {
-        presenter.refreshProfileData()
-    }
-
     // MARK: - Loading State Management
     private func showLoadingState() {
         profileImageView.isHidden = true
@@ -209,31 +206,6 @@ extension ProfileViewController: ProfilePresenterOutput {
         websiteLabel.text = profile.website
 
         if let avatarURL = profile.avatar, !avatarURL.absoluteString.isEmpty {
-            let loadingView = UIView()
-            loadingView.tag = 999
-            loadingView.translatesAutoresizingMaskIntoConstraints = false
-            loadingView.backgroundColor = UIColor.yaPrimary.withAlphaComponent(0.7)
-            loadingView.layer.cornerRadius = 35
-            loadingView.clipsToBounds = true
-
-            let activityIndicator = UIActivityIndicatorView(style: .medium)
-            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-            activityIndicator.color = .white
-            activityIndicator.startAnimating()
-
-            loadingView.addSubview(activityIndicator)
-            view.addSubview(loadingView)
-
-            NSLayoutConstraint.activate([
-                loadingView.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor),
-                loadingView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-                loadingView.widthAnchor.constraint(equalToConstant: 70),
-                loadingView.heightAnchor.constraint(equalToConstant: 70),
-
-                activityIndicator.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
-                activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)
-            ])
-
             profileImageView.kf.setImage(
                 with: avatarURL,
                 placeholder: UIImage(resource: .placeholderAvatar),
@@ -243,8 +215,6 @@ extension ProfileViewController: ProfilePresenterOutput {
                 ]
             ) { [weak self] result in
                 DispatchQueue.main.async {
-                    self?.view.subviews.first { $0.tag == 999 }?.removeFromSuperview()
-
                     switch result {
                     case .success:
                         break
@@ -254,7 +224,6 @@ extension ProfileViewController: ProfilePresenterOutput {
                 }
             }
         } else {
-            view.subviews.first { $0.tag == 999 }?.removeFromSuperview()
             profileImageView.image = UIImage(resource: .placeholderAvatar)
         }
     }
@@ -283,8 +252,8 @@ extension ProfileViewController: ProfilePresenterOutput {
         hideLoadingState()
 
         let alert = UIAlertController(
-            title: "Ошибка",
-            message: "Не удалось загрузить данные профиля",
+            title: NSLocalizedString("Error.title", comment: "Error title"),
+            message: NSLocalizedString("Error.network", comment: "Network error message"),
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "OK", style: .default))

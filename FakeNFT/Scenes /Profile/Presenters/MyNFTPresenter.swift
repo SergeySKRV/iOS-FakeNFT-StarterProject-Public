@@ -19,7 +19,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     private var currentSortOption: NFTSortOption = .byName
 
     // MARK: - Lifecycle
-    required init(view: MyNFTViewProtocol, nftService: NftService, userService: UserProfileService, servicesAssembly: ServicesAssembly) {
+    init(view: MyNFTViewProtocol, nftService: NftService, userService: UserProfileService, servicesAssembly: ServicesAssembly) {
         self.view = view
         self.nftService = nftService
         self.userService = userService
@@ -120,7 +120,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
 
         group.notify(queue: .global(qos: .userInitiated)) {
             let defaultImageURL = URL(string: "https://example.com/default-nft.jpg")!
-            let nftItems: [NFTItem] = loadedNfts.map { nft in
+            let nftItems: [NFTItem] = loadedNfts.compactMap { nft in
                 let formattedAuthor = self.formatAuthor(from: nft.author)
                 let imageURL = nft.images.first ?? defaultImageURL
 

@@ -13,7 +13,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let shouldShowOnboarding = !UserDefaults.standard.bool(forKey: "hasSeenOnboarding")
+        let shouldShowOnboarding = !UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.hasSeenOnboarding)
 
         if shouldShowOnboarding {
             let onboardingVC = OnboardingViewController()

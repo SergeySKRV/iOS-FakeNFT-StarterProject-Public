@@ -14,11 +14,11 @@ protocol NftService {
 // MARK: - NftServiceImpl
 final class NftServiceImpl: NftService {
     // MARK: - Properties
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
     private let storage: NftStorage
 
     // MARK: - Initialization
-    init(networkClient: NetworkClient, storage: NftStorage) {
+    init(networkClient: NetworkClientProtocol, storage: NftStorage) {
         self.storage = storage
         self.networkClient = networkClient
     }

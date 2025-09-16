@@ -4,13 +4,13 @@ import Foundation
 final class ServicesAssembly {
 
     // MARK: - Properties
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
     private let nftStorage: NftStorage
     private let userProfileService: UserProfileService
 
     // MARK: - Initialization
     init(
-        networkClient: NetworkClient,
+        networkClient: NetworkClientProtocol,
         nftStorage: NftStorage
     ) {
         self.networkClient = networkClient

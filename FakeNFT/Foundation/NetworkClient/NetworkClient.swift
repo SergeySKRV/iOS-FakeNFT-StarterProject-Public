@@ -7,7 +7,7 @@ enum NetworkClientError: Error {
     case parsingError
 }
 
-protocol NetworkClient {
+protocol NetworkClientProtocol {
     @discardableResult
     func send(
         request: NetworkRequest,
@@ -24,7 +24,7 @@ protocol NetworkClient {
     ) -> NetworkTask?
 }
 
-extension NetworkClient {
+extension NetworkClientProtocol {
     @discardableResult
     func send(
         request: NetworkRequest,
@@ -52,7 +52,7 @@ extension NetworkClient {
     }
 }
 
-struct DefaultNetworkClient: NetworkClient {
+struct DefaultNetworkClient: NetworkClientProtocol {
     private let session: URLSession
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder

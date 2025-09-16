@@ -11,9 +11,9 @@ protocol ExamplePutService {
 }
 
 final class ExamplePutServiceImpl: ExamplePutService {
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
 
-    init(networkClient: NetworkClient) {
+    init(networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient
     }
 

@@ -12,7 +12,9 @@ final class OnboardingPresenter {
     // MARK: - UI Properties
     weak var view: OnboardingViewProtocol?
     private let model: OnboardingModel
-    private let totalSlides = 3
+    private var totalSlides: Int {
+        model.getSlides().count
+    }
 
     // MARK: - Properties
     private var currentIndex = 0
@@ -42,12 +44,12 @@ final class OnboardingPresenter {
     }
 
     func close() {
-        UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
+        UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.hasSeenOnboarding)
         view?.dismiss()
     }
 
     func goToNextScreen() {
-        UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
+        UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.hasSeenOnboarding)
         view?.goToNextScreen()
     }
 

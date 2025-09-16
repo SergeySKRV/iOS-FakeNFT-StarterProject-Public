@@ -10,7 +10,6 @@ import UIKit
 // MARK: - MyNFTPresenterProtocol
 protocol MyNFTPresenterProtocol: AnyObject {
     // MARK: - Lifecycle
-    init(view: MyNFTViewProtocol, nftService: NftService, userService: UserProfileService, servicesAssembly: ServicesAssembly)
     func viewDidLoad()
     func viewWillAppear()
 
