@@ -1,47 +1,61 @@
 import UIKit
 
-protocol UserProfileService {
-    func fetchUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void)
-    func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void)
-    func saveUserProfileLocally(_ profile: UserProfile) -> Bool
-    func loadUserProfileLocally() -> UserProfile?
-}
-
 final class UserProfileServiceImpl: UserProfileService {
-    
+    // MARK: - Properties
+    private let networkClient: NetworkClientProtocol
+
+    // MARK: - Initialization
+    init(networkClient: NetworkClientProtocol) {
+        self.networkClient = networkClient
+    }
+
     // MARK: - Public Methods
     func fetchUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
-        if let localProfile = loadUserProfileLocally() {
-            completion(.success(localProfile))
-            return
-        }
-        
-            let mockProfile = UserProfile(
-                photo: UIImage(named: "userPic") ?? UIImage(systemName: "person.circle") ?? UIImage(),
-                name: "Joaquin Phoenix",
-                description: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям.",
-                website: "Joaquin Phoenix.com"
-            )
-            
-            DispatchQueue.main.async {
-                completion(.success(mockProfile))
-            }
-    }
-    
-    func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            let saved = self.saveUserProfileLocally(profile)
-            
-            DispatchQueue.main.async {
-                if saved {
-                    completion(.success(true))
+        let request = UserProfileRequest()
+        networkClient.send(request: request, type: UserProfile.self) { [weak self] result in
+            switch result {
+            case .success(let profile):
+                _ = self?.saveUserProfileLocally(profile)
+                DispatchQueue.main.async {
+                    completion(.success(profile))
+                }
+            case .failure(let error):
+                if let localProfile = self?.loadUserProfileLocally() {
+                    DispatchQueue.main.async {
+                        completion(.success(localProfile))
+                    }
                 } else {
-                    completion(.failure(NSError(domain: "SaveError", code: 0, userInfo: nil)))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }
     }
-    
+
+    func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let updateDTO = UserProfileUpdateDTO(
+            name: profile.name,
+            description: profile.description,
+            website: profile.website,
+            avatar: profile.avatar?.absoluteString
+        )
+        let updateRequest = UpdateUserProfileRequest(updateData: updateDTO)
+        networkClient.send(request: updateRequest) { [weak self] result in
+            switch result {
+            case .success:
+                let saveResult = self?.saveUserProfileLocally(profile) ?? false
+                DispatchQueue.main.async {
+                    completion(.success(saveResult))
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
     func saveUserProfileLocally(_ profile: UserProfile) -> Bool {
         do {
             let encoder = JSONEncoder()
@@ -49,22 +63,20 @@ final class UserProfileServiceImpl: UserProfileService {
             UserDefaults.standard.set(data, forKey: "UserProfile")
             return true
         } catch {
-            print("Ошибка сохранения профиля: \(error)")
             return false
         }
     }
-    
+
     func loadUserProfileLocally() -> UserProfile? {
         guard let data = UserDefaults.standard.data(forKey: "UserProfile") else {
             return nil
         }
-        
         do {
             let decoder = JSONDecoder()
             let profile = try decoder.decode(UserProfile.self, from: data)
             return profile
         } catch {
-            print("Ошибка загрузки профиля: \(error)")
+            UserDefaults.standard.removeObject(forKey: "UserProfile")
             return nil
         }
     }

@@ -3,6 +3,7 @@ import UIKit
 
 protocol LoadingView {
     var activityIndicator: UIActivityIndicatorView { get }
+
     func showLoading()
     func hideLoading()
 }

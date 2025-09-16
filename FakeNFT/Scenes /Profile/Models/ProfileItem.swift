@@ -7,7 +7,9 @@
 
 import Foundation
 
+// MARK: - ProfileItem
 struct ProfileItem {
+    // MARK: - Properties
     let title: String
     let subtitle: String
 }

@@ -7,7 +7,9 @@
 
 import Foundation
 
+// MARK: - ProfileSection
 struct ProfileSection {
+    // MARK: - Properties
     let title: String
     let items: [ProfileItem]
 }

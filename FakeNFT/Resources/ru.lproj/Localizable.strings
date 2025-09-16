@@ -21,7 +21,7 @@
 "EditProfile.photoDelete" = "Удалить фото";
 "EditProfile.photoCancel" = "Отмена";
 "EditProfile.photoUrlTitle" = "Ссылка на фото";
-"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg  ";
+"EditProfile.photoUrlPlaceholder" = "https://example.com/photo.jpg";
 "EditProfile.nameLabel" = "Имя";
 "EditProfile.descriptionLabel" = "Описание";
 "EditProfile.websiteLabel" = "Сайт";
@@ -34,3 +34,30 @@
 
 // MARK: - Web View
 "Webview.backButton" = "Назад";
+
+// MARK: - My NFT
+"MyNFT.title" = "Мои NFT";
+
+// MARK: - My NFT Sorting
+"MyNFT.sortTitle" = "Сортировка";
+"MyNFT.sortCancel" = "Закрыть";
+
+// MARK: - Sorting Options
+"Sort.byPrice" = "По цене";
+"Sort.byRating" = "По рейтингу";
+"Sort.byName" = "По названию";
+
+// MARK: - Empty State
+"MyNFT.emptyState" = "У Вас ещё нет NFT";
+
+// MARK: - Price
+"price" = "Цена";
+
+// MARK: - Onboarding
+"Onboarding.nextButton" = "Что внутри?";
+"Onboarding.slide1.title" = "Исследуйте";
+"Onboarding.slide1.subtitle" = "Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров";
+"Onboarding.slide2.title" = "Коллекционируйте";
+"Onboarding.slide2.subtitle" = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!";
+"Onboarding.slide3.title" = "Состязайтесь";
+"Onboarding.slide3.subtitle" = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция";
