@@ -2,12 +2,16 @@ import UIKit
 import Kingfisher
 
 final class StatisticsCollectionViewCell: UICollectionViewCell {
+    var presenter: StatisticsCollectionPresenter?
     // MARK: - private properties
+   
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+       return imageView
     }()
     private let likeImage: UIImageView = {
         let imageView = UIImageView()
@@ -44,14 +48,16 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
     // MARK: - public methods
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureView()
+       configureView()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     func configureView() {
         backgroundColor = .clear
         contentView.addSubview(nftImageView)
+        
         NSLayoutConstraint.activate([
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -79,6 +85,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
             cartImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)])
     }
     func configureCellData(nftCart: StatisticsNFTModel) {
+        nftImageView.kf.indicatorType = .activity
         nftImageView.kf.setImage(with: URL(string: nftCart.image))
         likeImage.image = nftCart.isLike ? UIImage(resource: .statisticsLikeActive) :
         UIImage(resource: .statisticsLikeNoActive)
@@ -91,7 +98,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         case 5: ratingImage.image = UIImage(resource: .statisticsRating5)
         default: ratingImage.image = UIImage(resource: .statisticsRating0)
         }
-        nameLabel.text = nftCart.name
+        nameLabel.text = nftCart.name.components(separatedBy: " ")[0]
         priceLabel.text = "\(nftCart.price) ETH"
         cartImage.image  = nftCart.isInCart ? UIImage(resource: .statisticsCartActive) :
         UIImage(resource: .statisticsCartNoActive)

@@ -54,8 +54,8 @@ final class StatisticsViewPresenter {
             assertionFailure("can't move to initial state")
         case .loading:
             view?.showLoadingIndicator()
-            //loadStatistics() // TODO: убрать перед ревью
-             loadMockStatistics() // Для ускорения отладки работаем с моковыми данными
+            loadStatistics() // TODO: убрать перед ревью
+            // loadMockStatistics() // Для ускорения отладки работаем с моковыми данными
         case .data:
             view?.hideLoadingIndicator()
             view?.showStatistics()

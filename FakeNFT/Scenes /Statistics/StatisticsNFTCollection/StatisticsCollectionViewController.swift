@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 protocol StatisticsCollectionView: AnyObject, ErrorView {
     func showNFTs()
@@ -53,10 +54,12 @@ final class StatisticsCollectionViewController: UIViewController, StatisticsColl
         ])
     }
     func showLoadingIndicator() {
-        StatisticsUIBlockingProgressHUD.show()
+        view?.isUserInteractionEnabled = false
+        ProgressHUD.show()
     }
     func hideLoadingIndicator() {
-        StatisticsUIBlockingProgressHUD.dismiss()
+        view?.isUserInteractionEnabled = true
+        ProgressHUD.dismiss()
     }
     func showNFTs() {
         nftCollectionView.reloadData()
@@ -83,9 +86,11 @@ extension StatisticsCollectionViewController: UICollectionViewDataSource {
         presenter.statisticsCollectionViewModel.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+      // let cell = StatisticsCollectionViewCell(presenter: presenter)
         guard let cell = nftCollectionView.dequeueReusableCell(withReuseIdentifier: "StatisticsCollectionViewCell",
                                                                for: indexPath)
                 as? StatisticsCollectionViewCell else {return UICollectionViewCell()}
+        cell.presenter = presenter
         cell.configureCellData(nftCart: presenter.statisticsCollectionViewModel[indexPath.row])
         return cell
     }

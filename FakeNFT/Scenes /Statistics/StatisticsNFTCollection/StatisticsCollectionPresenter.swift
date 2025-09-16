@@ -67,12 +67,11 @@ final class StatisticsCollectionPresenter {
         // MARK: - public methods
         func viewDidLoad() {
             state = .loading
-            
+            statisticsCollectionViewModel = []
         }
         // MARK: - private methods:
     private init () {
-        statisticsCollectionViewModel = [stubNFT1, stubNFT2, stubNFT3, stubNFT4, stubNFT5]
-       
+        statisticsCollectionViewModel = []
     }
         private func loadNFTCollection() {
             guard let userProfile = view?.userProfile else {return}
@@ -82,29 +81,35 @@ final class StatisticsCollectionPresenter {
                 service.loadNft(id: nftId) {[weak self] result in
                     switch result {
                     case .success(let nft):
-                     guard  let images = nft.images,
-                        let name = nft.name,
-                        let price = nft.price,
-                        let rating = nft.rating,
-                        let id = nft.id
-                                else { return }
+                        guard  let images = nft.images,
+                               let name = nft.name,
+                               let price = nft.price,
+                               let rating = nft.rating,
+                               let id = nft.id
+                        else { return }
                         let isLike = false
                         let isInCart = false
-                        self?.statisticsCollectionViewModel.append(StatisticsNFTModel(image: images[0],
-                                                                                name: name,
-                                                                                price: Float(price),
-                                                                                rating: rating,
-                                                                                id: id,
-                                                                                isLike: isLike,
-                                                                                isInCart: isInCart))
-                       print("ura")
+                        if self?.statisticsCollectionViewModel.contains(where: { $0.id == id }) == false {
+                            self?.statisticsCollectionViewModel.append(StatisticsNFTModel(image: images[0],
+                                                                                          name: name,
+                                                                                          price: Float(price),
+                                                                                          rating: rating,
+                                                                                          id: id,
+                                                                                          isLike: isLike,
+                                                                                          isInCart: isInCart))
+                        }
+                            print("ura")
                     case .failure(let error):
                         self?.state = .failed(error)
                         print("error in SCVP \(error)")
                     }
+                    if userProfile.nfts.count <= self?.statisticsCollectionViewModel.count ?? 0 {
+                        print("Data!")
+                    self?.state = .data
+                }
                 }
             }
-            state = .data
+            
     }
         private func stateDidChanged() {
             switch state {

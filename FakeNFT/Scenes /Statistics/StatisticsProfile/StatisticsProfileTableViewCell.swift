@@ -35,9 +35,10 @@ final class StatisticsProfileTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             collectionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)])
-        contentView.addSubview(chevronImageView)
-        NSLayoutConstraint.activate([
-            chevronImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            chevronImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)])
+        if nftCount ?? 0 > 0 { contentView.addSubview(chevronImageView)
+            NSLayoutConstraint.activate([
+                chevronImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                chevronImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)])
+        }
     }
 }

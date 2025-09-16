@@ -48,6 +48,4 @@ final class UsersServiceImpl: UsersService {
     func loadProfile(id: Int, completion: @escaping (Result<User, any Error>) -> Void) {
             
         }
-        
-  
 }
