@@ -61,7 +61,3 @@
 "Onboarding.slide2.subtitle" = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!";
 "Onboarding.slide3.title" = "Состязайтесь";
 "Onboarding.slide3.subtitle" = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция";
-
-//MARK: - FavoritesNFT
-"FavoritesNFT.title" = "Избранные NFT";
-"FavoritesNFT.emptyState" = "У вас еще нет избранных NFT";
