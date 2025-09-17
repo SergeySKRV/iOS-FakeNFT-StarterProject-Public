@@ -15,7 +15,7 @@ final class StatisticsCollectionViewController: UIViewController, StatisticsColl
         let label = UILabel()
         label.font = Fonts.sfProBold17
         label.textColor = UIColor.yaPrimary
-        label.text = "Коллекция NFT"
+        label.text = NSLocalizedString("Statistics.NFTCollection", comment: "Коллекция NFT")
         return label
     }()
     private let nftCollectionView: UICollectionView = {
@@ -86,7 +86,6 @@ extension StatisticsCollectionViewController: UICollectionViewDataSource {
         presenter.statisticsCollectionViewModel.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-      // let cell = StatisticsCollectionViewCell(presenter: presenter)
         guard let cell = nftCollectionView.dequeueReusableCell(withReuseIdentifier: "StatisticsCollectionViewCell",
                                                                for: indexPath)
                 as? StatisticsCollectionViewCell else {return UICollectionViewCell()}

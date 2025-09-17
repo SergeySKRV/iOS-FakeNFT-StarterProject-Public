@@ -7,7 +7,6 @@ final class StatisticsProfileViewPresenter {
     // MARK: - public methods
     func viewDidLoad() {
         view?.setupNavigationBar()
-        
     }
     func showWebView() {
         let webViewController = WebViewController(urlString: StatisticsConstants.webViewURL)

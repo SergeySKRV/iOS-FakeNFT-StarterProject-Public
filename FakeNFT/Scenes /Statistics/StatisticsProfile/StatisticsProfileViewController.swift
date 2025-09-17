@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 final class StatisticsProfileViewController: UIViewController {
-    // MARK:  - public properties
+    // MARK: - public properties
     var profile: StatisticsProfileModel
     // MARK: - private properties
     private let presenter = StatisticsProfileViewPresenter.shared

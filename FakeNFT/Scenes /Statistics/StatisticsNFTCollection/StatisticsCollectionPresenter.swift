@@ -41,29 +41,22 @@ final class StatisticsCollectionPresenter {
             networkClient: networkClient,
             storage: storage
         )
-        let profile = service.loadProfile { [weak self] result in
+        service.loadProfile { [weak self] result in
             switch result {
             case .success(let profile):
-                print("Likes: \(profile.likes)")
-                print("Profile \(profile.id)")
-                self?.likes = profile.likes
+               self?.likes = profile.likes
             case .failure(let error):
-                
-                print("error in SVP \(error)")
+                print("error while fetching likes \(error)")
             }
         }
-        let order = service.getOrders { [weak self] result in
+        service.getOrders { [weak self] result in
             switch result {
             case .success(let order):
-                print("Order: \(order.nfts)")
-                print("Profile \(order.id)")
                 self?.orders  = order.nfts
             case .failure(let error):
-                
-                print("error in SVP \(error)")
+                print("error while fetching order \(error)")
             }
         }
-        
         let nftService = NftServiceImpl(
             networkClient: networkClient,
             storage: NftStorageImpl()
@@ -102,13 +95,11 @@ final class StatisticsCollectionPresenter {
                 if (userProfile.nfts.count <= self?
                     .statisticsCollectionViewModel.count ?? 0)
                     && (self?.likes != nil)
-                    && (self?.orders != nil)
-                {
+                    && (self?.orders != nil) {
                     self?.state = .data
                 }
             }
         }
-        
     }
     private func stateDidChanged() {
         switch state {
@@ -145,8 +136,7 @@ final class StatisticsCollectionPresenter {
             message = NSLocalizedString("Error.unknown", comment: "")
         }
         let actionText = NSLocalizedString("Error.repeat", comment: "")
-        return ErrorModel(message: message, actionText: actionText) {
-            [weak self] in
+        return ErrorModel(message: message, actionText: actionText) { [weak self] in
             self?.state = .loading
         }
     }

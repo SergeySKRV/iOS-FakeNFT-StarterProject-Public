@@ -5,14 +5,13 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
     var presenter: StatisticsCollectionPresenter?
     var nftCard: StatisticsNFTModel?
     // MARK: - private properties
-   
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
-       return imageView
+        return imageView
     }()
     private let likeButton: UIButton = {
         let button = UIButton()
@@ -49,16 +48,14 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
     // MARK: - public methods
     override init(frame: CGRect) {
         super.init(frame: frame)
-       configureView()
+        configureView()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     func configureView() {
         backgroundColor = .clear
         contentView.addSubview(nftImageView)
-        
         NSLayoutConstraint.activate([
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),

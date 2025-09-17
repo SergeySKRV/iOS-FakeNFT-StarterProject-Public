@@ -54,8 +54,7 @@ final class StatisticsViewPresenter {
             assertionFailure("can't move to initial state")
         case .loading:
             view?.showLoadingIndicator()
-            loadStatistics() // TODO: убрать перед ревью
-            // loadMockStatistics() // Для ускорения отладки работаем с моковыми данными
+            loadStatistics()
         case .data:
             view?.hideLoadingIndicator()
             view?.showStatistics()
@@ -83,59 +82,7 @@ final class StatisticsViewPresenter {
             }
         }
     }
-    private func loadMockStatistics() {
-        let mockDescription = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-        let mockNfts = [
-            "1fda6f0c-a615-4a1a-aa9c-a1cbd7cc76ae",
-            "77c9aa30-f07a-4bed-886b-dd41051fade2",
-            "b3907b86-37c4-4e15-95bc-7f8147a9a660",
-            "f380f245-0264-4b42-8e7e-c4486e237504"]
-        let mockLikes = [String]()
-        statisticsViewModel = [
-            StatisticsProfileModel(avatarImage: "https://n1s2.hsmedia.ru/10/07/5b/10075bc9f87787e109c8bd9d93e8d66b/600x400_0x0a330c9a_8308133731545062329.jpeg", description: "Very Long Description",
-                                   name: "Maxim Sokolov",
-                                   nftCount: mockNfts.count,
-                                   nfts: mockNfts,
-                                   likes: mockLikes,
-                                   rating: 2),
-            StatisticsProfileModel(avatarImage: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/182.jpg",
-                                   description: mockDescription,
-                                   name: "Tina Duke",
-                                   nftCount: mockNfts.count,
-                                   nfts: mockNfts,
-                                   likes: mockLikes,
-                                   rating: 1),
-            StatisticsProfileModel(avatarImage: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/594.jpg",
-                                   description: mockDescription,
-                                   name: "Jimmie Reilly",
-                                   nftCount: mockNfts.count,
-                                   nfts: mockNfts,
-                                   likes: mockLikes,
-                                   rating: 2),
-            StatisticsProfileModel(avatarImage: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/991.jpg",
-                                   description: mockDescription,
-                                   name: "Antony Langley",
-                                   nftCount: mockNfts.count,
-                                   nfts: mockNfts,
-                                   likes: mockLikes,
-                                   rating: 2),
-            StatisticsProfileModel(avatarImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Brendan_Fraser_October_2022.jpg/1200px-Brendan_Fraser_October_2022.jpg",
-                                   description: mockDescription,
-                                   name: "Brendan Fraser",
-                                   nftCount: mockNfts.count,
-                                   nfts: mockNfts,
-                                   likes: mockLikes,
-                                   rating: 1),
-            StatisticsProfileModel(avatarImage: "https://images.iptv.rt.ru/images/cpt8sk3ir4sqiatbcj90.jpg",
-                                   description: mockDescription,
-                                   name: "Joaquin Phoenix",
-                                   nftCount: mockNfts.count,
-                                   nfts: mockNfts,
-                                   likes: mockLikes,
-                                   rating: 1)]
-        state = .data
-    }
-    private func convertStoreToViewModel(_ store: [StatisticsUser]) -> [StatisticsProfileModel] {
+   private func convertStoreToViewModel(_ store: [StatisticsUser]) -> [StatisticsProfileModel] {
         var result: [StatisticsProfileModel] = []
         guard let users = storage.getUsers() else {return []}
         for user in users {

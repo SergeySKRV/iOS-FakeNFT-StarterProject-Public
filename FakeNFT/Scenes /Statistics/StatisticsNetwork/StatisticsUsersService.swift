@@ -9,8 +9,6 @@ protocol StatisticsUsersService {
 }
 
 final class StatisticsUsersServiceImpl: StatisticsUsersService {
-    
-    
     // MARK: - private properties
     private let networkClient: NetworkClient
     private let storage: StatisticsUsersStorage
