@@ -61,3 +61,7 @@
 "Onboarding.slide2.subtitle" = "Erweitern Sie Ihre Sammlung mit exklusiven Kunstwerken, die von KI erstellt wurden!";
 "Onboarding.slide3.title" = "Wettkampf";
 "Onboarding.slide3.subtitle" = "Sehen Sie sich die Statistiken anderer an und zeigen Sie allen, dass Sie die wertvollste Sammlung haben";
+
+//MARK: - FavoritesNFT
+"FavoritesNFT.title" = "Favorisierte NFT";
+"FavoritesNFT.emptyState" = "Sie haben noch keine favorisierten NFTs";

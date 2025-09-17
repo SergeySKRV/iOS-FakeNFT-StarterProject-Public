@@ -61,3 +61,7 @@
 "Onboarding.slide2.subtitle" = "Enrich your collection with exclusive artworks created by AI!";
 "Onboarding.slide3.title" = "Compete";
 "Onboarding.slide3.subtitle" = "View other users' stats and show everyone that you have the most valuable collection";
+
+//MARK: - FavoritesNFT
+"FavoritesNFT.title" = "Favorite NFT";
+"FavoritesNFT.emptyState" = "You don't have any favorite NFTs yet";

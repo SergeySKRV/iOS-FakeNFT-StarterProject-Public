@@ -108,8 +108,19 @@ final class ProfilePresenter: ProfilePresenterProtocol {
                 }
             }
         case NSLocalizedString("EditProfile.favoritesNFT", comment: ""):
-            break
-            // TODO: переход к экрану Избранных NFT
+            let favoriteNFTAssembly = FavoriteNFTAssembly(servicesAssembler: servicesAssembly)
+            let favoriteNFTViewController = favoriteNFTAssembly.build()
+
+            if let profileViewController = self.view as? UIViewController,
+               let navController = profileViewController.navigationController {
+                navController.pushViewController(favoriteNFTViewController, animated: true)
+            } else {
+                let navController = UINavigationController(rootViewController: favoriteNFTViewController)
+                navController.modalPresentationStyle = .fullScreen
+                if let profileViewController = self.view as? UIViewController {
+                    profileViewController.present(navController, animated: true)
+                }
+            }
         default:
             break
         }
