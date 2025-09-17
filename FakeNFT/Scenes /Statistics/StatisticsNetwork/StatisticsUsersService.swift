@@ -9,7 +9,7 @@ protocol StatisticsUsersService {
 }
 
 final class StatisticsUsersServiceImpl: StatisticsUsersService {
-
+    
     
     // MARK: - private properties
     private let networkClient: NetworkClient
@@ -49,11 +49,24 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
         networkClient.send(request: request, type: StatisticsProfile.self) { [weak storage] result in
             switch result {
             case .success(let profile):
-               completion(.success(profile))
+                completion(.success(profile))
             case .failure(let error):
                 print("Error: \(error)")
                 completion(.failure(error))
             }
         }
+    }
+    func getOrders(completion: @escaping (Result<StatisticsOrder, any Error>) -> Void) {
+        let request = StatisticsOrderRequest()
+        networkClient.send(request: request, type: StatisticsOrder.self) { [weak storage] result in
+            switch result {
+            case .success(let order):
+                print("Order: \(order)")
+                completion(.success(order))
+            case .failure(let error):
+                print("Error: \(error)")
+                completion(.failure(error))
+            }
         }
+    }
 }

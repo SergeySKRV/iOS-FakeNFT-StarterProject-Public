@@ -45,14 +45,25 @@ final class StatisticsCollectionPresenter {
             switch result {
             case .success(let profile):
                 print("Likes: \(profile.likes)")
-
+                print("Profile \(profile.id)")
                 self?.likes = profile.likes
             case .failure(let error):
-
+                
                 print("error in SVP \(error)")
             }
         }
-
+        let order = service.getOrders { [weak self] result in
+            switch result {
+            case .success(let order):
+                print("Order: \(order.nfts)")
+                print("Profile \(order.id)")
+                self?.orders  = order.nfts
+            case .failure(let error):
+                
+                print("error in SVP \(error)")
+            }
+        }
+        
         let nftService = NftServiceImpl(
             networkClient: networkClient,
             storage: NftStorageImpl()
@@ -62,10 +73,10 @@ final class StatisticsCollectionPresenter {
                 switch result {
                 case .success(let nft):
                     guard let images = nft.images,
-                        let name = nft.name,
-                        let price = nft.price,
-                        let rating = nft.rating,
-                        let id = nft.id
+                          let name = nft.name,
+                          let price = nft.price,
+                          let rating = nft.rating,
+                          let id = nft.id
                     else { return }
                     let isLike = false
                     let isInCart = false
@@ -91,12 +102,13 @@ final class StatisticsCollectionPresenter {
                 if (userProfile.nfts.count <= self?
                     .statisticsCollectionViewModel.count ?? 0)
                     && (self?.likes != nil)
+                    && (self?.orders != nil)
                 {
                     self?.state = .data
                 }
             }
         }
-
+        
     }
     private func stateDidChanged() {
         switch state {
@@ -108,9 +120,13 @@ final class StatisticsCollectionPresenter {
         case .data:
             for number in 0..<statisticsCollectionViewModel.count - 1 {
                 statisticsCollectionViewModel[number].isLike =
-                    likes?.contains(where: {
-                        $0 == statisticsCollectionViewModel[number].id
-                    }) ?? false
+                likes?.contains(where: {
+                    $0 == statisticsCollectionViewModel[number].id
+                }) ?? false
+                statisticsCollectionViewModel[number].isInCart =
+                orders?.contains(where: {
+                    $0 == statisticsCollectionViewModel[number].id
+                }) ?? false
             }
             view?.hideLoadingIndicator()
             view?.showNFTs()
