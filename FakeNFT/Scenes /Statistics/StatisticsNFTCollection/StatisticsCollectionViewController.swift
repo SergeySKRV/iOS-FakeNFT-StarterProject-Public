@@ -91,7 +91,8 @@ extension StatisticsCollectionViewController: UICollectionViewDataSource {
                                                                for: indexPath)
                 as? StatisticsCollectionViewCell else {return UICollectionViewCell()}
         cell.presenter = presenter
-        cell.configureCellData(nftCart: presenter.statisticsCollectionViewModel[indexPath.row])
+        cell.nftCard = presenter.statisticsCollectionViewModel[indexPath.row]
+        cell.configureCellData()
         return cell
     }
 }

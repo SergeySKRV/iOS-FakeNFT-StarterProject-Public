@@ -3,6 +3,7 @@ import Kingfisher
 
 final class StatisticsCollectionViewCell: UICollectionViewCell {
     var presenter: StatisticsCollectionPresenter?
+    var nftCard: StatisticsNFTModel?
     // MARK: - private properties
    
     private let nftImageView: UIImageView = {
@@ -13,11 +14,11 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
        return imageView
     }()
-    private let likeImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private let likeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(likeButtonTouch), for: .touchUpInside)
+        return button
     }()
     private let ratingImage: UIImageView = {
         let imageView = UIImageView()
@@ -39,11 +40,11 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private let cartImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private let cartButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(cartButtonTouch), for: .touchUpInside)
+        return button
     }()
     // MARK: - public methods
     override init(frame: CGRect) {
@@ -63,10 +64,10 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
             nftImageView.heightAnchor.constraint(equalToConstant: 108)])
-        contentView.addSubview(likeImage)
+        contentView.addSubview(likeButton)
         NSLayoutConstraint.activate([
-            likeImage.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12),
-            likeImage.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12)])
+            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12),
+            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12)])
         contentView.addSubview(ratingImage)
         NSLayoutConstraint.activate([
             ratingImage.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
@@ -79,17 +80,19 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             priceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             priceLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4)])
-        contentView.addSubview(cartImage)
+        contentView.addSubview(cartButton)
         NSLayoutConstraint.activate([
-            cartImage.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 40),
-            cartImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)])
+            cartButton.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 40),
+            cartButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)])
     }
-    func configureCellData(nftCart: StatisticsNFTModel) {
+    func configureCellData() {
+        guard let nftCard = nftCard else { return }
         nftImageView.kf.indicatorType = .activity
-        nftImageView.kf.setImage(with: URL(string: nftCart.image))
-        likeImage.image = nftCart.isLike ? UIImage(resource: .statisticsLikeActive) :
+        nftImageView.kf.setImage(with: URL(string: nftCard.image))
+        let likeImage = nftCard.isLike ? UIImage(resource: .statisticsLikeActive) :
         UIImage(resource: .statisticsLikeNoActive)
-        switch nftCart.rating {
+        likeButton.setImage(likeImage, for: .normal)
+        switch nftCard.rating {
         case 0: ratingImage.image = UIImage(resource: .statisticsRating0)
         case 1: ratingImage.image = UIImage(resource: .statisticsRating1)
         case 2: ratingImage.image = UIImage(resource: .statisticsRating2)
@@ -98,9 +101,22 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         case 5: ratingImage.image = UIImage(resource: .statisticsRating5)
         default: ratingImage.image = UIImage(resource: .statisticsRating0)
         }
-        nameLabel.text = nftCart.name.components(separatedBy: " ")[0]
-        priceLabel.text = "\(nftCart.price) ETH"
-        cartImage.image  = nftCart.isInCart ? UIImage(resource: .statisticsCartActive) :
+        nameLabel.text = nftCard.name.components(separatedBy: " ")[0]
+        priceLabel.text = "\(nftCard.price) ETH"
+        let cartImage = nftCard.isInCart ? UIImage(resource: .statisticsCartActive) :
         UIImage(resource: .statisticsCartNoActive)
+        cartButton.setImage(cartImage, for: .normal)
+    }
+    @objc func likeButtonTouch() {
+        print("likeButtonTouched")
+        nftCard?.isLike.toggle()
+        configureCellData()
+        presenter?.likeButtonTouch()
+    }
+    @objc func cartButtonTouch() {
+        print("cartButtonTouched")
+        nftCard?.isInCart.toggle()
+        configureCellData()
+        presenter?.cartButtonTouch()
     }
 }

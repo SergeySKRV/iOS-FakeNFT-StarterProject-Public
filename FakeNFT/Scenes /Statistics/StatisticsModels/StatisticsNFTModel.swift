@@ -6,6 +6,6 @@ struct StatisticsNFTModel {
     let price: Float
     let rating: Int
     let id: String
-    let isLike: Bool
-    let isInCart: Bool
+    var isLike: Bool
+    var isInCart: Bool
 }

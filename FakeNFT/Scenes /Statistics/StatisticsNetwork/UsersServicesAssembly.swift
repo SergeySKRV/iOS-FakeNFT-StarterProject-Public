@@ -1,17 +1,17 @@
 final class UsersServicesAssembly {
     // MARK: - private properties
     private let networkClient: NetworkClient
-    private let usersStorage: UsersStorage
+    private let usersStorage: StatisticsUsersStorage
     // MARK: - public methods
     init(
         networkClient: NetworkClient,
-        usersStorage: UsersStorage
+        usersStorage: StatisticsUsersStorage
     ) {
         self.networkClient = networkClient
         self.usersStorage = usersStorage
     }
-    var usersService: UsersService {
-        UsersServiceImpl(
+    var usersService: StatisticsUsersService {
+        StatisticsUsersServiceImpl(
             networkClient: networkClient,
             storage: usersStorage
         )

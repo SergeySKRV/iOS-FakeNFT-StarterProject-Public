@@ -24,7 +24,7 @@ final class StatisticsViewPresenter {
         }
     }
     // MARK: private properties
-    private let storage = UsersStorageImpl.shared
+    private let storage = StatisticsUsersStorageImpl.shared
     private var state = StatisticsViewState.initial {
         didSet {
             stateDidChanged()
@@ -67,7 +67,7 @@ final class StatisticsViewPresenter {
     }
     private func loadStatistics() {
         let networkClient = DefaultNetworkClient()
-        let service = UsersServiceImpl(networkClient: networkClient, storage: storage)
+        let service = StatisticsUsersServiceImpl(networkClient: networkClient, storage: storage)
         let _: () = service.loadUsers {[weak self] result in
             switch result {
             case .success(let users):
@@ -135,7 +135,7 @@ final class StatisticsViewPresenter {
                                    rating: 1)]
         state = .data
     }
-    private func convertStoreToViewModel(_ store: [User]) -> [StatisticsProfileModel] {
+    private func convertStoreToViewModel(_ store: [StatisticsUser]) -> [StatisticsProfileModel] {
         var result: [StatisticsProfileModel] = []
         guard let users = storage.getUsers() else {return []}
         for user in users {

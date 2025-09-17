@@ -1,6 +1,6 @@
 import Foundation
 
-struct ProfilesRequest: NetworkRequest {
+struct StatisticsUsersRequest: NetworkRequest {
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/users?sortBy=name")
     }
