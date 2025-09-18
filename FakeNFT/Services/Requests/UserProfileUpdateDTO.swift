@@ -9,17 +9,15 @@ import Foundation
 
 // MARK: - UserProfileUpdateDTO
 struct UserProfileUpdateDTO: Dto {
-
     // MARK: - Properties
     let name: String?
     let description: String?
     let website: String?
     let avatar: String?
 
-    // MARK: - Public Methods
+    // MARK: - Public methods
     func asDictionary() -> [String: String] {
         var params: [String: String] = [:]
-
         if let name = self.name {
             params["name"] = name
         }

@@ -11,15 +11,20 @@ import Foundation
 struct UpdateUserProfileRequest: NetworkRequest {
     // MARK: - Properties
     private let profileId: String
-    private let updateData: UserProfileUpdateDTO
+    private let updateData: Dto?
 
-    // MARK: - Initialization
-    init(profileId: String = "1", updateData: UserProfileUpdateDTO) {
+    // MARK: - Lifecycle
+    init(profileId: String = "1", updateData: UserProfileUpdateDTO? = nil) {
         self.profileId = profileId
         self.updateData = updateData
     }
 
-    // MARK: - NetworkRequest Properties
+    init(profileId: String = "1", likes: [String]) {
+        self.profileId = profileId
+        self.updateData = UserLikesUpdateDTO(likes: likes)
+    }
+
+    // MARK: - Public methods
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/profile/\(profileId)")
     }

@@ -5,7 +5,6 @@ final class TabBarController: UITabBarController {
     // MARK: - Properties
     var servicesAssembly: ServicesAssembly! {
         didSet {
-            // Когда servicesAssembly установлен, настраиваем контроллеры
             if isViewLoaded {
                 setupViewControllers()
             }
@@ -32,7 +31,7 @@ final class TabBarController: UITabBarController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Настройка контроллеров перед появлением
+
         if viewControllers == nil {
             setupViewControllers()
         }

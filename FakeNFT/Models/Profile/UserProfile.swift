@@ -1,25 +1,23 @@
 import UIKit
 
 // MARK: - UserProfile
+
 struct UserProfile: Codable {
-    // MARK: - Properties from API
     let id: String
     let name: String
     let description: String?
     let website: String
     private let avatarString: String?
     let nfts: [String]
-    let likes: [String]
+    var likes: [String]
 
-    // MARK: - Computed Properties / Helpers
+    private var avatarImage: UIImage?
+
     var avatar: URL? {
         guard let avatarString = avatarString else { return nil }
         return URL(string: avatarString)
     }
 
-    private var avatarImage: UIImage?
-
-    // MARK: - Lifecycle (Initializers)
     init(id: String, name: String, description: String?, website: String, avatarURLString: String?, nfts: [String], likes: [String]) {
         self.id = id
         self.name = name
@@ -52,7 +50,6 @@ struct UserProfile: Codable {
         self.avatarImage = photo
     }
 
-    // MARK: - Codable
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -63,7 +60,6 @@ struct UserProfile: Codable {
         case likes
     }
 
-    // MARK: - Public Methods
     func getAvatarImage(completion: @escaping (UIImage?) -> Void) {
         if let cachedImage = avatarImage {
             completion(cachedImage)
@@ -99,11 +95,25 @@ struct UserProfile: Codable {
         updatedProfile.avatarImage = image
         return updatedProfile
     }
+
+    mutating func addToLikes(nftId: String) {
+        if !likes.contains(nftId) {
+            likes.append(nftId)
+        }
+    }
+
+    mutating func removeFromLikes(nftId: String) {
+        likes.removeAll { $0 == nftId }
+    }
+
+    func isLiked(nftId: String) -> Bool {
+        likes.contains(nftId)
+    }
 }
 
-// MARK: - UIImage Extension for compatibility
+// MARK: - UIImage Extension
+
 extension UIImage {
-    // MARK: - Public Methods
     func pngDataURL() -> URL? {
         guard let data = pngData() else { return nil }
         return URL(string: "data:image/png;base64,\(data.base64EncodedString())")

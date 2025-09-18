@@ -14,4 +14,5 @@ protocol UserProfileService {
     func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void)
     func saveUserProfileLocally(_ profile: UserProfile) -> Bool
     func loadUserProfileLocally() -> UserProfile?
+    func updateUserLikes(nftId: String, isLiked: Bool, completion: @escaping (Result<Bool, Error>) -> Void)
 }

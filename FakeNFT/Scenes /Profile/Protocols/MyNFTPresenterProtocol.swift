@@ -17,4 +17,7 @@ protocol MyNFTPresenterProtocol: AnyObject {
     func sortButtonTapped()
     func sortOptionSelected(_ option: NFTSortOption)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+
+    // MARK: - Heart Tap Handling
+    func handleHeartTap(for nftId: String, isSelected: Bool)
 }

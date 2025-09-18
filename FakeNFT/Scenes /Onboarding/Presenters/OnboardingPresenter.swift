@@ -8,6 +8,7 @@
 import UIKit
 
 // MARK: - Onboarding Presenter
+
 final class OnboardingPresenter {
     // MARK: - UI Properties
     weak var view: OnboardingViewProtocol?

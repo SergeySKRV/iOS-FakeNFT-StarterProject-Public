@@ -1,10 +1,11 @@
-import UIKit
+import Foundation
 
+// MARK: - UserProfileServiceImpl
 final class UserProfileServiceImpl: UserProfileService {
     // MARK: - Properties
     private let networkClient: NetworkClientProtocol
 
-    // MARK: - Initialization
+    // MARK: - Lifecycle
     init(networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient
     }
@@ -56,6 +57,48 @@ final class UserProfileServiceImpl: UserProfileService {
         }
     }
 
+    func updateUserLikes(nftId: String, isLiked: Bool, completion: @escaping (Result<Bool, Error>) -> Void) {
+        fetchUserProfile { [weak self] result in
+            switch result {
+            case .success(var profile):
+                if isLiked {
+                    profile.addToLikes(nftId: nftId)
+                } else {
+                    profile.removeFromLikes(nftId: nftId)
+                }
+                _ = self?.saveUserProfileLocally(profile)
+
+                let likesUpdateRequest = UpdateUserProfileRequest(likes: profile.likes)
+                self?.networkClient.send(request: likesUpdateRequest) { updateResult in
+                    switch updateResult {
+                    case .success:
+                        let saveResult = self?.saveUserProfileLocally(profile) ?? false
+                        DispatchQueue.main.async {
+                            completion(.success(saveResult))
+                        }
+                    case .failure(let error):
+                        if var currentProfile = self?.loadUserProfileLocally() {
+                            if isLiked {
+                                currentProfile.removeFromLikes(nftId: nftId)
+                            } else {
+                                currentProfile.addToLikes(nftId: nftId)
+                            }
+                            _ = self?.saveUserProfileLocally(currentProfile)
+                        }
+                        DispatchQueue.main.async {
+                            completion(.failure(error))
+                        }
+                    }
+                }
+
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
     func saveUserProfileLocally(_ profile: UserProfile) -> Bool {
         do {
             let encoder = JSONEncoder()
@@ -63,6 +106,7 @@ final class UserProfileServiceImpl: UserProfileService {
             UserDefaults.standard.set(data, forKey: "UserProfile")
             return true
         } catch {
+            print("Failed to save profile locally: \(error)")
             return false
         }
     }
@@ -76,6 +120,7 @@ final class UserProfileServiceImpl: UserProfileService {
             let profile = try decoder.decode(UserProfile.self, from: data)
             return profile
         } catch {
+            print("Failed to load profile locally: \(error)")
             UserDefaults.standard.removeObject(forKey: "UserProfile")
             return nil
         }

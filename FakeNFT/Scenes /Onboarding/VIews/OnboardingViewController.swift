@@ -8,9 +8,8 @@
 import UIKit
 
 // MARK: - Onboarding View Controller
-final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 
-    // MARK: - UI Elements
+final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     private lazy var presenter: OnboardingPresenter = {
         OnboardingPresenter(view: self)
     }()
@@ -63,17 +62,13 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         return button
     }()
 
-    // MARK: - Properties
     private var slideViews: [SlideView] = []
     private var currentPageIndex = 0
     private var autoScrollTimer: Timer?
     private let autoScrollInterval: TimeInterval = 5.0
     private var isUserInteracting = false
-
-    // MARK: - Simple Pagination Indicators
     private var paginationIndicators: [UIView] = []
 
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -86,20 +81,15 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         stopAutoScrollTimer()
     }
 
-    // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .black
-
         createSlides()
-
         setupPagination()
-
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         [paginationView, closeButton, nextButton].forEach {
             view.addSubview($0)
         }
-
         setupConstraints()
     }
 
@@ -119,7 +109,6 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
             indicator.layer.cornerRadius = 4
             indicator.translatesAutoresizingMaskIntoConstraints = false
             indicator.heightAnchor.constraint(equalToConstant: 4).isActive = true
-
             paginationView.addArrangedSubview(indicator)
             paginationIndicators.append(indicator)
         }
@@ -173,7 +162,6 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         ])
     }
 
-    // MARK: - Auto Scroll
     private func startAutoScrollTimer() {
         stopAutoScrollTimer()
         autoScrollTimer = Timer.scheduledTimer(timeInterval: autoScrollInterval, target: self, selector: #selector(autoScrollToNext), userInfo: nil, repeats: true)
@@ -184,7 +172,6 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         autoScrollTimer = nil
     }
 
-    // MARK: - Actions
     @objc
     private func autoScrollToNext() {
         guard !isUserInteracting else { return }
@@ -211,7 +198,6 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         scrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: true)
     }
 
-    // MARK: - OnboardingViewProtocol
     func showSlide(_ slide: OnboardingSlide, at index: Int) {
         guard index < slideViews.count else { return }
         slideViews[index].configure(with: slide)
@@ -270,6 +256,7 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 }
 
 // MARK: - UIScrollViewDelegate
+
 extension OnboardingViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isUserInteracting = true
