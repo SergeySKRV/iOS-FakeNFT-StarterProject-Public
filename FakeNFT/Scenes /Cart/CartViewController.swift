@@ -99,10 +99,7 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        
         showCachedData()
-        
-        presenter?.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -187,10 +184,10 @@ final class CartViewController: UIViewController {
     
     @objc private func deleteButtonTapped(_ sender: UIButton) {
         let index = sender.tag
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? CartCell else { return }
+        
+        guard index < cartItems.count else { return }
         
         let item = cartItems[index]
-        let nftImage = cell.getNFTImage()
         
         showDeletePopup(for: index, nftImageURL: item.image, nftName: item.name)
     }
@@ -243,12 +240,18 @@ extension CartViewController: CartViewProtocol {
     }
     
     func displayCartItems(_ items: [CartItem]) {
+        let oldCount = cartItems.count
         cartItems = items
-        tableView.isHidden = false
-        totalView.isHidden = false
-        emptyStateLabel.isHidden = true
-        tableView.reloadData()
-        updateTotalPrice()
+        
+        if oldCount == items.count {
+            updateTotalPrice()
+        } else {
+            tableView.isHidden = false
+            totalView.isHidden = false
+            emptyStateLabel.isHidden = true
+            tableView.reloadData()
+            updateTotalPrice()
+        }
         
         let totalPrice = items.reduce(0) { $0 + $1.price }
         cacheCartData(count: items.count, price: totalPrice)

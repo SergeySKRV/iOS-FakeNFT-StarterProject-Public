@@ -3,6 +3,9 @@ import UIKit
 final class PaymentMethodCell: UICollectionViewCell {
     static let reuseIdentifier = "PaymentMethodCell"
     
+    private let imageLoader: ImageLoaderServiceProtocol = ImageLoaderService.shared
+    private var imageLoadingTaskId: UUID?
+    
     private lazy var contentContainer: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(resource: .ypLightGrey)
@@ -106,26 +109,31 @@ final class PaymentMethodCell: UICollectionViewCell {
         loadImage(from: method.currency.image)
         nameLabel.text = method.currency.displayName
         symbolLabel.text = method.currency.symbol
+        
+        loadImage(from: method.currency.image)
     }
     
     private func loadImage(from urlString: String) {
-        guard let url = URL(string: urlString) else {
-            iconImageView.image = UIImage(systemName: "photo")
-            return
+        if let existingTaskId = imageLoadingTaskId {
+            imageLoader.cancelLoad(taskId: existingTaskId)
         }
         
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else {
-                DispatchQueue.main.async {
-                    self?.iconImageView.image = UIImage(systemName: "photo")
-                }
-                return
-            }
-            
+        imageLoadingTaskId = imageLoader.loadImage(from: urlString) { [weak self] image in
             DispatchQueue.main.async {
-                self?.iconImageView.image = UIImage(data: data)
+                self?.iconImageView.image = image
             }
-        }.resume()
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        if let taskId = imageLoadingTaskId {
+            imageLoader.cancelLoad(taskId: taskId)
+            imageLoadingTaskId = nil
+        }
+        
+        iconImageView.image = nil
     }
     
     override var isSelected: Bool {

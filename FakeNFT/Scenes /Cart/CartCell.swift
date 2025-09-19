@@ -3,7 +3,9 @@ import UIKit
 final class CartCell: UITableViewCell {
     static let reuseIdentifier = "CartCell"
     
-    private var currentImage: UIImage?
+    private let imageLoader: ImageLoaderServiceProtocol = ImageLoaderService.shared
+    private var currentImageUrl: String?
+    private var currentLoadTaskId: UUID?
     
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -107,6 +109,19 @@ final class CartCell: UITableViewCell {
         ])
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        if let taskId = currentLoadTaskId {
+            imageLoader.cancelLoad(taskId: taskId)
+            currentLoadTaskId = nil
+        }
+        
+        currentImageUrl = nil
+        nftImageView.image = UIImage(systemName: "photo")
+        nftImageView.backgroundColor = .lightGray
+    }
+    
     func configure(with item: CartItem) {
         nameLabel.text = item.name
         priceLabel.text = String(format: "%.2f \(item.currency)", item.price)
@@ -115,39 +130,27 @@ final class CartCell: UITableViewCell {
         nftImageView.image = UIImage(systemName: "photo")
         nftImageView.backgroundColor = .lightGray
         
-        //        let activityIndicator = UIActivityIndicatorView(style: .medium)
-        //        activityIndicator.startAnimating()
-        //        nftImageView.addSubview(activityIndicator)
-        //        activityIndicator.center = nftImageView.center
-        
+        currentImageUrl = item.image
         loadImage(from: item.image)
-        currentImage = nftImageView.image
     }
     
     func getNFTImage() -> UIImage? {
-        return currentImage ?? nftImageView.image
+        return nftImageView.image
     }
     
     private func loadImage(from urlString: String) {
-        guard let url = URL(string: urlString) else {
-            return
+        if let taskId = currentLoadTaskId {
+            imageLoader.cancelLoad(taskId: taskId)
         }
         
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                return
-            }
-            
-            guard let data = data, let image = UIImage(data: data) else {
-                return
-            }
-            
+        currentLoadTaskId = imageLoader.loadImage(from: urlString) { [weak self] image in
             DispatchQueue.main.async {
+                guard let self = self, self.currentImageUrl == urlString else { return }
+                
                 self.nftImageView.image = image
-                self.nftImageView.backgroundColor = .clear
+                self.nftImageView.backgroundColor = image == nil ? .lightGray : .clear
+                self.currentLoadTaskId = nil
             }
-        }.resume()
+        }
     }
 }
