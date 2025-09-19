@@ -4,6 +4,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     weak var view: PaymentViewProtocol?
     private let cartService: CartServiceProtocol
     private var paymentMethods: [PaymentMethod] = []
+    private var currentPaymentMethod: Currency?
     
     init(view: PaymentViewProtocol, cartService: CartServiceProtocol) {
         self.view = view
@@ -16,18 +17,12 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     
     func payButtonTapped(with method: PaymentMethod?) {
         guard let method = method else {
-            view?.showError(message: "Выберите способ оплаты")
+            view?.showError(message: "Выберите способ оплаты", retryHandler: nil)
             return
         }
         
+        currentPaymentMethod = method.currency
         processPayment(with: method.currency)
-    }
-    
-    func userAgreementTapped() {
-        //        if let url = URL(string: "") {
-        //            UIApplication.shared.open(url)
-        //        }
-        print("Кнопка соглашения нажата")
     }
     
     private func loadCurrencies() {
@@ -40,7 +35,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
                     self?.view?.displayPaymentMethods(paymentMethods)
                     
                 case .failure(let error):
-                    self?.view?.showError(message: "Не удалось загрузить способы оплаты")
+                    self?.view?.showError(message: "Не удалось загрузить способы оплаты", retryHandler: nil)
                 }
             }
         }
@@ -76,26 +71,21 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     }
     
     private func handlePaymentFailure(currency: Currency) {
-        let errorMessage = "Оплата через \(currency.name) не удалась"
-        view?.showError(message: errorMessage)
+        let errorMessage = "Не удалось произвести оплату"
+        view?.showError(message: errorMessage, retryHandler: { [weak self] in
+            self?.retryPayment()
+        })
     }
     
     private func handlePaymentError(error: Error) {
-        let errorMessage: String
-        
-        if let urlError = error as? URLError {
-            switch urlError.code {
-            case .notConnectedToInternet:
-                errorMessage = "Нет соединения с интернетом"
-            case .timedOut:
-                errorMessage = "Таймаут соединения"
-            default:
-                errorMessage = "Ошибка сети: \(urlError.localizedDescription)"
-            }
-        } else {
-            errorMessage = "Ошибка оплаты: \(error.localizedDescription)"
-        }
-        
-        view?.showError(message: errorMessage)
+        let errorMessage = "Не удалось произвести оплату"
+        view?.showError(message: errorMessage, retryHandler: { [weak self] in
+            self?.retryPayment()
+        })
+    }
+    
+    private func retryPayment() {
+        guard let currency = currentPaymentMethod else { return }
+        processPayment(with: currency)
     }
 }

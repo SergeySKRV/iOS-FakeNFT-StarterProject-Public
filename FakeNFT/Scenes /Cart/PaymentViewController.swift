@@ -143,7 +143,11 @@ final class PaymentViewController: UIViewController {
     }
     
     @objc private func userAgreementTapped() {
-        presenter?.userAgreementTapped()
+        let webViewController = WebViewController(
+            urlString: "https://yandex.ru/legal/practicum_termsofuse/"
+        )
+        webViewController.title = "Пользовательское соглашение"
+        navigationController?.pushViewController(webViewController, animated: true)
     }
 }
 
@@ -214,17 +218,15 @@ extension PaymentViewController: PaymentViewProtocol {
         }
     }
     
+    func showWebView(with urlString: String, title: String?) {
+        let webViewController = WebViewController(urlString: urlString)
+        webViewController.title = title
+        navigationController?.pushViewController(webViewController, animated: true)
+    }
+    
     func showPaymentSuccess(message: String) {
-        let alert = UIAlertController(
-            title: "Успех!",
-            message: message,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        })
-        present(alert, animated: true)
-        //пока не сверстал экраны ошибки и успеха для оплаты возвращаю на предыдущий экран, в итерации эпика 3/3 буду реализовывать эти экраны
+        let successVC = PaymentSuccessViewController()
+        navigationController?.pushViewController(successVC, animated: true)
     }
     
     func setPayButtonEnabled(_ enabled: Bool) {
@@ -237,13 +239,23 @@ extension PaymentViewController: PaymentViewProtocol {
         collectionView.reloadData()
     }
     
-    func showError(message: String) {
+    func showError(message: String, retryHandler: (() -> Void)?) {
         let alert = UIAlertController(
-            title: "Ошибка",
-            message: message,
+            title: nil,
+            message: "Не удалось произвести оплату",
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        alert.addAction(cancelAction)
+        
+        if let retryHandler = retryHandler {
+            let retryAction = UIAlertAction(title: "Повторить", style: .default) { _ in
+                retryHandler()
+            }
+            alert.addAction(retryAction)
+        }
+        
         present(alert, animated: true)
     }
 }

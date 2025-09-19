@@ -175,7 +175,27 @@ final class CartViewController: UIViewController {
     }
     
     @objc private func filterButtonTapped() {
-        print("Фильтрация нажата")
+        let alert = UIAlertController(
+            title: "Сортировка",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        alert.addAction(UIAlertAction(title: "По цене", style: .default) { [weak self] _ in
+            self?.presenter?.sortItems(by: .price)
+        })
+        
+        alert.addAction(UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
+            self?.presenter?.sortItems(by: .rating)
+        })
+        
+        alert.addAction(UIAlertAction(title: "По названию", style: .default) { [weak self] _ in
+            self?.presenter?.sortItems(by: .name)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
+        
+        present(alert, animated: true)
     }
     
     @objc private func payButtonTapped() {
@@ -240,11 +260,12 @@ extension CartViewController: CartViewProtocol {
     }
     
     func displayCartItems(_ items: [CartItem]) {
-        let oldCount = cartItems.count
         cartItems = items
         
-        if oldCount == items.count {
-            updateTotalPrice()
+        if items.isEmpty {
+            tableView.isHidden = true
+            totalView.isHidden = true
+            emptyStateLabel.isHidden = false
         } else {
             tableView.isHidden = false
             totalView.isHidden = false

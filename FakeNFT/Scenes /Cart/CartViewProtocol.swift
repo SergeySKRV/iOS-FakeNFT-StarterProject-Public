@@ -12,4 +12,5 @@ protocol CartPresenterProtocol {
     func viewDidLoad()
     func payButtonTapped()
     func deleteItem(at index: Int)
+    func sortItems(by option: SortOption)
 }
