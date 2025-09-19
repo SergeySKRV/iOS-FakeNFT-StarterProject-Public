@@ -138,13 +138,13 @@ final class PaymentMethodCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
+            contentView.layer.borderWidth = 1
+            
             if isSelected {
                 contentView.layer.borderColor = UIColor(resource: .ypBlack).cgColor
-                contentView.layer.borderWidth = 1
                 contentView.layer.cornerRadius = 12
             } else {
                 contentView.layer.borderColor = UIColor(resource: .ypLightGrey).cgColor
-                contentView.layer.borderWidth = 1
             }
         }
     }
