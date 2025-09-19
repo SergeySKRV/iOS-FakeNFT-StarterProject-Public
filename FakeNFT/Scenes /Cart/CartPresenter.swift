@@ -16,7 +16,11 @@ final class CartPresenter: CartPresenterProtocol {
     }
     
     func payButtonTapped() {
-        print("Кнопка оплаты нажата (заглушка)")
+        guard !cartItems.isEmpty else {
+            view?.showError(message: "Корзина пуста")
+            return
+        }
+        view?.navigateToPaymentScreen()
     }
     
     func deleteItem(at index: Int) {

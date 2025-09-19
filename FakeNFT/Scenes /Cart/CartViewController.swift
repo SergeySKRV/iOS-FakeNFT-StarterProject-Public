@@ -24,12 +24,12 @@ final class CartViewController: UIViewController {
     
     private lazy var filterButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
-            image: UIImage(named: "filterButton"),
+            image: UIImage(resource: .filterButton),
             style: .plain,
             target: self,
             action: #selector(filterButtonTapped)
         )
-        button.tintColor = UIColor(named: "ypBlack")
+        button.tintColor = UIColor(resource: .ypBlack)
         return button
     }()
     
@@ -44,16 +44,16 @@ final class CartViewController: UIViewController {
     
     private lazy var nftCountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "SFProText-Regular", size: 15)
-        label.textColor = UIColor(named: "ypBlack")
+        label.font = Fonts.sfProRegular15
+        label.textColor = UIColor(resource: .ypBlack)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "SFProText-Bold", size: 17)
-        label.textColor = UIColor(named: "ypGreen")
+        label.font = Fonts.sfProBold17
+        label.textColor = UIColor(resource: .ypGreen)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -62,8 +62,8 @@ final class CartViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("К оплате", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "SFProText-Bold", size: 17)
-        button.backgroundColor = UIColor(named: "ypBlack")
+        button.titleLabel?.font = Fonts.sfProBold17
+        button.backgroundColor = UIColor(resource: .ypBlack)
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -74,8 +74,8 @@ final class CartViewController: UIViewController {
         let label = UILabel()
         label.text = "Корзина пуста"
         label.textAlignment = .center
-        label.font = UIFont(name: "SFProText-Bold", size: 17)
-        label.textColor = .textSecondary
+        label.font = Fonts.sfProBold17
+        label.textColor = UIColor(resource: .ypBlack)
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -99,9 +99,11 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        
         showCachedData()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         presenter?.viewDidLoad()
     }
     
@@ -134,13 +136,13 @@ final class CartViewController: UIViewController {
             totalView.heightAnchor.constraint(equalToConstant: 76),
             
             nftCountLabel.topAnchor.constraint(equalTo: totalView.topAnchor, constant: 16),
-            nftCountLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 16),
+            nftCountLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 12),
             
             totalPriceLabel.topAnchor.constraint(equalTo: nftCountLabel.bottomAnchor, constant: 2),
-            totalPriceLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 16),
+            totalPriceLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 12),
             
             payButton.centerYAnchor.constraint(equalTo: totalView.centerYAnchor),
-            payButton.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -16),
+            payButton.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -8),
             payButton.widthAnchor.constraint(equalToConstant: 240),
             payButton.heightAnchor.constraint(equalToConstant: 44)
         ])
@@ -150,7 +152,7 @@ final class CartViewController: UIViewController {
         let defaults = UserDefaults.standard
         let itemCount = defaults.integer(forKey: CacheKeys.cartItemsCount)
         let totalPrice = defaults.double(forKey: CacheKeys.totalPrice)
-
+        
         if itemCount > 0 {
             nftCountLabel.text = "\(itemCount) NFT"
             totalPriceLabel.text = String(format: "%.2f ETH", totalPrice)
@@ -182,10 +184,10 @@ final class CartViewController: UIViewController {
     
     @objc private func deleteButtonTapped(_ sender: UIButton) {
         let index = sender.tag
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? CartCell else { return }
+        
+        guard index < cartItems.count else { return }
         
         let item = cartItems[index]
-        let nftImage = cell.getNFTImage()
         
         showDeletePopup(for: index, nftImageURL: item.image, nftName: item.name)
     }
@@ -238,12 +240,18 @@ extension CartViewController: CartViewProtocol {
     }
     
     func displayCartItems(_ items: [CartItem]) {
+        let oldCount = cartItems.count
         cartItems = items
-        tableView.isHidden = false
-        totalView.isHidden = false
-        emptyStateLabel.isHidden = true
-        tableView.reloadData()
-        updateTotalPrice()
+        
+        if oldCount == items.count {
+            updateTotalPrice()
+        } else {
+            tableView.isHidden = false
+            totalView.isHidden = false
+            emptyStateLabel.isHidden = true
+            tableView.reloadData()
+            updateTotalPrice()
+        }
         
         let totalPrice = items.reduce(0) { $0 + $1.price }
         cacheCartData(count: items.count, price: totalPrice)
@@ -256,6 +264,14 @@ extension CartViewController: CartViewProtocol {
         totalPriceLabel.text = String(format: "%.2f ETH", totalPrice)
         
         cacheCartData(count: cartItems.count, price: totalPrice)
+    }
+    
+    func navigateToPaymentScreen() {
+        let paymentVC = PaymentViewController()
+        let paymentPresenter = PaymentPresenter(view: paymentVC, cartService: CartService())
+        paymentVC.presenter = paymentPresenter
+        
+        navigationController?.pushViewController(paymentVC, animated: true)
     }
     
     func showError(message: String) {

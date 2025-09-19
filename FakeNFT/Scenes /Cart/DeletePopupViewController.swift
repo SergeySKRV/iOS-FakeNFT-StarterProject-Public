@@ -35,8 +35,8 @@ final class DeletePopupViewController: UIViewController {
     private let messageLabel: UILabel = {
         let label = UILabel()
         label.text = "Вы уверены, что хотите удалить объект из корзины?"
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.font = UIFont(name: "SFProText-Regular", size: 13)
+        label.font = Fonts.sfProRegular13
+        label.textColor = UIColor(resource: .ypBlack)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,32 +46,22 @@ final class DeletePopupViewController: UIViewController {
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Вернуться", for: .normal)
-        button.setTitleColor(UIColor(named: "ypWhite"), for: .normal)
-        button.backgroundColor = UIColor(named: "ypBlack")
+        button.setTitleColor(UIColor(resource: .ypWhite), for: .normal)
+        button.backgroundColor = UIColor(resource: .ypBlack)
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-        if let font = UIFont(name: "SFProText-Regular", size: 17) {
-            button.titleLabel?.font = font
-        } else {
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        }
+        button.titleLabel?.font = Fonts.sfProRegular17
         return button
     }()
     
     private let deleteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Удалить", for: .normal)
-        button.setTitleColor(UIColor(named: "ypRed"), for: .normal)
-        button.backgroundColor = UIColor(named: "ypBlack")
+        button.setTitleColor(UIColor(resource: .ypRed), for: .normal)
+        button.backgroundColor = UIColor(resource: .ypBlack)
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-        if let font = UIFont(name: "SFProText-Regular", size: 17) {
-            button.titleLabel?.font = font
-        } else {
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        }
+        button.titleLabel?.font = Fonts.sfProRegular17
         return button
     }()
     
