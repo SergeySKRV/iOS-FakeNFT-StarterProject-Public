@@ -88,9 +88,9 @@ final class TabBarController: UITabBarController {
             .foregroundColor: UIColor(named: "ypBlack") ?? .black
         ]
         
-        appearance.stackedLayoutAppearance.selected.iconColor = .primary
+        appearance.stackedLayoutAppearance.selected.iconColor = .yaBlueUniversal
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
-            .foregroundColor: UIColor.primary
+            .foregroundColor: UIColor.yaBlueUniversal
         ]
         
         appearance.backgroundColor = .background

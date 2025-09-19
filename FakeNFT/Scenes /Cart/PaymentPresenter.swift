@@ -23,13 +23,6 @@ final class PaymentPresenter: PaymentPresenterProtocol {
         processPayment(with: method.currency)
     }
     
-    func userAgreementTapped() {
-        //        if let url = URL(string: "") {
-        //            UIApplication.shared.open(url)
-        //        }
-        print("Кнопка соглашения нажата")
-    }
-    
     private func loadCurrencies() {
         cartService.loadCurrencies { [weak self] result in
             DispatchQueue.main.async {

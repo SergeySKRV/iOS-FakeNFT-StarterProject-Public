@@ -143,7 +143,11 @@ final class PaymentViewController: UIViewController {
     }
     
     @objc private func userAgreementTapped() {
-        presenter?.userAgreementTapped()
+        let webViewController = WebViewController(
+            urlString: "https://yandex.ru/legal/practicum_termsofuse/"
+        )
+        webViewController.title = "Пользовательское соглашение"
+        navigationController?.pushViewController(webViewController, animated: true)
     }
 }
 
@@ -214,6 +218,12 @@ extension PaymentViewController: PaymentViewProtocol {
         }
     }
     
+    func showWebView(with urlString: String, title: String?) {
+        let webViewController = WebViewController(urlString: urlString)
+        webViewController.title = title
+        navigationController?.pushViewController(webViewController, animated: true)
+    }
+    
     func showPaymentSuccess(message: String) {
         let alert = UIAlertController(
             title: "Успех!",
@@ -226,6 +236,7 @@ extension PaymentViewController: PaymentViewProtocol {
         present(alert, animated: true)
         //пока не сверстал экраны ошибки и успеха для оплаты возвращаю на предыдущий экран, в итерации эпика 3/3 буду реализовывать эти экраны
     }
+    
     
     func setPayButtonEnabled(_ enabled: Bool) {
         payButton.isEnabled = enabled
