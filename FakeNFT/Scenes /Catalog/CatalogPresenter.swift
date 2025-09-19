@@ -24,6 +24,7 @@ final class CatalogPresenter: CatalogPresenterProtocol {
     // MARK: - Private Properties
     private let catalogService: CatalogServiceProtocol
     private let sortStorage: SortStorageProtocol
+
     
     // MARK: - Initializers
     init(catalogService: CatalogServiceProtocol, sortStorage: SortStorageProtocol) {

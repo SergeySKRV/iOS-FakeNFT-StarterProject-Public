@@ -74,16 +74,16 @@ extension TabBarController {
         let shoppingCartVC = ShoppingCartViewController()
         let statisticVC = StatisticViewController()
         
-        // 2. Обертываем каждый контроллер в NavigationController
+        // Обертываем каждый контроллер в NavigationController
         let catalogNav = wrapInNavigationController(catalogVC, tab: .catalog)
         let cartNav = wrapInNavigationController(shoppingCartVC, tab: .cart)
         let profileNav = wrapInNavigationController(profileVC, tab: .profile)
         let statisticsNav = wrapInNavigationController(statisticVC, tab: .statistics)
         
-        // 3. Устанавливаем контроллеры в таббар
+        // Устанавливаем контроллеры в таббар
         viewControllers = [profileNav, catalogNav, cartNav, statisticsNav]
         
-        // 4. Устанавливаем начальную вкладку
+        // Устанавливаем начальную вкладку
         selectedIndex = 0
     }
     

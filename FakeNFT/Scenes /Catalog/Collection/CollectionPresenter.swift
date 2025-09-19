@@ -5,7 +5,6 @@
 //  Created by Dmitry Batorevich on 01.09.2025.
 //
 
-
 import Foundation
 
 protocol CollectionPresenterProtocol: AnyObject {
@@ -17,30 +16,35 @@ protocol CollectionPresenterProtocol: AnyObject {
     func getModel(for indexPath: IndexPath) -> NFTCellModel
     func changeLike(for indexPath: IndexPath, isLiked: Bool)
     func changeOrder(for indexPath: IndexPath)
+    func openWebsite()
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
-    func changeLike(for indexPath: IndexPath, isLiked: Bool) {
-       
-    }
+    func changeLike(for indexPath: IndexPath, isLiked: Bool) {}
     
-    func changeOrder(for indexPath: IndexPath) {
-        
-    }
+    func changeOrder(for indexPath: IndexPath) {}
     
     // MARK: - Public Properties
     var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
     var authorURL: String?
     weak var collectionView: CollectionViewControllerProtocol?
+    private weak var view: ProfilePresenterOutput? // webview
     
     // MARK: - Private Properties
     private let catalogService: CatalogServiceProtocol
+
     
     // MARK: - Initializers
+    
     init(collectionNft: NFTCollection?, catalogService: CatalogServiceProtocol) {
         self.collectionNft = collectionNft
         self.catalogService = catalogService
+    }
+    
+    // Метод для установки view после инициализации
+    func setProfilePresenterOutput(_ output: ProfilePresenterOutput) {
+        self.view = output
     }
     
     // MARK: - Public Methods
@@ -71,6 +75,10 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     
     func getModel(for indexPath: IndexPath) -> NFTCellModel {
         self.convertToCellModel(nft: nfts[indexPath.row])
+    }
+    
+    func openWebsite() {
+        view?.showWebViewController(urlString: "https://practicum.yandex.ru/ios-developer")
     }
     
     // MARK: - Private Methods
