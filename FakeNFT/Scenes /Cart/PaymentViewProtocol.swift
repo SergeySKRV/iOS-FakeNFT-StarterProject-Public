@@ -2,7 +2,7 @@ import Foundation
 
 protocol PaymentViewProtocol: AnyObject {
     func displayPaymentMethods(_ methods: [PaymentMethod])
-    func showError(message: String)
+    func showError(message: String, retryHandler: (() -> Void)?)
     func showLoading()
     func hideLoading()
     func showPaymentSuccess(message: String)
