@@ -34,6 +34,7 @@ final class CatalogPresenter: CatalogPresenterProtocol {
     
     // MARK: - Public Methods
     func getNftCollections() {
+         
         catalogView?.showLoadIndicator()
         catalogService.getNftCollections { [weak self] result in
             guard let self else { return }
