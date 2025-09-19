@@ -1,10 +1,18 @@
 import Foundation
 
+enum SortOption {
+    case price
+    case rating
+    case name
+    case `default`
+}
+
 final class CartPresenter: CartPresenterProtocol {
     weak var view: CartViewProtocol?
     private let cartService: CartServiceProtocol
     
     private var cartItems: [CartItem] = []
+    private var originalItems: [CartItem] = []
     
     init(view: CartViewProtocol, cartService: CartServiceProtocol) {
         self.view = view
@@ -51,12 +59,28 @@ final class CartPresenter: CartPresenterProtocol {
         }
     }
     
+    func sortItems(by option: SortOption) {
+        switch option {
+        case .price:
+            cartItems.sort { $0.price < $1.price }
+        case .rating:
+            cartItems.sort { $0.rating > $1.rating }
+        case .name:
+            cartItems.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        case .default:
+            cartItems = originalItems
+        }
+        
+        view?.displayCartItems(cartItems)
+    }
+    
     private func loadCartItems() {
         cartService.loadCartItems { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let items):
                     self?.cartItems = items
+                    self?.originalItems = items
                     if items.isEmpty {
                         self?.view?.showEmptyState()
                     } else {
