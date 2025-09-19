@@ -108,7 +108,7 @@ struct DefaultNetworkClient: NetworkClient {
     }
 
     // MARK: - Private
-
+    
     private func create(request: NetworkRequest) -> URLRequest? {
         guard let endpoint = request.endpoint else {
             assertionFailure("Empty endpoint")
@@ -145,5 +145,16 @@ struct DefaultNetworkClient: NetworkClient {
         } catch {
             onResponse(.failure(NetworkClientError.parsingError))
         }
+    }
+}
+
+extension Encodable {
+    func asDictionary() -> [String: String]? {
+        let encoder = JSONEncoder()
+        guard let data = try? encoder.encode(self) else { return nil }
+        guard let dictionary = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+            return nil
+        }
+        return dictionary.mapValues { "\($0)" }
     }
 }

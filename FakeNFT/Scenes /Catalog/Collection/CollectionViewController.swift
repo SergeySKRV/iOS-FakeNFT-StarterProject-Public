@@ -8,17 +8,16 @@
 import UIKit
 import Kingfisher
 
-protocol CollectionViewControllerProtocol: AnyObject {
+protocol CollectionViewControllerProtocol: AnyObject, AlertCatalogView {
     func collectionViewData(data: CollectionViewData)
     func reloadNftCollectionView()
     func showLoadIndicator()
     func hideLoadIndicator()
-    //func showWebView(with url: URL)  // Добавьте этот метод
 }
 
 final class CollectionViewController: UIViewController {
     // MARK: - Public Properties
-    private var presenter: CollectionPresenterProtocol!
+    private var presenter: CollectionPresenterProtocol
 
     // MARK: - Private Properties
     private let scrollView: UIScrollView = {
@@ -134,14 +133,10 @@ final class CollectionViewController: UIViewController {
     func didTapBackButton() {
         dismiss(animated: true)
     }
-    // вынести в презентер
     
     @objc private func openWebsite() {
         presenter.openWebsite()
     }
-    
-    @objc
-    func collectionAuthorLinkTapped() {}
     
     // MARK: - Private Methods
     private func setupCollectionViewController() {
@@ -277,9 +272,11 @@ final class CollectionViewController: UIViewController {
 
 // MARK: - CollectionViewControllerProtocol
 extension CollectionViewController: CollectionViewControllerProtocol {
-    func showWebView(with url: URL) {
-    
+    func openAlert(title: String, message: String?, alertStyle: UIAlertController.Style, actionTitles: [String], actionStyles: [UIAlertAction.Style], actions: [((UIAlertAction) -> Void)]) {
+        // TODO: -
     }
+    
+    
     func collectionViewData(data: CollectionViewData) {
         DispatchQueue.main.async {
             self.collectionCoverImage.kf.setImage(with: URL(string: data.coverImage))
@@ -316,29 +313,28 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
         
         let cellModel = presenter.getModel(for: indexPath)
         cell.configCollectionCell(nftModel: cellModel)
+        cell.indexPath = indexPath
+        cell.delegate = self
+        
         return cell
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension CollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var itemSizeWith: CGFloat = 0
-        var itemSizeHeight: CGFloat = 0
-        itemSizeWith = (collectionView.bounds.width - Constants.eighteen) / Constants.three
-        itemSizeHeight = Constants.oneHundredNinetyTwo
-        return CGSize(width: itemSizeWith, height: itemSizeHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return Constants.collectionViewminimumLineSpacingForSectionAt
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return Constants.collectionViewminimumInteritemSpacingForSectionAt
-    }
-}
+ // MARK: - UICollectionViewDelegateFlowLayout
+ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+         return CGSize(width: (collectionView.bounds.width - Constants.eighteen) / Constants.three, height: Constants.oneHundredNinetyTwo)
+     }
+     
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+         return Constants.collectionViewminimumLineSpacingForSectionAt
+     }
+     
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+         return Constants.collectionViewminimumInteritemSpacingForSectionAt
+     }
+ }
+ 
 
 // MARK: - CollectionViewCellDelegate
 extension CollectionViewController: CollectionViewCellDelegate {
@@ -350,15 +346,14 @@ extension CollectionViewController: CollectionViewCellDelegate {
     }
 }
 
-// MARK: - ShowWebView это для вызова веб вью
+// MARK: - ShowWebView
 extension CollectionViewController: ProfilePresenterOutput {
     
     func showWebViewController(urlString: String) {
         let webViewController = WebViewController(urlString: urlString)
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.modalPresentationStyle = .fullScreen
-        navigationController.modalTransitionStyle = .crossDissolve // Плавный переход
+        navigationController.modalTransitionStyle = .crossDissolve
         present(navigationController, animated: true)
     }
 }
-

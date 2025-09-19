@@ -22,8 +22,6 @@ protocol CollectionPresenterProtocol: AnyObject {
 final class CollectionPresenter: CollectionPresenterProtocol {
     func changeLike(for indexPath: IndexPath, isLiked: Bool) {}
     
-    func changeOrder(for indexPath: IndexPath) {}
-    
     // MARK: - Public Properties
     var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
@@ -67,6 +65,29 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         }
     }
     
+    func changeOrder(for indexPath: IndexPath) {
+        collectionView?.showLoadIndicator()
+        catalogService.putOrders(id: nfts[indexPath.row].id, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.collectionView?.reloadNftCollectionView()
+            case .failure(let error):
+                let errorModel = makePutErrorModel(error)
+                self.collectionView?.hideLoadIndicator()
+                collectionView?.openAlert(
+                    title: errorModel.title,
+                    message: errorModel.message,
+                    alertStyle: .alert,
+                    actionTitles: errorModel.actionTitles,
+                    actionStyles: [.default],
+                    actions: [{ _ in }]
+                )
+            }
+            self.collectionView?.hideLoadIndicator()
+        })
+    }
+    
     func loadCollectionData() {
         self.prepare()
         self.collectionView?.hideLoadIndicator()
@@ -78,7 +99,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     }
     
     func openWebsite() {
-        view?.showWebViewController(urlString: "https://practicum.yandex.ru/ios-developer")
+        view?.showWebViewController(urlString: RequestConstants.stubAuthorUrl)
     }
     
     // MARK: - Private Methods
@@ -114,5 +135,21 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     private func loadAuthor() {
         self.authorURL = RequestConstants.stubAuthorUrl
     }
+    
+    private func makePutErrorModel(_ error: Error) -> AlertModel {
+        let title: String = NSLocalizedString("Error.title", comment: "")
+        let message: String
+        switch error {
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "")
+        default:
+            message = NSLocalizedString("Error.unknown", comment: "")
+        }
+        let cancelText: String = NSLocalizedString("Error.cancel", comment: "")
+        return AlertModel(
+            title: title,
+            message: message,
+            actionTitles: [cancelText]
+        )
+    }
 }
-

@@ -17,7 +17,7 @@ final class WebViewController: UIViewController, WKNavigationDelegate {
         webView.isOpaque = false
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear
-        webView.alpha = 0 // скрываем WebView
+        webView.alpha = 0
         return webView
     }()
     

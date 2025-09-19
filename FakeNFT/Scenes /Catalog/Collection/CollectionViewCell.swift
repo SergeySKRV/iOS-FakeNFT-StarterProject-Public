@@ -8,10 +8,6 @@
 import UIKit
 import Kingfisher
 
-protocol CollectionViewCellDelegate: AnyObject {
-    func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool)
-    func cartButtonDidChange(for indexPath: IndexPath)
-}
 
 final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - Public Properties
@@ -23,7 +19,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     
     // MARK: - Private Properties
-    private var isLiked: Bool = true
+    private var isLiked: Bool = false
     private lazy var ratingView = RatingView()
     
     private lazy var nftImageView: UIImageView = {
@@ -35,21 +31,20 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }()
     
     private lazy var likeButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(named: "likeNoActive")
-        configuration.contentInsets = NSDirectionalEdgeInsets(
-            top: Constants.likeButtonInsetsTopBottom,
-            leading: Constants.likeButtonInsetsLeft,
-            bottom: Constants.likeButtonInsetsTopBottom,
-            trailing: Constants.likeButtonInsetsRight
-        )
-        
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        
-        button.addTarget(
-            self,
-            action: #selector (likeButtonTapped),
-            for: .touchUpInside)
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.addTarget(self,
+                         action: #selector(likeButtonTapped),
+                         for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var cartButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.addTarget(self,
+                         action: #selector(cartButtonTapped),
+                         for: .touchUpInside)
         return button
     }()
     
@@ -69,21 +64,6 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         return label
     }()
     
-    private lazy var cartButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.tintColor = .textPrimary
-        button.imageView?.contentMode = .scaleAspectFill
-        button.contentHorizontalAlignment = .fill
-        button.contentVerticalAlignment = .fill
-        button.clipsToBounds = true
-        
-        button.addTarget(
-            self,
-            action: #selector (cartButtonTapped),
-            for: .touchUpInside)
-        return button
-    }()
-    
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -98,19 +78,12 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - Actions
     @objc
     func likeButtonTapped() {
-        isLiked.toggle()
-       
-        let imageName = isLiked ? "likeActive" : "likeNoActive"
-        likeButton.setImage(UIImage(named: imageName), for: .normal)
+        // TODO:
     }
     
     @objc
     func cartButtonTapped() {
-        isLiked.toggle()
-       
-        let imageName = isLiked ? "inCart" : "notInCart"
-       
-        cartButton.setImage(UIImage(named: imageName), for: .normal)
+        // TODO:
     }
     
     // MARK: - Public Methods
@@ -120,7 +93,8 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             self.nftName.text = nftModel.name
             self.nftPrice.text = "\(nftModel.price) ETH"
             self.ratingView.createRating(with: nftModel.rating)
-            self.cartButton.setImage(self.setIsCart(isInCart: nftModel.isInCart), for: .normal)
+            self.likeButton.setBackgroundImage(UIImage(named: nftModel.isLiked ? "likeActive" : "likeNoActive"), for: .normal)
+            self.cartButton.setBackgroundImage(UIImage(named: nftModel.isInCart ? "inCart" : "notInCart"), for: .normal)
         }
     }
     
@@ -139,12 +113,6 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             )
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-    }
-    
-    private func setIsCart(isInCart: Bool) -> UIImage? {
-        isInCart
-        ? UIImage(named: "inCart")
-        : UIImage(named: "notInCart")
     }
     
     private func setupCollectionViewConstrains() {
