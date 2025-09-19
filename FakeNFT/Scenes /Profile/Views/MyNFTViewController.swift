@@ -170,7 +170,7 @@ extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
         let cell: MyNFTTableViewCell = tableView.dequeueReusableCell()
         let nft = displayedNFTs[indexPath.row]
         let myPresenter = presenter as? MyNFTPresenter
-        let isLiked = myPresenter?.userProfile?.isLiked(nftId: nft.id) ?? false
+        let isLiked = myPresenter?.userProfile?.likes.contains(nft.id) ?? false
 
         cell.configure(with: nft, isLiked: isLiked) { [weak self] isSelected in
             self?.presenter.handleHeartTap(for: nft.id, isSelected: isSelected)

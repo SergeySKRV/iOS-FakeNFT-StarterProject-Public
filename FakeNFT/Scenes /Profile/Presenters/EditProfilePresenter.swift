@@ -56,10 +56,11 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
             name: view?.getNameText() ?? currentUser.name,
             description: view?.getDescriptionText() ?? currentUser.description,
             website: view?.getWebsiteText() ?? currentUser.website,
-            avatarURLString: avatarURLString,
+            avatar: avatarURLString,
             nfts: currentUser.nfts,
             likes: currentUser.likes
         )
+
         userService.updateUserProfile(updatedProfile) { [weak self] result in
             switch result {
             case .success:
@@ -140,8 +141,9 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
 
     // MARK: - Data Operations
     func loadImageFromURL(_ url: URL, completion: @escaping (UIImage?) -> Void) {
-        imageLoaderService.loadImage(from: url, completion: completion)
+        imageLoaderService.loadImage(from: url.absoluteString, completion: completion)
     }
+
 
     func saveUserProfileLocally(_ profile: UserProfile) {
         view?.saveUserProfileLocally(profile)

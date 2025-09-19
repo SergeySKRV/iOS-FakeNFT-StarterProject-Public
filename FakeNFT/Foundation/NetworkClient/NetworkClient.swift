@@ -1,12 +1,26 @@
 import Foundation
 
 // MARK: - Errors
-
+/// Ошибки, которые может возвращать сетевой клиент.
+///
+/// Используются для обработки и диагностики проблем при выполнении HTTP-запросов.
 enum NetworkClientError: Error {
+    /// Сервер вернул код ответа, выходящий за пределы диапазона `200...299`.
+    /// - Parameter Int: полученный HTTP статус-код.
     case httpStatusCode(Int)
+
+    /// Ошибка при формировании или отправке `URLRequest`.
+    /// - Parameter Error: исходная ошибка системы.
     case urlRequestError(Error)
+
+    /// Ошибка внутри `URLSession` (например, отсутствует корректный `HTTPURLResponse`).
     case urlSessionError
+
+    /// Ошибка при декодировании полученных данных в ожидаемую модель.
     case parsingError
+
+    /// Ошибка соединения: "Connection reset by peer".
+    /// Обычно означает, что сервер закрыл соединение преждевременно.
     case connectionReset
 }
 
@@ -143,7 +157,7 @@ struct DefaultNetworkClient: NetworkClientProtocol {
         urlRequest.httpMethod = request.httpMethod.rawValue
         urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
-        if let dto = request.dto {
+        if let dto = request.body {
             if let json = dto.asJSONData() {
                 urlRequest.httpBody = json
                 urlRequest.setValue(dto.contentType, forHTTPHeaderField: "Content-Type")
@@ -174,10 +188,21 @@ struct DefaultNetworkClient: NetworkClientProtocol {
 }
 
 // MARK: - HTTP
-
+/// HTTP-методы, поддерживаемые сетевым клиентом.
+///
+/// Используются для указания типа запроса при формировании `URLRequest`.
+/// Основаны на стандартных методах протокола HTTP 1.1.
 enum HttpMethod: String {
+    /// Используется для получения данных с сервера (чтение).
     case get = "GET"
+
+    /// Используется для отправки данных на сервер (создание ресурса).
     case post = "POST"
+
+    /// Используется для обновления существующего ресурса.
+    /// В отличие от `PATCH`, предполагает полную замену ресурса.
     case put = "PUT"
+
+    /// Используется для удаления ресурса с сервера.
     case delete = "DELETE"
 }

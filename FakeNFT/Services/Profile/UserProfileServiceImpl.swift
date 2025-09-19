@@ -35,11 +35,11 @@ final class UserProfileServiceImpl: UserProfileService {
     }
 
     func updateUserProfile(_ profile: UserProfile, completion: @escaping (Result<Bool, Error>) -> Void) {
-        let updateDTO = UserProfileUpdateDTO(
+        let updateDTO = UserProfileUpdateRequestBody(
             name: profile.name,
             description: profile.description,
             website: profile.website,
-            avatar: profile.avatar?.absoluteString
+            avatar: profile.avatar
         )
         let updateRequest = UpdateUserProfileRequest(updateData: updateDTO)
         networkClient.send(request: updateRequest) { [weak self] result in
@@ -57,35 +57,35 @@ final class UserProfileServiceImpl: UserProfileService {
         }
     }
 
-    func updateUserLikes(nftId: String, isLiked: Bool, completion: @escaping (Result<Bool, Error>) -> Void) {
+    func updateUserLikes(
+        nftId: String,
+        isLiked: Bool,
+        completion: @escaping (Result<Bool, Error>) -> Void
+    ) {
         fetchUserProfile { [weak self] result in
+            guard let self = self else { return }
+
             switch result {
             case .success(var profile):
+                // Обновляем локально (оптимистично)
                 if isLiked {
-                    profile.addToLikes(nftId: nftId)
+                    profile.likes.insert(nftId)
                 } else {
-                    profile.removeFromLikes(nftId: nftId)
+                    profile.likes.remove(nftId)
                 }
-                _ = self?.saveUserProfileLocally(profile)
 
-                let likesUpdateRequest = UpdateUserProfileRequest(likes: profile.likes)
-                self?.networkClient.send(request: likesUpdateRequest) { updateResult in
-                    switch updateResult {
-                    case .success:
-                        let saveResult = self?.saveUserProfileLocally(profile) ?? false
-                        DispatchQueue.main.async {
-                            completion(.success(saveResult))
-                        }
-                    case .failure(let error):
-                        if var currentProfile = self?.loadUserProfileLocally() {
-                            if isLiked {
-                                currentProfile.removeFromLikes(nftId: nftId)
-                            } else {
-                                currentProfile.addToLikes(nftId: nftId)
-                            }
-                            _ = self?.saveUserProfileLocally(currentProfile)
-                        }
-                        DispatchQueue.main.async {
+                // Сохраняем локально сразу
+                let saveResult = self.saveUserProfileLocally(profile)
+
+                // Отправляем обновление на сервер
+                let likesUpdateRequest = UpdateUserProfileRequest(likes: Array(profile.likes))
+                self.networkClient.send(request: likesUpdateRequest) { updateResult in
+                    DispatchQueue.main.async {
+                        switch updateResult {
+                        case .success:
+                            completion(.success(saveResult)) // всё ок
+                        case .failure(let error):
+                            // Сервер не принял, но UI не откатываем
                             completion(.failure(error))
                         }
                     }

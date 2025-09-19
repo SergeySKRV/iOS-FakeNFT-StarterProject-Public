@@ -8,30 +8,55 @@
 import Foundation
 
 // MARK: - UpdateUserProfileRequest
+
+/// Запрос для обновления данных профиля пользователя.
+///
+/// Выполняет `PUT`-запрос к эндпоинту:
+/// `/api/v1/profile/{id}`
+///
+/// Может обновлять как общие данные профиля (имя, описание, сайт, аватар),
+/// так и список лайкнутых NFT.
 struct UpdateUserProfileRequest: NetworkRequest {
     // MARK: - Properties
+
+    /// Идентификатор профиля пользователя.
     private let profileId: String
-    private let updateData: Dto?
+
+    /// Данные для обновления.
+    private let requestBody: RequestBodyConvertible?
 
     // MARK: - Lifecycle
-    init(profileId: String = "1", updateData: UserProfileUpdateDTO? = nil) {
+
+    /// Инициализация запроса для обновления профиля.
+    /// - Parameters:
+    ///   - profileId: Идентификатор профиля (по умолчанию `"1"`).
+    ///   - updateData: Данные для обновления (`UserProfileUpdateRequestBody`).
+    init(profileId: String = "1", updateData: UserProfileUpdateRequestBody? = nil) {
         self.profileId = profileId
-        self.updateData = updateData
+        self.requestBody = updateData
     }
 
+    /// Инициализация запроса для обновления лайков пользователя.
+    /// - Parameters:
+    ///   - profileId: Идентификатор профиля (по умолчанию `"1"`).
+    ///   - likes: Список идентификаторов лайкнутых NFT.
     init(profileId: String = "1", likes: [String]) {
         self.profileId = profileId
-        self.updateData = UserLikesUpdateDTO(likes: likes)
+        self.requestBody = UserLikesUpdateRequestBody(likes: likes)
     }
 
-    // MARK: - Public methods
+    // MARK: - NetworkRequest Properties
+
+    /// Конечная точка запроса (например, `/api/v1/profile/1`).
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/profile/\(profileId)")
     }
 
+    /// HTTP-метод (`PUT`).
     var httpMethod: HttpMethod = .put
 
-    var dto: Dto? {
-        updateData
+    /// Тело запроса.
+    var body: RequestBodyConvertible? {
+        requestBody
     }
 }

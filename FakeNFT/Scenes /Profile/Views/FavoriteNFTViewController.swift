@@ -10,7 +10,6 @@ import UIKit
 final class FavoriteNFTViewController: UIViewController {
 
     // MARK: - Properties
-    private var servicesAssembly: ServicesAssembly!
     var presenter: FavoriteNFTPresenterProtocol!
     private var displayedNFTs: [NFTItem] = []
 
@@ -57,15 +56,14 @@ final class FavoriteNFTViewController: UIViewController {
     }()
 
     // MARK: - Init
-    init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
-        super.init(nibName: nil, bundle: nil)
-    }
+        override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+            super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        }
 
-    required init?(coder: NSCoder) {
-        assertionFailure("init(coder:) has not been implemented")
-        return nil
-    }
+        required init?(coder: NSCoder) {
+            assertionFailure("init(coder:) has not been implemented")
+            return nil
+        }
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -172,7 +170,7 @@ extension FavoriteNFTViewController: FavoriteNFTViewProtocol {
     }
 
     func showNFTDetails(_ viewController: UIViewController) {
-        present(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

@@ -31,7 +31,6 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         button.isSelected = true
         button.tintColor = .yaWhiteUniversal
         button.contentMode = .scaleAspectFit
-        button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -40,8 +39,6 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 4
-        stackView.alignment = .fill
-        stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -50,7 +47,6 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         let label = UILabel()
         label.font = Fonts.sfProBold17
         label.textColor = .yaPrimary
-        label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         return label
     }()
@@ -62,14 +58,7 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.setContentHuggingPriority(.required, for: .horizontal)
-
-        for _ in 0..<5 {
-            let starImageView = UIImageView()
-            starImageView.contentMode = .scaleAspectFit
-            starImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-            starImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
-            stackView.addArrangedSubview(starImageView)
-        }
+        makeStarImageViews(in: stackView)
         return stackView
     }()
 
@@ -77,7 +66,6 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         let label = UILabel()
         label.font = Fonts.sfProRegular15
         label.textColor = .yaPrimary
-        label.numberOfLines = 1
         return label
     }()
 
@@ -94,6 +82,16 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
     required init?(coder: NSCoder) {
         assertionFailure("init(coder:) has not been implemented")
         return nil
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nftImageView.image = nil
+        nameLabel.text = nil
+        priceLabel.text = nil
+        heartButton.isSelected = false
+        heartButton.tintColor = .yaWhiteUniversal
+        setupRatingStars(rating: 0)
     }
 
     // MARK: - Public Methods
@@ -125,9 +123,9 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         textStackView.addArrangedSubview(priceLabel)
 
         NSLayoutConstraint.activate([
-            nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             nftImageView.widthAnchor.constraint(equalToConstant: 80),
             nftImageView.heightAnchor.constraint(equalToConstant: 80),
 
@@ -153,15 +151,25 @@ final class FavoriteNFTCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         for (index, starImageView) in stars.enumerated() {
             let starIndex = Double(index)
             if clampedRating >= starIndex + 1 {
-                starImageView.image = UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysTemplate)
+                starImageView.image = UIImage(systemName: "star.fill")
                 starImageView.tintColor = .yaYellowUniversal
             } else if clampedRating > starIndex {
-                starImageView.image = UIImage(systemName: "star.leadinghalf.filled")?.withRenderingMode(.alwaysTemplate)
+                starImageView.image = UIImage(systemName: "star.leadinghalf.filled")
                 starImageView.tintColor = .yaYellowUniversal
             } else {
-                starImageView.image = UIImage(systemName: "star")?.withRenderingMode(.alwaysTemplate)
+                starImageView.image = UIImage(systemName: "star")
                 starImageView.tintColor = .yaLightGray
             }
+        }
+    }
+
+    private func makeStarImageViews(in stackView: UIStackView) {
+        for _ in 0..<5 {
+            let starImageView = UIImageView()
+            starImageView.contentMode = .scaleAspectFit
+            starImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+            starImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+            stackView.addArrangedSubview(starImageView)
         }
     }
 

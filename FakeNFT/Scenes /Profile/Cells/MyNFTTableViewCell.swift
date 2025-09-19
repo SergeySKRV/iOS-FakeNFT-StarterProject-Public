@@ -54,7 +54,6 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         return label
     }()
 
-    // MARK: - Rating Stars
     private lazy var ratingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -62,14 +61,7 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         stackView.distribution = .fillEqually
         stackView.alignment = .center
         stackView.setContentHuggingPriority(.required, for: .horizontal)
-
-        for _ in 0..<5 {
-            let starImageView = UIImageView()
-            starImageView.contentMode = .scaleAspectFit
-            starImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-            starImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
-            stackView.addArrangedSubview(starImageView)
-        }
+        makeStarImageViews(in: stackView)
         return stackView
     }()
 
@@ -197,6 +189,16 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
                 starImageView.image = UIImage(systemName: "star")?.withRenderingMode(.alwaysTemplate)
                 starImageView.tintColor = .yaLightGray
             }
+        }
+    }
+
+    private func makeStarImageViews(in stackView: UIStackView) {
+        for _ in 0..<5 {
+            let starImageView = UIImageView()
+            starImageView.contentMode = .scaleAspectFit
+            starImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+            starImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+            stackView.addArrangedSubview(starImageView)
         }
     }
 

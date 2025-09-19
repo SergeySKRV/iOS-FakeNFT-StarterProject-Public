@@ -63,21 +63,19 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
 
     func handleHeartTap(for nftId: String, isSelected: Bool) {
         userService.updateUserLikes(nftId: nftId, isLiked: isSelected) { [weak self] result in
-            switch result {
-            case .success:
-                if var profile = self?.userProfile {
-                    if isSelected {
-                        profile.addToLikes(nftId: nftId)
-                    } else {
-                        profile.removeFromLikes(nftId: nftId)
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    if var profile = self?.userProfile {
+                        if isSelected {
+                            profile.likes.insert(nftId)
+                        } else {
+                            profile.likes.remove(nftId)
+                        }
+                        self?.userProfile = profile
                     }
-                    self?.userProfile = profile
-                }
-                DispatchQueue.main.async {
                     self?.view?.displayNFTs(self?.sortedNftItems ?? [])
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
+                case .failure(let error):
                     self?.view?.showError(error)
                     self?.view?.displayNFTs(self?.sortedNftItems ?? [])
                 }

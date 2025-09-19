@@ -1,32 +1,42 @@
+//
+//  ImageLoaderService.swift
+//  FakeNFT
+//
+//  Created by Сергей Скориков on 19.09.2025.
+//
+
 import UIKit
 
-// MARK: - ImageLoaderService
 protocol ImageLoaderService {
-    func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void)
+    /// Загружает изображение по URL-строке.
+    /// - Parameters:
+    ///   - urlString: Строка с URL.
+    ///   - completion: Колбэк с результатом (`UIImage?`).
+    func loadImage(from urlString: String?, completion: @escaping (UIImage?) -> Void)
 }
 
-// MARK: - ImageLoaderServiceImpl
 final class ImageLoaderServiceImpl: ImageLoaderService {
-    func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        URLSession.shared
-            .dataTask(with: url) { data, _, error in
-                if error != nil {
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
-                    return
-                }
-                guard let data = data else {
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
-                    return
-                }
-                let image = UIImage(data: data)
-                DispatchQueue.main.async {
-                    completion(image)
-                }
+    private let cache = NSCache<NSString, UIImage>()
+
+    func loadImage(from urlString: String?, completion: @escaping (UIImage?) -> Void) {
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+
+        if let cached = cache.object(forKey: urlString as NSString) {
+            completion(cached)
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let data = data, let image = UIImage(data: data), error == nil else {
+                DispatchQueue.main.async { completion(nil) }
+                return
             }
-            .resume()
+            self?.cache.setObject(image, forKey: urlString as NSString)
+            DispatchQueue.main.async { completion(image) }
+        }
+        .resume()
     }
 }

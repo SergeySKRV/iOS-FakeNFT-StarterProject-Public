@@ -8,21 +8,24 @@
 import UIKit
 
 // MARK: - FavoriteNFTAssembly
+final class FavoriteNFTAssembly {
 
-public final class FavoriteNFTAssembly {
-    private let servicesAssembler: ServicesAssembly
+    // MARK: - Dependencies
+    private let services: ServicesAssembly
 
-    internal init(servicesAssembler: ServicesAssembly) {
-        self.servicesAssembler = servicesAssembler
+    // MARK: - Init
+    init(services: ServicesAssembly) {
+        self.services = services
     }
 
-    public func build() -> UIViewController {
-        let viewController = FavoriteNFTViewController(servicesAssembly: servicesAssembler)
+    // MARK: - Public Methods
+    func build() -> UIViewController {
+        let viewController = FavoriteNFTViewController()
         let presenter = FavoriteNFTPresenter(
             view: viewController,
-            nftService: servicesAssembler.nftService,
-            userService: servicesAssembler.userService,
-            servicesAssembly: servicesAssembler
+            nftService: services.nftService,
+            userService: services.userService,
+            nftDetailAssembly: NftDetailAssembly(servicesAssembler: services)
         )
         viewController.presenter = presenter
         return viewController

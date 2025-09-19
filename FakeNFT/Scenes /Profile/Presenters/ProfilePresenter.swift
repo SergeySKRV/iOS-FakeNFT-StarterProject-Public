@@ -3,20 +3,26 @@ import UIKit
 // MARK: - ProfilePresenter
 final class ProfilePresenter: ProfilePresenterProtocol {
 
-    // MARK: - UI Properties
+    // MARK: - Dependencies
     private weak var view: ProfilePresenterOutput?
     private let userService: UserProfileService
     private let servicesAssembly: ServicesAssembly
+    private let imageLoader: ImageLoaderService
 
-    // MARK: - UI Properties
+    // MARK: - State
     private var userProfile: UserProfile?
     private var tableData: [ProfileSection] = []
 
     // MARK: - Lifecycle
-    required init(view: ProfilePresenterOutput, userService: UserProfileService, servicesAssembly: ServicesAssembly) {
+    required init(
+        view: ProfilePresenterOutput,
+        userService: UserProfileService,
+        servicesAssembly: ServicesAssembly
+    ) {
         self.view = view
         self.userService = userService
         self.servicesAssembly = servicesAssembly
+        self.imageLoader = ImageLoaderServiceImpl()
     }
 
     func viewDidLoad() {
@@ -51,13 +57,8 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func handleProfileUpdate(_ profile: UserProfile) {
         self.userProfile = profile
         setupTableView()
-        DispatchQueue.main.async { [weak self] in
-            if let profileViewController = self?.view as? UIViewController,
-               let tableView = profileViewController.view.subviews.first(where: { $0 is UITableView }) as? UITableView {
-                tableView.reloadData()
-            }
-        }
-        view?.updateProfileUI(profile)
+        reloadTableView()
+        presentProfile(profile)
     }
 
     // MARK: - TableView Methods (ProfilePresenterTableViewOperations)
@@ -67,18 +68,26 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.defaultReuseIdentifier, for: indexPath) as? ProfileTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ProfileTableViewCell.defaultReuseIdentifier,
+            for: indexPath
+        ) as? ProfileTableViewCell else {
             assertionFailure("Could not dequeue ProfileTableViewCell")
             return UITableViewCell()
         }
-        guard indexPath.section < tableData.count else { return cell }
-        guard indexPath.row < tableData[indexPath.section].items.count else { return cell }
+
+        guard indexPath.section < tableData.count,
+              indexPath.row < tableData[indexPath.section].items.count else {
+            return cell
+        }
 
         let item = tableData[indexPath.section].items[indexPath.row]
         let localizedItem = ProfileItem(
-            title: item.title == "Мои NFT" ? NSLocalizedString("EditProfile.myNFT", comment: "") :
-                item.title == "Избранные NFT" ? NSLocalizedString("EditProfile.favoritesNFT", comment: "") :
-                item.title,
+            title: item.title == "Мои NFT"
+                ? NSLocalizedString("EditProfile.myNFT", comment: "")
+                : item.title == "Избранные NFT"
+                    ? NSLocalizedString("EditProfile.favoritesNFT", comment: "")
+                    : item.title,
             subtitle: item.subtitle
         )
         cell.configure(with: localizedItem)
@@ -92,38 +101,20 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard indexPath.section < tableData.count else { return }
-        guard indexPath.row < tableData[indexPath.section].items.count else { return }
+        guard indexPath.section < tableData.count,
+              indexPath.row < tableData[indexPath.section].items.count else { return }
 
         let item = tableData[indexPath.section].items[indexPath.row]
         switch item.title {
         case NSLocalizedString("EditProfile.myNFT", comment: ""):
             let myNFTController = MyNFTViewController(servicesAssembly: servicesAssembly)
+            pushOrPresent(myNFTController)
 
-            if let profileViewController = self.view as? UIViewController,
-               let navController = profileViewController.navigationController {
-                navController.pushViewController(myNFTController, animated: true)
-            } else {
-                let navController = UINavigationController(rootViewController: myNFTController)
-                navController.modalPresentationStyle = .fullScreen
-                if let profileViewController = self.view as? UIViewController {
-                    profileViewController.present(navController, animated: true)
-                }
-            }
         case NSLocalizedString("EditProfile.favoritesNFT", comment: ""):
-            let favoriteNFTAssembly = FavoriteNFTAssembly(servicesAssembler: servicesAssembly)
+            let favoriteNFTAssembly = FavoriteNFTAssembly(services: servicesAssembly)
             let favoriteNFTViewController = favoriteNFTAssembly.build()
+            pushOrPresent(favoriteNFTViewController)
 
-            if let profileViewController = self.view as? UIViewController,
-               let navController = profileViewController.navigationController {
-                navController.pushViewController(favoriteNFTViewController, animated: true)
-            } else {
-                let navController = UINavigationController(rootViewController: favoriteNFTViewController)
-                navController.modalPresentationStyle = .fullScreen
-                if let profileViewController = self.view as? UIViewController {
-                    profileViewController.present(navController, animated: true)
-                }
-            }
         default:
             break
         }
@@ -152,17 +143,42 @@ final class ProfilePresenter: ProfilePresenterProtocol {
             case .success(let profile):
                 self?.userProfile = profile
                 self?.setupTableView()
-                DispatchQueue.main.async { [weak self] in
-                    if let profileViewController = self?.view as? UIViewController,
-                       let tableView = profileViewController.view.subviews.first(where: { $0 is UITableView }) as? UITableView {
-                        tableView.reloadData()
-                    }
-                    self?.view?.updateProfileUI(profile)
-                }
+                self?.reloadTableView()
+                self?.presentProfile(profile)
+
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.view?.showError(error)
                 }
+            }
+        }
+    }
+
+    private func presentProfile(_ profile: UserProfile) {
+        imageLoader.loadImage(from: profile.avatar) { [weak self] image in
+            let viewModel = UserProfileViewModel(profile: profile, avatarImage: image)
+            self?.view?.updateProfileUI(viewModel)
+        }
+    }
+
+    private func reloadTableView() {
+        DispatchQueue.main.async { [weak self] in
+            if let profileVC = self?.view as? UIViewController,
+               let tableView = profileVC.view.subviews.first(where: { $0 is UITableView }) as? UITableView {
+                tableView.reloadData()
+            }
+        }
+    }
+
+    private func pushOrPresent(_ vc: UIViewController) {
+        if let profileVC = self.view as? UIViewController,
+           let navController = profileVC.navigationController {
+            navController.pushViewController(vc, animated: true)
+        } else {
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            if let profileVC = self.view as? UIViewController {
+                profileVC.present(navController, animated: true)
             }
         }
     }
