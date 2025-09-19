@@ -139,13 +139,13 @@ final class CartViewController: UIViewController {
             totalView.heightAnchor.constraint(equalToConstant: 76),
             
             nftCountLabel.topAnchor.constraint(equalTo: totalView.topAnchor, constant: 16),
-            nftCountLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 16),
+            nftCountLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 12),
             
             totalPriceLabel.topAnchor.constraint(equalTo: nftCountLabel.bottomAnchor, constant: 2),
-            totalPriceLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 16),
+            totalPriceLabel.leadingAnchor.constraint(equalTo: totalView.leadingAnchor, constant: 12),
             
             payButton.centerYAnchor.constraint(equalTo: totalView.centerYAnchor),
-            payButton.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -16),
+            payButton.trailingAnchor.constraint(equalTo: totalView.trailingAnchor, constant: -8),
             payButton.widthAnchor.constraint(equalToConstant: 240),
             payButton.heightAnchor.constraint(equalToConstant: 44)
         ])
