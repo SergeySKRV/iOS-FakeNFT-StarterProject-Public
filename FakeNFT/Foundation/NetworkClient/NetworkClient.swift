@@ -117,6 +117,35 @@ struct DefaultNetworkClient: NetworkClient {
 
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
+        urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
+
+        // Убрали дублирование заголовков Content-Type
+        if let dto = request.dto {
+            do {
+                let jsonData = try encoder.encode(dto)
+                urlRequest.httpBody = jsonData
+                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            } catch {
+                assertionFailure("Failed to encode DTO: \(error)")
+                return nil
+            }
+        } else if let body = request.body {
+            urlRequest.httpBody = body
+            urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        }
+
+        return urlRequest
+    }
+    
+/*
+    private func create(request: NetworkRequest) -> URLRequest? {
+        guard let endpoint = request.endpoint else {
+            assertionFailure("Empty endpoint")
+            return nil
+        }
+
+        var urlRequest = URLRequest(url: endpoint)
+        urlRequest.httpMethod = request.httpMethod.rawValue
 
         urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
@@ -137,7 +166,7 @@ struct DefaultNetworkClient: NetworkClient {
 
         return urlRequest
     }
-
+*/
     private func parse<T: Decodable>(data: Data, type _: T.Type, onResponse: @escaping (Result<T, Error>) -> Void) {
         do {
             let response = try decoder.decode(T.self, from: data)

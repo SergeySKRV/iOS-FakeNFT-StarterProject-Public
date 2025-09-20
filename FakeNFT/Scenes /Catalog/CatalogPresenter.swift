@@ -109,5 +109,24 @@ final class CatalogPresenter: CatalogPresenterProtocol {
         )
     }
      
+    private func makeErrorModel(_ error: Error) -> AlertModel {
+        let title: String = NSLocalizedString("Error.title", comment: "")
+        let message: String
+        switch error {
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "")
+        default:
+            message = NSLocalizedString("Error.unknown", comment: "")
+        }
+        
+        let actionText: String =  NSLocalizedString("Error.repeat", comment: "")
+        let cancelText: String = NSLocalizedString("Error.cancel", comment: "")
+        return AlertModel(
+            title: title,
+            message: message,
+            actionTitles: [cancelText,
+                           actionText]
+        )
+    }
 
 }

@@ -76,6 +76,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     // MARK: - Actions
+    
     @objc
     func likeButtonTapped() {
         // TODO:
@@ -84,6 +85,8 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     @objc
     func cartButtonTapped() {
         // TODO:
+        guard let indexPath = indexPath else { return }
+        delegate?.cartButtonDidChange(for: indexPath)
     }
     
     // MARK: - Public Methods

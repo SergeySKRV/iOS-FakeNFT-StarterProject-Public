@@ -25,7 +25,7 @@ struct OrdersPutRequest: NetworkRequest {
         self.orders = orders
         self.id = id
     }
-
+    
     // MARK: - Public Methods
     func ordersToString() -> String {
         var ordersString = "nfts="
