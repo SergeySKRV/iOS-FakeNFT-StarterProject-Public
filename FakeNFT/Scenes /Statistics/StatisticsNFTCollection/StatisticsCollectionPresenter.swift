@@ -12,7 +12,7 @@ final class StatisticsCollectionPresenter {
     weak var view: StatisticsCollectionViewController?
     var userProfile: StatisticsProfileModel?
     var statisticsCollectionViewModel: [StatisticsNFTModel]
-    var likes: [String]?
+    var likes: [String]
     var orders: [String]?
     // MARK: - private properties:
     private var state = StatisticsCollectionViewState.initial {
@@ -26,13 +26,34 @@ final class StatisticsCollectionPresenter {
         statisticsCollectionViewModel = []
         orders = []
     }
-    func likeButtonTouch() {
+    func likeButtonTouch(nftID: String) {
+        if likes.contains(nftID) {
+            if let index = likes.firstIndex(of: nftID) {
+                likes.remove(at: index)
+            }
+        } else {
+            likes.append(nftID)
+        }
+        let networkClient = DefaultNetworkClient()
+        let service = StatisticsUsersServiceImpl(
+            networkClient: networkClient,
+            storage: storage
+        )
+        service.putProfile(likes: likes) { [weak self] result in
+            switch result {
+            case .success(let profile):
+               self?.likes = profile.likes ?? []
+            case .failure(let error):
+                print("error while fetching likes \(error)")
+            }
+        }
     }
-    func cartButtonTouch() {
+    func cartButtonTouch(nftID: String) {
     }
     // MARK: - private methods:
     private init() {
         statisticsCollectionViewModel = []
+        self.likes = []
     }
     private func loadNFTCollection() {
         guard let userProfile = view?.userProfile else { return }
@@ -44,7 +65,7 @@ final class StatisticsCollectionPresenter {
         service.loadProfile { [weak self] result in
             switch result {
             case .success(let profile):
-               self?.likes = profile.likes
+                self?.likes = profile.likes ?? []
             case .failure(let error):
                 print("error while fetching likes \(error)")
             }
@@ -111,9 +132,9 @@ final class StatisticsCollectionPresenter {
         case .data:
             for number in 0..<statisticsCollectionViewModel.count - 1 {
                 statisticsCollectionViewModel[number].isLike =
-                likes?.contains(where: {
+                likes.contains(where: {
                     $0 == statisticsCollectionViewModel[number].id
-                }) ?? false
+                })
                 statisticsCollectionViewModel[number].isInCart =
                 orders?.contains(where: {
                     $0 == statisticsCollectionViewModel[number].id

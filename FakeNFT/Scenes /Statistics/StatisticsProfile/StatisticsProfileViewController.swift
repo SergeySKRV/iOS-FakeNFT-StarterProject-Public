@@ -32,7 +32,7 @@ final class StatisticsProfileViewController: UIViewController {
     }()
     private let webSiteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Перейти на сайт пользователя", for: .normal)
+        button.setTitle(NSLocalizedString("Statistics.moveToSite", comment: "Коллекция NFT"), for: .normal)
         button.titleLabel?.font = Fonts.sfProRegular15
         button.setTitleColor(UIColor.yaPrimary, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false

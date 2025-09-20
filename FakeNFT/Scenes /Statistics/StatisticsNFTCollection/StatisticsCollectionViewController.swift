@@ -9,6 +9,14 @@ protocol StatisticsCollectionView: AnyObject, ErrorView {
 
 final class StatisticsCollectionViewController: UIViewController, StatisticsCollectionView {
     var userProfile: StatisticsProfileModel
+    let nftCollectionView: UICollectionView = {
+         let layout = UICollectionViewFlowLayout()
+         layout.minimumInteritemSpacing = 0
+         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+         collectionView.backgroundColor = .yaSecondary
+         collectionView.translatesAutoresizingMaskIntoConstraints = false
+         return collectionView
+     }()
     // MARK: - private properties
     private let presenter = StatisticsCollectionPresenter.shared
     private let navigationBarTitle: UILabel = {
@@ -18,15 +26,7 @@ final class StatisticsCollectionViewController: UIViewController, StatisticsColl
         label.text = NSLocalizedString("Statistics.NFTCollection", comment: "Коллекция NFT")
         return label
     }()
-    private let nftCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .yaSecondary
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        return collectionView
-    }()
-    // MARK: - public methods
+   // MARK: - public methods
     init(profile: StatisticsProfileModel) {
         self.userProfile = profile
         super.init(nibName: nil, bundle: nil)

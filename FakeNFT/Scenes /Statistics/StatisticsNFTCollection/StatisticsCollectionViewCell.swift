@@ -105,15 +105,13 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
         cartButton.setImage(cartImage, for: .normal)
     }
     @objc func likeButtonTouch() {
-        print("likeButtonTouched")
-        nftCard?.isLike.toggle()
+        presenter?.likeButtonTouch(nftID: nftCard?.id ?? "")
+        self.nftCard?.isLike.toggle()
         configureCellData()
-        presenter?.likeButtonTouch()
     }
     @objc func cartButtonTouch() {
-        print("cartButtonTouched")
+        presenter?.cartButtonTouch(nftID: nftCard?.id ?? "")
         nftCard?.isInCart.toggle()
         configureCellData()
-        presenter?.cartButtonTouch()
     }
 }
