@@ -17,7 +17,7 @@ protocol CollectionViewControllerProtocol: AnyObject, AlertCatalogView {
 
 final class CollectionViewController: UIViewController {
     // MARK: - Public Properties
-    private var presenter: CollectionPresenterProtocol
+    private var presenter: CollectionPresenterProtocol!
 
     // MARK: - Private Properties
     private let scrollView: UIScrollView = {
@@ -338,24 +338,23 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
 
 // MARK: - CollectionViewCellDelegate
 extension CollectionViewController: CollectionViewCellDelegate {
-    
     func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool) {
-        // TODO:
+        presenter.changeLike(for: indexPath, isLiked: isLiked)
+        nftCollectionView.reloadData() // Добавил от Ильи
     }
-    
     func cartButtonDidChange(for indexPath: IndexPath) {
         presenter.changeOrder(for: indexPath)
     }
 }
 
-// MARK: - ShowWebView
+// MARK: - ShowWebView это для вызова веб вью
 extension CollectionViewController: ProfilePresenterOutput {
     
     func showWebViewController(urlString: String) {
         let webViewController = WebViewController(urlString: urlString)
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.modalPresentationStyle = .fullScreen
-        navigationController.modalTransitionStyle = .crossDissolve
+        navigationController.modalTransitionStyle = .crossDissolve // Плавный переход
         present(navigationController, animated: true)
     }
 }

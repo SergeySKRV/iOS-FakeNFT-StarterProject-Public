@@ -18,4 +18,3 @@ struct UserModel {
         self.website = user.website
     }
 }
-

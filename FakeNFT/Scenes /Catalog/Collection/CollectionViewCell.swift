@@ -29,6 +29,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         imageView.layer.cornerRadius = Constants.cornerRadius
         return imageView
     }()
+    // Ilia
     
     private lazy var likeButton: UIButton = {
         let button = UIButton()
@@ -76,15 +77,14 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     // MARK: - Actions
-    
     @objc
     func likeButtonTapped() {
-        // TODO:
+        guard let indexPath = indexPath else { return }
+        delegate?.likeButtonDidChange(for: indexPath, isLiked: isLiked)
     }
     
     @objc
     func cartButtonTapped() {
-        // TODO:
         guard let indexPath = indexPath else { return }
         delegate?.cartButtonDidChange(for: indexPath)
     }

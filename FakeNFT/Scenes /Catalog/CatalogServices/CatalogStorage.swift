@@ -55,5 +55,11 @@ final class CatalogStorage: CatalogStorageProtocol {
     func findInOrders(_ nft: String) -> Bool {
         orders.contains(nft)
     }
+        // ,,,,,
+        func setOrders(_ nfts: Set<String>) {
+            syncQueue.async { [weak self] in
+                self?.orders = nfts
+            }
+    }
 }
 
