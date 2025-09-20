@@ -70,6 +70,7 @@
 		90577EF92E71F9EC002B707B /* AllNFTsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90577EF82E71F9EC002B707B /* AllNFTsRequest.swift */; };
 		90892C872E7DBD7900E4415B /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90892C862E7DBD7900E4415B /* UserProfileViewModel.swift */; };
 		90892C8F2E7DE8D600E4415B /* EditProfileViewController+UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90892C8E2E7DE8D600E4415B /* EditProfileViewController+UIFactory.swift */; };
+		90892C952E7DF9C600E4415B /* ReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90892C942E7DF9C600E4415B /* ReviewManager.swift */; };
 		90B789E02E7341E80027656C /* UserProfileUpdateRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B789DF2E7341E80027656C /* UserProfileUpdateRequestBody.swift */; };
 		90B789E22E7342230027656C /* UpdateUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B789E12E7342230027656C /* UpdateUserProfileRequest.swift */; };
 		90B789E62E7357270027656C /* EditProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B789E52E7357270027656C /* EditProfileViewControllerDelegate.swift */; };
@@ -179,6 +180,7 @@
 		90577EF82E71F9EC002B707B /* AllNFTsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNFTsRequest.swift; sourceTree = "<group>"; };
 		90892C862E7DBD7900E4415B /* UserProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
 		90892C8E2E7DE8D600E4415B /* EditProfileViewController+UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditProfileViewController+UIFactory.swift"; sourceTree = "<group>"; };
+		90892C942E7DF9C600E4415B /* ReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManager.swift; sourceTree = "<group>"; };
 		90B789DF2E7341E80027656C /* UserProfileUpdateRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileUpdateRequestBody.swift; sourceTree = "<group>"; };
 		90B789E12E7342230027656C /* UpdateUserProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserProfileRequest.swift; sourceTree = "<group>"; };
 		90B789E52E7357270027656C /* EditProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				90B78B142E79B5BC0027656C /* AppConstants.swift */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
+				90892C942E7DF9C600E4415B /* ReviewManager.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
@@ -820,6 +823,7 @@
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				90892C952E7DF9C600E4415B /* ReviewManager.swift in Sources */,
 				90577ED22E6F5BE0002B707B /* MyNFTViewController.swift in Sources */,
 				90577ECE2E6F5B93002B707B /* MyNFTTableViewCell.swift in Sources */,
 				90B789E02E7341E80027656C /* UserProfileUpdateRequestBody.swift in Sources */,
