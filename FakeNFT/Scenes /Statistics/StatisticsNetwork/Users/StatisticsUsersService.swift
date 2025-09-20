@@ -73,7 +73,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
         networkClient.send(request: request, type: StatisticsOrder.self) { [weak storage] result in
             switch result {
             case .success(let order):
-               completion(.success(order))
+                completion(.success(order))
             case .failure(let error):
                 print("Error: \(error)")
                 completion(.failure(error))

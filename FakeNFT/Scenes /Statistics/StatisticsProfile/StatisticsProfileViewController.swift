@@ -42,7 +42,7 @@ final class StatisticsProfileViewController: UIViewController {
         button.addTarget(self, action: #selector(webButtonTouch), for: .touchUpInside)
         return button
     }()
-   private let collectionTableView: UITableView = {
+    private let collectionTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StatisticsProfileTableViewCell.self,
@@ -130,7 +130,7 @@ extension StatisticsProfileViewController: UITableViewDataSource {
         let cell = StatisticsProfileTableViewCell(style: .default,
                                                   reuseIdentifier: "StatisticsProfileTableViewCell",
                                                   nftCount: profile.nftCount)
-       return cell
+        return cell
     }
 }
 extension StatisticsProfileViewController: UITableViewDelegate {

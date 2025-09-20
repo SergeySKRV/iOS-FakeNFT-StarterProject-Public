@@ -11,23 +11,29 @@ final class StatisticsCollectionViewController: UIViewController, StatisticsColl
     var userProfile: StatisticsProfileModel
     var progressHUD: StatisticsUIBlockingProgressHUD?
     let nftCollectionView: UICollectionView = {
-         let layout = UICollectionViewFlowLayout()
-         layout.minimumInteritemSpacing = 0
-         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-         collectionView.backgroundColor = .yaSecondary
-         collectionView.translatesAutoresizingMaskIntoConstraints = false
-         return collectionView
-     }()
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout
+        )
+        collectionView.backgroundColor = .yaSecondary
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
     // MARK: - private properties
     private let presenter = StatisticsCollectionPresenter.shared
     private let navigationBarTitle: UILabel = {
         let label = UILabel()
         label.font = Fonts.sfProBold17
         label.textColor = UIColor.yaPrimary
-        label.text = NSLocalizedString("Statistics.NFTCollection", comment: "Коллекция NFT")
+        label.text = NSLocalizedString(
+            "Statistics.NFTCollection",
+            comment: "Коллекция NFT"
+        )
         return label
     }()
-   // MARK: - public methods
+    // MARK: - public methods
     init(profile: StatisticsProfileModel) {
         self.userProfile = profile
         super.init(nibName: nil, bundle: nil)
@@ -46,13 +52,29 @@ final class StatisticsCollectionViewController: UIViewController, StatisticsColl
         nftCollectionView.dataSource = self
         nftCollectionView.delegate = self
         view.addSubview(nftCollectionView)
-        NSLayoutConstraint.activate([
-            nftCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            nftCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            nftCollectionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -20),
-            nftCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nftCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32)
-        ])
+        NSLayoutConstraint.activate(
+[
+            nftCollectionView.leadingAnchor
+                .constraint(
+                    equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                    constant: 16
+                ),
+            nftCollectionView.topAnchor
+                .constraint(
+                    equalTo: view.safeAreaLayoutGuide.topAnchor,
+                    constant: 20
+                ),
+            nftCollectionView.heightAnchor
+                .constraint(
+                    equalTo: view.safeAreaLayoutGuide.heightAnchor,
+                    constant: -20
+                ),
+            nftCollectionView.centerXAnchor
+                .constraint(equalTo: view.centerXAnchor),
+            nftCollectionView.widthAnchor
+                .constraint(equalTo: view.widthAnchor, constant: -32)
+]
+        )
     }
     func showLoadingIndicator() {
         view?.isUserInteractionEnabled = false
@@ -89,7 +111,9 @@ extension StatisticsCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = nftCollectionView.dequeueReusableCell(withReuseIdentifier: "StatisticsCollectionViewCell",
                                                                for: indexPath)
-                as? StatisticsCollectionViewCell else {return UICollectionViewCell()}
+                as? StatisticsCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         cell.presenter = presenter
         cell.nftCard = presenter.statisticsCollectionViewModel[indexPath.row]
         cell.configureCellData()
@@ -100,6 +124,9 @@ extension StatisticsCollectionViewController: UICollectionViewDataSource {
 extension StatisticsCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width - 18) / 3, height: 192)
+        return CGSize(
+            width: (collectionView.bounds.width - 18) / 3,
+            height: 192
+        )
     }
 }

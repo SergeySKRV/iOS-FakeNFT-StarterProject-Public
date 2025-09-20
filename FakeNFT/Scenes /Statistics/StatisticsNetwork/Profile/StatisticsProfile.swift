@@ -7,5 +7,5 @@ struct StatisticsProfile: Decodable {
     let website: String?
     let nfts: [String]?
     let likes: [String]?
-   let id: String?
+    let id: String?
 }

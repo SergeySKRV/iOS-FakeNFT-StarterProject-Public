@@ -82,7 +82,7 @@ final class StatisticsViewPresenter {
             }
         }
     }
-   private func convertStoreToViewModel(_ store: [StatisticsUser]) -> [StatisticsProfileModel] {
+    private func convertStoreToViewModel(_ store: [StatisticsUser]) -> [StatisticsProfileModel] {
         var result: [StatisticsProfileModel] = []
         guard let users = storage.getUsers() else {return []}
         for user in users {
