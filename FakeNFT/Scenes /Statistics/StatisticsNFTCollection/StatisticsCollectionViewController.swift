@@ -9,6 +9,7 @@ protocol StatisticsCollectionView: AnyObject, ErrorView {
 
 final class StatisticsCollectionViewController: UIViewController, StatisticsCollectionView {
     var userProfile: StatisticsProfileModel
+    var progressHUD: StatisticsUIBlockingProgressHUD?
     let nftCollectionView: UICollectionView = {
          let layout = UICollectionViewFlowLayout()
          layout.minimumInteritemSpacing = 0

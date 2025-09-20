@@ -13,7 +13,7 @@ final class StatisticsCollectionPresenter {
     var userProfile: StatisticsProfileModel?
     var statisticsCollectionViewModel: [StatisticsNFTModel]
     var likes: [String]
-    var orders: [String]?
+    var orders: [String]
     // MARK: - private properties:
     private var state = StatisticsCollectionViewState.initial {
         didSet {
@@ -24,9 +24,9 @@ final class StatisticsCollectionPresenter {
     func viewDidLoad() {
         state = .loading
         statisticsCollectionViewModel = []
-        orders = []
     }
     func likeButtonTouch(nftID: String) {
+        StatisticsUIBlockingProgressHUD.show()
         if likes.contains(nftID) {
             if let index = likes.firstIndex(of: nftID) {
                 likes.remove(at: index)
@@ -42,26 +42,44 @@ final class StatisticsCollectionPresenter {
         service.putProfile(likes: likes) { [weak self] result in
             switch result {
             case .success(let profile):
-               self?.likes = profile.likes ?? []
+                StatisticsUIBlockingProgressHUD.dismiss()
+                self?.likes = profile.likes ?? []
             case .failure(let error):
                 print("error while fetching likes \(error)")
             }
         }
     }
     func cartButtonTouch(nftID: String) {
-    }
-    // MARK: - private methods:
-    private init() {
-        statisticsCollectionViewModel = []
-        self.likes = []
-    }
-    private func loadNFTCollection() {
-        guard let userProfile = view?.userProfile else { return }
+        StatisticsUIBlockingProgressHUD.show()
+        if orders.contains(nftID) {
+            if let index = orders.firstIndex(of: nftID) {
+                orders.remove(at: index)
+            }
+        } else {
+            orders.append(nftID)
+        }
         let networkClient = DefaultNetworkClient()
         let service = StatisticsUsersServiceImpl(
             networkClient: networkClient,
             storage: storage
         )
+        service.putOrders(order: orders) { [weak self] result in
+            switch result {
+            case .success(let profile):
+                StatisticsUIBlockingProgressHUD.dismiss()
+                self?.orders = profile.nfts ?? []
+            case .failure(let error):
+                print("error while fetching order \(error)")
+            }
+        }
+    }
+    // MARK: - private methods:
+    private init() {
+        statisticsCollectionViewModel = []
+        self.likes = []
+        self.orders = []
+    }
+    private func fetchProfile(service: StatisticsUsersServiceImpl) {
         service.loadProfile { [weak self] result in
             switch result {
             case .success(let profile):
@@ -70,14 +88,26 @@ final class StatisticsCollectionPresenter {
                 print("error while fetching likes \(error)")
             }
         }
+    }
+    private func fetchOrders(service: StatisticsUsersServiceImpl) {
         service.getOrders { [weak self] result in
             switch result {
             case .success(let order):
-                self?.orders  = order.nfts
+                self?.orders  = order.nfts ?? []
             case .failure(let error):
                 print("error while fetching order \(error)")
             }
         }
+    }
+    private func loadNFTCollection() {
+        guard let userProfile = view?.userProfile else { return }
+        let networkClient = DefaultNetworkClient()
+        let service = StatisticsUsersServiceImpl(
+            networkClient: networkClient,
+            storage: storage
+        )
+        fetchProfile(service: service)
+        fetchOrders(service: service)
         let nftService = NftServiceImpl(
             networkClient: networkClient,
             storage: NftStorageImpl()
@@ -111,7 +141,6 @@ final class StatisticsCollectionPresenter {
                     }
                 case .failure(let error):
                     self?.state = .failed(error)
-                    print("error in SCVP \(error)")
                 }
                 if (userProfile.nfts.count <= self?
                     .statisticsCollectionViewModel.count ?? 0)
@@ -127,7 +156,7 @@ final class StatisticsCollectionPresenter {
         case .initial:
             assertionFailure("can't move to initial state")
         case .loading:
-            view?.showLoadingIndicator()
+            StatisticsUIBlockingProgressHUD.show()
             loadNFTCollection()
         case .data:
             for number in 0..<statisticsCollectionViewModel.count - 1 {
@@ -136,11 +165,11 @@ final class StatisticsCollectionPresenter {
                     $0 == statisticsCollectionViewModel[number].id
                 })
                 statisticsCollectionViewModel[number].isInCart =
-                orders?.contains(where: {
+                orders.contains(where: {
                     $0 == statisticsCollectionViewModel[number].id
-                }) ?? false
+                })
             }
-            view?.hideLoadingIndicator()
+            StatisticsUIBlockingProgressHUD.dismiss()
             view?.showNFTs()
         case .failed(let error):
             let errorModel = makeErrorModel(error)

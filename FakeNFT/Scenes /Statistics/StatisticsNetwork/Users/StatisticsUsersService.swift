@@ -55,7 +55,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
         }
     }
     func putProfile(likes: [String], completion: @escaping (Result<StatisticsProfile, any Error>) -> Void) {
-        let param = likes.joined(separator: ",")
+        let param = likes.isEmpty ? "null" : likes.joined(separator: ",")
         let dto = StatisticsProfileDtoObject(param1: param)
         let request = StatisticsProfilePutRequest(dto: dto)
         networkClient.send(request: request, type: StatisticsProfile.self) { [weak storage] result in
@@ -66,13 +66,28 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
                 print("Error: \(error)")
                 completion(.failure(error))
             }
-        }    }
+        }
+    }
     func getOrders(completion: @escaping (Result<StatisticsOrder, any Error>) -> Void) {
         let request = StatisticsOrderRequest()
         networkClient.send(request: request, type: StatisticsOrder.self) { [weak storage] result in
             switch result {
             case .success(let order):
                completion(.success(order))
+            case .failure(let error):
+                print("Error: \(error)")
+                completion(.failure(error))
+            }
+        }
+    }
+    func putOrders(order: [String], completion: @escaping (Result<StatisticsOrder, any Error>) -> Void) {
+        let param = order.isEmpty ? "null" : order.joined(separator: ", ")
+        let dto = StatisticsOrderDtoObject(param1: param)
+        let request = StatisticsOrderPutRequest(dto: dto)
+        networkClient.send(request: request, type: StatisticsOrder.self) { [weak self] result in
+            switch result {
+            case .success(let order):
+                completion(.success(order))
             case .failure(let error):
                 print("Error: \(error)")
                 completion(.failure(error))
