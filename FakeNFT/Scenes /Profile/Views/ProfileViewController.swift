@@ -198,14 +198,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - ProfilePresenterView
 extension ProfileViewController: ProfilePresenterOutput {
-    func updateProfileUI(_ profile: UserProfile) {
+    func updateProfileUI(_ viewModel: UserProfileViewModel) {
         hideLoadingState()
 
-        nameLabel.text = profile.name
-        descriptionLabel.text = profile.description
-        websiteLabel.text = profile.website
+        nameLabel.text = viewModel.name
+        descriptionLabel.text = viewModel.description
+        websiteLabel.text = viewModel.website
 
-        if let avatarURL = profile.avatar, !avatarURL.absoluteString.isEmpty {
+        if let avatarImage = viewModel.avatarImage {
+            profileImageView.image = avatarImage
+        } else if let avatarString = viewModel.avatarURL, let avatarURL = URL(string: avatarString) {
             profileImageView.kf.setImage(
                 with: avatarURL,
                 placeholder: UIImage(resource: .placeholderAvatar),
@@ -227,6 +229,7 @@ extension ProfileViewController: ProfilePresenterOutput {
             profileImageView.image = UIImage(resource: .placeholderAvatar)
         }
     }
+
 
     func showWebViewController(urlString: String) {
         let webViewController = WebViewController(urlString: urlString)

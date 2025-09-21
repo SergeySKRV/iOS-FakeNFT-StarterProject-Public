@@ -51,6 +51,7 @@ final class ProfileTableViewCell: UITableViewCell, ReuseIdentifying {
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: chevronImageView.leadingAnchor, constant: -15),
+
             chevronImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             chevronImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chevronImageView.widthAnchor.constraint(equalToConstant: 8),

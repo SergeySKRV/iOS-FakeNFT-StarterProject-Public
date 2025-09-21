@@ -8,13 +8,26 @@
 import Foundation
 
 // MARK: - NFTSortOption
+
+/// Варианты сортировки списка NFT.
+///
+/// Используется в экранах «Мои NFT» и «Избранные NFT»
+/// для отображения пользователю различных способов сортировки.
 enum NFTSortOption: CaseIterable {
     // MARK: - Cases
+
+    /// Сортировка по цене (возрастание/убывание).
     case byPrice
+
+    /// Сортировка по рейтингу (например, популярность, лайки).
     case byRating
+
+    /// Сортировка по названию (алфавит).
     case byName
 
     // MARK: - Computed Properties
+
+    /// Локализованное название опции сортировки.
     var title: String {
         switch self {
         case .byPrice:

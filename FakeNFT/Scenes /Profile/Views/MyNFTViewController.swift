@@ -86,6 +86,7 @@ final class MyNFTViewController: UIViewController {
         setupPresenter()
         presenter.viewDidLoad()
     }
+
     // MARK: - Private Methods
     private func setupUI() {
         view.backgroundColor = .yaSecondary
@@ -168,7 +169,12 @@ extension MyNFTViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: MyNFTTableViewCell = tableView.dequeueReusableCell()
         let nft = displayedNFTs[indexPath.row]
-        cell.configure(with: nft)
+        let myPresenter = presenter as? MyNFTPresenter
+        let isLiked = myPresenter?.userProfile?.likes.contains(nft.id) ?? false
+
+        cell.configure(with: nft, isLiked: isLiked) { [weak self] isSelected in
+            self?.presenter.handleHeartTap(for: nft.id, isSelected: isSelected)
+        }
         return cell
     }
 

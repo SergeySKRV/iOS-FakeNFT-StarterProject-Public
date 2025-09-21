@@ -9,14 +9,19 @@ import UIKit
 
 // MARK: - MyNFTPresenter
 final class MyNFTPresenter: MyNFTPresenterProtocol {
-    // MARK: - Properties
+
+    // MARK: - UI Properties
     private weak var view: MyNFTViewProtocol?
     private let nftService: NftService
     private let userService: UserProfileService
+    private let servicesAssembly: ServicesAssembly
+
+    // MARK: - UI Properties
     private var originalNftItems: [NFTItem] = []
     private var sortedNftItems: [NFTItem] = []
-    private let servicesAssembly: ServicesAssembly
     private var currentSortOption: NFTSortOption = .byName
+
+    private(set) var userProfile: UserProfile?
 
     // MARK: - Lifecycle
     init(view: MyNFTViewProtocol, nftService: NftService, userService: UserProfileService, servicesAssembly: ServicesAssembly) {
@@ -28,7 +33,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
 
     func viewDidLoad() {
         view?.showLoading()
-        loadNFTs()
+        loadUserProfileAndNFTs()
     }
 
     func viewWillAppear() {
@@ -56,42 +61,59 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
         view?.showNFTDetails(nftDetailViewController)
     }
 
+    func handleHeartTap(for nftId: String, isSelected: Bool) {
+        userService.updateUserLikes(nftId: nftId, isLiked: isSelected) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    if var profile = self?.userProfile {
+                        if isSelected {
+                            profile.likes.insert(nftId)
+                        } else {
+                            profile.likes.remove(nftId)
+                        }
+                        self?.userProfile = profile
+                    }
+                    self?.view?.displayNFTs(self?.sortedNftItems ?? [])
+                case .failure(let error):
+                    self?.view?.showError(error)
+                    self?.view?.displayNFTs(self?.sortedNftItems ?? [])
+                }
+            }
+        }
+    }
+
     // MARK: - Private Methods
-    private func loadNFTs() {
-        userService.fetchUserProfile { [weak self] userProfileResult in
-            guard let self = self else { return }
-
-            switch userProfileResult {
-            case .success(let userProfile):
-                let userNftIds = userProfile.nfts
-
-                if userNftIds.isEmpty {
-                    DispatchQueue.main.async {
-                        self.originalNftItems = []
-                        self.sortedNftItems = []
-                        self.view?.displayNFTs([])
-                        self.view?.hideLoading()
-                    }
-                    return
-                }
-
-                self.loadNftDetails(for: userNftIds) { [weak self] nftItems in
-                    guard let self = self else { return }
-                    DispatchQueue.main.async {
-                        self.originalNftItems = nftItems
-                        self.sortAndDisplayNFTs()
-                        self.view?.hideLoading()
-                    }
-                }
-
+    private func loadUserProfileAndNFTs() {
+        userService.fetchUserProfile { [weak self] result in
+            switch result {
+            case .success(let profile):
+                self?.userProfile = profile
+                self?.loadNFTs(for: profile.nfts)
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.originalNftItems = []
-                    self.sortedNftItems = []
-                    self.view?.displayNFTs([])
-                    self.view?.hideLoading()
-                    self.view?.showError(error)
-                }
+                self?.view?.showError(error)
+                self?.view?.hideLoading()
+            }
+        }
+    }
+
+    private func loadNFTs(for userNftIds: [String]) {
+        if userNftIds.isEmpty {
+            DispatchQueue.main.async {
+                self.originalNftItems = []
+                self.sortedNftItems = []
+                self.view?.displayNFTs([])
+                self.view?.hideLoading()
+            }
+            return
+        }
+
+        self.loadNftDetails(for: userNftIds) { [weak self] nftItems in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.originalNftItems = nftItems
+                self.sortAndDisplayNFTs()
+                self.view?.hideLoading()
             }
         }
     }

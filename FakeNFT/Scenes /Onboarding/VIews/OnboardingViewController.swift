@@ -8,9 +8,8 @@
 import UIKit
 
 // MARK: - Onboarding View Controller
-final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
 
-    // MARK: - UI Elements
+final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     private lazy var presenter: OnboardingPresenter = {
         OnboardingPresenter(view: self)
     }()
@@ -63,22 +62,32 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         return button
     }()
 
-    // MARK: - Properties
     private var slideViews: [SlideView] = []
     private var currentPageIndex = 0
     private var autoScrollTimer: Timer?
     private let autoScrollInterval: TimeInterval = 5.0
     private var isUserInteracting = false
 
-    // MARK: - Simple Pagination Indicators
     private var paginationIndicators: [UIView] = []
+    private var paginationProgressConstraints: [NSLayoutConstraint] = []
+    private var didStartFirstAnimation = false
 
     // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         startAutoScrollTimer()
         _ = presenter
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if !didStartFirstAnimation {
+            didStartFirstAnimation = true
+            animateProgress(for: 0)
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,11 +96,10 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     }
 
     // MARK: - UI Setup
+
     private func setupUI() {
         view.backgroundColor = .black
-
         createSlides()
-
         setupPagination()
 
         view.addSubview(scrollView)
@@ -99,7 +107,6 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         [paginationView, closeButton, nextButton].forEach {
             view.addSubview($0)
         }
-
         setupConstraints()
     }
 
@@ -113,15 +120,31 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     }
 
     private func setupPagination() {
-        for i in 0..<3 {
-            let indicator = UIView()
-            indicator.backgroundColor = i == 0 ? .white : UIColor.white.withAlphaComponent(0.3)
-            indicator.layer.cornerRadius = 4
-            indicator.translatesAutoresizingMaskIntoConstraints = false
-            indicator.heightAnchor.constraint(equalToConstant: 4).isActive = true
+        for _ in 0..<3 {
+            let container = UIView()
+            container.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+            container.layer.cornerRadius = 2
+            container.translatesAutoresizingMaskIntoConstraints = false
+            container.heightAnchor.constraint(equalToConstant: 4).isActive = true
 
-            paginationView.addArrangedSubview(indicator)
-            paginationIndicators.append(indicator)
+            let progressView = UIView()
+            progressView.backgroundColor = .white
+            progressView.layer.cornerRadius = 2
+            progressView.translatesAutoresizingMaskIntoConstraints = false
+            container.addSubview(progressView)
+
+            let widthConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
+            widthConstraint.isActive = true
+            paginationProgressConstraints.append(widthConstraint)
+
+            NSLayoutConstraint.activate([
+                progressView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+                progressView.topAnchor.constraint(equalTo: container.topAnchor),
+                progressView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+            ])
+
+            paginationView.addArrangedSubview(container)
+            paginationIndicators.append(progressView)
         }
     }
 
@@ -173,10 +196,39 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         ])
     }
 
+    // MARK: - Progress Animation
+
+    private func animateProgress(for index: Int) {
+        guard index < paginationProgressConstraints.count else { return }
+        let constraint = paginationProgressConstraints[index]
+
+        constraint.constant = 0
+        view.layoutIfNeeded()
+
+        UIView.animate(withDuration: autoScrollInterval, delay: 0, options: [.curveLinear]) {
+            constraint.constant = self.paginationView.arrangedSubviews[index].frame.width
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    private func resetProgress(from index: Int) {
+        for i in index..<paginationProgressConstraints.count {
+            paginationProgressConstraints[i].constant = 0
+        }
+        view.layoutIfNeeded()
+    }
+
     // MARK: - Auto Scroll
+
     private func startAutoScrollTimer() {
         stopAutoScrollTimer()
-        autoScrollTimer = Timer.scheduledTimer(timeInterval: autoScrollInterval, target: self, selector: #selector(autoScrollToNext), userInfo: nil, repeats: true)
+        autoScrollTimer = Timer.scheduledTimer(
+            timeInterval: autoScrollInterval,
+            target: self,
+            selector: #selector(autoScrollToNext),
+            userInfo: nil,
+            repeats: true
+        )
     }
 
     private func stopAutoScrollTimer() {
@@ -184,7 +236,6 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         autoScrollTimer = nil
     }
 
-    // MARK: - Actions
     @objc
     private func autoScrollToNext() {
         guard !isUserInteracting else { return }
@@ -194,6 +245,8 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
             scrollToPage(nextPageIndex)
         }
     }
+
+    // MARK: - Actions
 
     @objc
     private func closeTapped() {
@@ -212,17 +265,20 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     }
 
     // MARK: - OnboardingViewProtocol
+
     func showSlide(_ slide: OnboardingSlide, at index: Int) {
         guard index < slideViews.count else { return }
         slideViews[index].configure(with: slide)
     }
 
     func updateIndicator(position: Int) {
-        currentPageIndex = position
-
-        for (i, indicator) in paginationIndicators.enumerated() {
-            indicator.backgroundColor = i == position ? .white : UIColor.white.withAlphaComponent(0.3)
+        if position > currentPageIndex {
+            animateProgress(for: position)
+        } else if position < currentPageIndex {
+            resetProgress(from: position + 1)
         }
+
+        currentPageIndex = position
 
         if position == 2 {
             hideCloseButton()
@@ -231,25 +287,12 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         }
     }
 
-    func showNextButton() {
-        nextButton.isHidden = false
-    }
+    func showNextButton() { nextButton.isHidden = false }
+    func hideNextButton() { nextButton.isHidden = true }
+    func showCloseButton() { closeButton.isHidden = false }
+    func hideCloseButton() { closeButton.isHidden = true }
 
-    func hideNextButton() {
-        nextButton.isHidden = true
-    }
-
-    func showCloseButton() {
-        closeButton.isHidden = false
-    }
-
-    func hideCloseButton() {
-        closeButton.isHidden = true
-    }
-
-    func dismiss() {
-        goToMainApp()
-    }
+    func dismiss() { goToMainApp() }
 
     func goToNextScreen() {
         stopAutoScrollTimer()
@@ -263,13 +306,19 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
         let tabBarController = TabBarController()
         tabBarController.servicesAssembly = sceneDelegate.servicesAssembly
 
-        UIView.transition(with: sceneDelegate.window!, duration: 0.2, options: .transitionCrossDissolve, animations: {
-            sceneDelegate.window?.rootViewController = tabBarController
-        })
+        UIView.transition(
+            with: sceneDelegate.window!,
+            duration: 0.2,
+            options: .transitionCrossDissolve,
+            animations: {
+                sceneDelegate.window?.rootViewController = tabBarController
+            }
+        )
     }
 }
 
 // MARK: - UIScrollViewDelegate
+
 extension OnboardingViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isUserInteracting = true
@@ -278,7 +327,6 @@ extension OnboardingViewController: UIScrollViewDelegate {
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         isUserInteracting = false
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.startAutoScrollTimer()
         }
@@ -296,7 +344,11 @@ extension OnboardingViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>
+    ) {
         let targetIndex = Int(targetContentOffset.pointee.x / view.frame.width)
         let clampedTargetIndex = max(0, min(2, targetIndex))
         targetContentOffset.pointee.x = CGFloat(clampedTargetIndex) * view.frame.width
