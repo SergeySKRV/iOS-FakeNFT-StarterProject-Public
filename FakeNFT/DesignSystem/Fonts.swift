@@ -33,6 +33,10 @@ struct Fonts {
     static let sfProBold17 = UIFont(name: "SFProText-Bold", size: 17)
         ?? UIFont.systemFont(ofSize: 17, weight: .bold)
 
+    // MARK: - Medium Fonts
+    static let sfProMedium10 = UIFont(name: "SFProText-Medium", size: 10)
+        ?? UIFont.systemFont(ofSize: 10, weight: .medium)
+    
     // MARK: - Regular Fonts
 
     /// Обычный шрифт `SFProText-Regular`, размер 17pt.

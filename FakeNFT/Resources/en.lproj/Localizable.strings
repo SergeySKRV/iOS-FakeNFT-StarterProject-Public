@@ -1,6 +1,8 @@
 // MARK: - Tab Bar Items
 "Tab.catalog" = "Catalog";
 "Tab.profile" = "Profile";
+"Tab.cart" = "Cart";
+"Tab.statistics" = "Statistics";
 
 // MARK: - Catalog
 "Catalog.openNft" = "Open NFT";

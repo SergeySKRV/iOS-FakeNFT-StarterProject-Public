@@ -1,64 +1,40 @@
 import UIKit
 
-// MARK: - TabBarController
 final class TabBarController: UITabBarController {
-    // MARK: - Properties
-    var servicesAssembly: ServicesAssembly! {
-        didSet {
-            if isViewLoaded {
-                setupViewControllers()
-            }
-        }
-    }
-
+    var servicesAssembly: ServicesAssembly!
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: ""),
-        image: UIImage(systemName: "person.crop.circle.fill"),
-        tag: 0
+        image: UIImage(resource: .profileIcon),
+       tag: 0
     )
-
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
+        image: UIImage(resource: .catalogIcon),
         tag: 1
     )
-
-    // MARK: - Lifecycle
+    private let cartTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.cart", comment: ""),
+        image: UIImage(resource: .cartIcon),
+        tag: 2
+    )
+    private let statisticsTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.statistics", comment: ""),
+        image: UIImage(resource: .statisticsIcon),
+        tag: 3
+    )
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if viewControllers == nil {
-            setupViewControllers()
-        }
-    }
-
-    // MARK: - Private Methods
-    private func setupViewControllers() {
-        guard let servicesAssembly = self.servicesAssembly else {
-            print("ServicesAssembly is not set yet")
-            return
-        }
-
-        let catalogController = TestCatalogViewController(
-            servicesAssembly: servicesAssembly
-        )
-        catalogController.tabBarItem = catalogTabBarItem
-
+        view.backgroundColor = UIColor.yaSecondary
+        tabBar.tintColor = UIColor.yaBlueUniversal
+        tabBar.unselectedItemTintColor = UIColor.yaPrimary
         let profileController = ProfileViewController()
+        let catalogController = CatalogViewController()
+        let cartController = CartViewController()
+        let statisticsController = StatisticsViewController()
         profileController.tabBarItem = profileTabBarItem
-        profileController.servicesAssembly = servicesAssembly
-
-        viewControllers = [profileController, catalogController]
-    }
-
-    private func setupUI() {
-        view.backgroundColor = .yaSecondary
-        tabBar.tintColor = .yaBlueUniversal
-        tabBar.unselectedItemTintColor = .yaPrimary
+        catalogController.tabBarItem = catalogTabBarItem
+        cartController.tabBarItem = cartTabBarItem
+        statisticsController.tabBarItem = statisticsTabBarItem
+        viewControllers = [profileController, catalogController, cartController, statisticsController]
     }
 }
