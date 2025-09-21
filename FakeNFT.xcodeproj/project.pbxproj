@@ -42,6 +42,15 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExamplePutRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		4AC1E4542E8025C50015BD68 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E4532E8025C50015BD68 /* AppConstants.swift */; };
+		4AC1E4622E8025E70015BD68 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E4592E8025E70015BD68 /* OnboardingViewController.swift */; };
+		4AC1E4632E8025E70015BD68 /* OnboardingLocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E45F2E8025E70015BD68 /* OnboardingLocalizationHelper.swift */; };
+		4AC1E4642E8025E70015BD68 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E45D2E8025E70015BD68 /* OnboardingSlide.swift */; };
+		4AC1E4652E8025E70015BD68 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E45E2E8025E70015BD68 /* OnboardingModel.swift */; };
+		4AC1E4662E8025E70015BD68 /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E4552E8025E70015BD68 /* OnboardingPresenter.swift */; };
+		4AC1E4672E8025E70015BD68 /* OnboardingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E4572E8025E70015BD68 /* OnboardingViewProtocol.swift */; };
+		4AC1E4682E8025E70015BD68 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E45A2E8025E70015BD68 /* GradientView.swift */; };
+		4AC1E4692E8025E70015BD68 /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E45B2E8025E70015BD68 /* SlideView.swift */; };
 		4AD735542E71EEC2005D7483 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD735532E71EEC2005D7483 /* SF-Pro-Text-Bold.otf */; };
 		4AD735562E71EED1005D7483 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD735552E71EED1005D7483 /* SF-Pro-Text-Regular.otf */; };
 		4AD735EA2E74833A005D7483 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD735E92E74833A005D7483 /* WebViewController.swift */; };
@@ -107,6 +116,15 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExamplePutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePutRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		4AC1E4532E8025C50015BD68 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		4AC1E4552E8025E70015BD68 /* OnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
+		4AC1E4572E8025E70015BD68 /* OnboardingViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewProtocol.swift; sourceTree = "<group>"; };
+		4AC1E4592E8025E70015BD68 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		4AC1E45A2E8025E70015BD68 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		4AC1E45B2E8025E70015BD68 /* SlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
+		4AC1E45D2E8025E70015BD68 /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
+		4AC1E45E2E8025E70015BD68 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
+		4AC1E45F2E8025E70015BD68 /* OnboardingLocalizationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLocalizationHelper.swift; sourceTree = "<group>"; };
 		4AD735532E71EEC2005D7483 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		4AD735552E71EED1005D7483 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		4AD735E92E74833A005D7483 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +271,7 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				4AC1E4532E8025C50015BD68 /* AppConstants.swift */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
@@ -297,6 +316,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				4AC1E4612E8025E70015BD68 /* Onboarding */,
 				4A19298A2E677B4A00A3C1DE /* Cart */,
 				4A1929892E677B4000A3C1DE /* Profile */,
 				4A19280F2E620C0900A3C1DE /* Statistics */,
@@ -364,6 +384,53 @@
 				0C79EE602A76DCD600EE90EA /* NftByIdRequest.swift */,
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		4AC1E4562E8025E70015BD68 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				4AC1E4552E8025E70015BD68 /* OnboardingPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		4AC1E4582E8025E70015BD68 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4AC1E4572E8025E70015BD68 /* OnboardingViewProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		4AC1E45C2E8025E70015BD68 /* VIews */ = {
+			isa = PBXGroup;
+			children = (
+				4AC1E4592E8025E70015BD68 /* OnboardingViewController.swift */,
+				4AC1E45A2E8025E70015BD68 /* GradientView.swift */,
+				4AC1E45B2E8025E70015BD68 /* SlideView.swift */,
+			);
+			path = VIews;
+			sourceTree = "<group>";
+		};
+		4AC1E4602E8025E70015BD68 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4AC1E45D2E8025E70015BD68 /* OnboardingSlide.swift */,
+				4AC1E45E2E8025E70015BD68 /* OnboardingModel.swift */,
+				4AC1E45F2E8025E70015BD68 /* OnboardingLocalizationHelper.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4AC1E4612E8025E70015BD68 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4AC1E4562E8025E70015BD68 /* Presenters */,
+				4AC1E4582E8025E70015BD68 /* Protocols */,
+				4AC1E45C2E8025E70015BD68 /* VIews */,
+				4AC1E4602E8025E70015BD68 /* Models */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
@@ -553,6 +620,7 @@
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
+				4AC1E4542E8025C50015BD68 /* AppConstants.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
@@ -562,6 +630,14 @@
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* ExamplePutService.swift in Sources */,
+				4AC1E4622E8025E70015BD68 /* OnboardingViewController.swift in Sources */,
+				4AC1E4632E8025E70015BD68 /* OnboardingLocalizationHelper.swift in Sources */,
+				4AC1E4642E8025E70015BD68 /* OnboardingSlide.swift in Sources */,
+				4AC1E4652E8025E70015BD68 /* OnboardingModel.swift in Sources */,
+				4AC1E4662E8025E70015BD68 /* OnboardingPresenter.swift in Sources */,
+				4AC1E4672E8025E70015BD68 /* OnboardingViewProtocol.swift in Sources */,
+				4AC1E4682E8025E70015BD68 /* GradientView.swift in Sources */,
+				4AC1E4692E8025E70015BD68 /* SlideView.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */,

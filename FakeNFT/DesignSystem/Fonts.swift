@@ -3,6 +3,7 @@ import UIKit
 struct Fonts {
     // MARK: - Bold Fonts
     static let sfProBold34 = UIFont(name: "SFProText-Bold", size: 34) ?? UIFont.systemFont(ofSize: 34, weight: .bold)
+    static let sfProBold32 = UIFont(name: "SFProText-Bold", size: 32) ?? UIFont.systemFont(ofSize: 32, weight: .bold)
     static let sfProBold28 = UIFont(name: "SFProText-Bold", size: 28) ?? UIFont.systemFont(ofSize: 28, weight: .bold)
     static let sfProBold22 = UIFont(name: "SFProText-Bold", size: 22) ?? UIFont.systemFont(ofSize: 22, weight: .bold)
     static let sfProBold20 = UIFont(name: "SFProText-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)

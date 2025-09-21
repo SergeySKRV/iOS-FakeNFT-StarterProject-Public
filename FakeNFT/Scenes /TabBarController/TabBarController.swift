@@ -1,7 +1,7 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    // var servicesAssembly: ServicesAssembly!
+    var servicesAssembly: ServicesAssembly!
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: ""),
         image: UIImage(resource: .profileIcon),
