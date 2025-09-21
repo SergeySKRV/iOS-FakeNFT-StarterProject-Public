@@ -17,7 +17,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.sfProHeadline3
-        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.textColor = UIColor(named: "blackDayNight")
         label.textAlignment = .left
         return label
     }()
@@ -26,7 +26,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.sfProCaption2
-        label.textColor = UIColor(named: "blackDayNight") ?? .label
+        label.textColor = UIColor(named: "blackDayNight")
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .natural
@@ -50,7 +50,7 @@ final class ProfileViewController: UIViewController {
         let button = UIButton(type: .custom)
         let image = UIImage(resource: .edit).withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
-        button.tintColor = UIColor(named: "blackDayNight") ?? .label
+        button.tintColor = UIColor(named: "blackDayNight")
         button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

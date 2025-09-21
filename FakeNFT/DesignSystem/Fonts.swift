@@ -16,4 +16,8 @@ extension UIFont {
     // Caption Fonts
     static var sfProCaption1 = UIFont(name: "SFProText-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .regular)
     static var sfProCaption2 = UIFont(name: "SFProText-Regular", size: 13) ?? UIFont.systemFont(ofSize: 13, weight: .regular)
+    
+    // MARK: - Medium Fonts
+        static let sfProMedium10 = UIFont(name: "SFProText-Medium", size: 10) ?? UIFont.systemFont(ofSize: 10, weight: .medium)
 }
+
