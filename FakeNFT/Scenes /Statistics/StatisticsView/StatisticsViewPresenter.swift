@@ -65,7 +65,7 @@ final class StatisticsViewPresenter {
         }
     }
     private func loadStatistics() {
-        let networkClient = StatisticsNetworkClient()`
+        let networkClient = StatisticsNetworkClient()
         let service = StatisticsUsersServiceImpl(networkClient: networkClient, storage: storage)
         let _: () = service.loadUsers {[weak self] result in
             switch result {
