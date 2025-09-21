@@ -10,10 +10,10 @@ protocol StatisticsUsersService {
 
 final class StatisticsUsersServiceImpl: StatisticsUsersService {
     // MARK: - private properties
-    private let networkClient: NetworkClient
+    private let networkClient: StatisticsNetworkClient
     private let storage: StatisticsUsersStorage
     // MARK: - public methods
-    init(networkClient: NetworkClient, storage: StatisticsUsersStorage) {
+    init(networkClient: StatisticsNetworkClient, storage: StatisticsUsersStorage) {
         self.storage = storage
         self.networkClient = networkClient
     }
@@ -31,7 +31,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
         }
     }
     func loadNft(id: String, completion: @escaping NftCompletion) {
-        let request = NFTRequest(id: id)
+        let request = StatisticsNFTRequest(id: id)
         networkClient.send(request: request, type: StatisticsNft.self) { [weak storage] result in
             switch result {
             case .success(let nft):

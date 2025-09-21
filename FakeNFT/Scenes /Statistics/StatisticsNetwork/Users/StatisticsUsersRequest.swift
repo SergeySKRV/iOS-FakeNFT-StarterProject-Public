@@ -1,8 +1,8 @@
 import Foundation
 
-struct StatisticsUsersRequest: NetworkRequest {
+struct StatisticsUsersRequest: StatisticsNetworkRequest {
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/users?sortBy=name")
     }
-    var dto: Dto?
+    var dto: StatisticsDto?
 }

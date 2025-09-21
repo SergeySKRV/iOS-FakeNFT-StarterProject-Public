@@ -1,3 +1,4 @@
+/*
 final class UsersServicesAssembly {
     // MARK: - private properties
     private let networkClient: NetworkClient
@@ -17,3 +18,4 @@ final class UsersServicesAssembly {
         )
     }
 }
+*/

@@ -1,14 +1,14 @@
 import Foundation
 
-struct StatisticsOrderPutRequest: NetworkRequest {
+struct StatisticsOrderPutRequest: StatisticsNetworkRequest {
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1")
     }
-    var dto: Dto?
+    var dto: StatisticsDto?
     var httpMethod: HttpMethod = .put
 }
 
-struct StatisticsOrderDtoObject: Dto {
+struct StatisticsOrderDtoObject: StatisticsDto {
     let param1: String
     func asDictionary() -> [String: String] {
         [
