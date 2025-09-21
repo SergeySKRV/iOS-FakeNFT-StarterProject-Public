@@ -5,7 +5,7 @@ final class TabBarController: UITabBarController {
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: ""),
         image: UIImage(resource: .profileIcon),
-       tag: 0
+        tag: 0
     )
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
