@@ -30,7 +30,7 @@ final class StatisticsProfileTableViewCell: UITableViewCell {
     private func configureCell() {
         selectionStyle = .none
         contentView.addSubview(collectionLabel)
-        collectionLabel.textColor =  nftCount ?? 0 > 0 ? UIColor.yaPrimary : UIColor.yaGrayUniversal
+        collectionLabel.textColor =  nftCount ?? 0 > 0 ? UIColor.yaPrimary : UIColor.yaLightGray
         collectionLabel.text = "\(NSLocalizedString("Statistics.NFTCollection", comment: "Коллекция NFT")) \(nftCount ?? 0)"
         NSLayoutConstraint.activate([
             collectionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
