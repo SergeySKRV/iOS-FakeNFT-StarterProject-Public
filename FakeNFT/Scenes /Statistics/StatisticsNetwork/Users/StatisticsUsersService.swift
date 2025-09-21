@@ -11,10 +11,10 @@ protocol StatisticsUsersService {
 final class StatisticsUsersServiceImpl: StatisticsUsersService {
     
     // MARK: - private properties
-    private let networkClient: StatisticsNetworkClient
+    private let networkClient: StatisticsDefaultNetworkClient
     private let storage: StatisticsUsersStorage
     // MARK: - public methods
-    init(networkClient: StatisticsNetworkClient, storage: StatisticsUsersStorage) {
+    init(networkClient: StatisticsDefaultNetworkClient, storage: StatisticsUsersStorage) {
         self.storage = storage
         self.networkClient = networkClient
     }

@@ -64,12 +64,12 @@ struct StatisticsDefaultNetworkClient: StatisticsNetworkClient {
 
         let task = session.dataTask(with: urlRequest) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
-                onResponse(.failure(NetworkClientError.urlSessionError))
+                onResponse(.failure(StatisticsNetworkClientError.urlSessionError))
                 return
             }
 
             guard 200 ..< 300 ~= response.statusCode else {
-                onResponse(.failure(NetworkClientError.httpStatusCode(response.statusCode)))
+                onResponse(.failure(StatisticsNetworkClientError.httpStatusCode(response.statusCode)))
                 return
             }
 
@@ -78,7 +78,7 @@ struct StatisticsDefaultNetworkClient: StatisticsNetworkClient {
                 return
             } else if let error = error {
                 print("error: \(error)")
-                onResponse(.failure(NetworkClientError.urlRequestError(error)))
+                onResponse(.failure(StatisticsNetworkClientError.urlRequestError(error)))
                 return
             } else {
                 assertionFailure("Unexpected condition!")

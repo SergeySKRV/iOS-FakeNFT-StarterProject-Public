@@ -34,7 +34,7 @@ final class StatisticsCollectionPresenter {
         } else {
             likes.append(nftID)
         }
-        let networkClient = DefaultNetworkClient()
+        let networkClient = StatisticsDefaultNetworkClient()
         let service = StatisticsUsersServiceImpl(
             networkClient: networkClient,
             storage: storage
@@ -58,7 +58,7 @@ final class StatisticsCollectionPresenter {
         } else {
             orders.append(nftID)
         }
-        let networkClient = DefaultNetworkClient()
+        let networkClient = StatisticsDefaultNetworkClient()
         let service = StatisticsUsersServiceImpl(
             networkClient: networkClient,
             storage: storage
@@ -101,16 +101,16 @@ final class StatisticsCollectionPresenter {
     }
     private func loadNFTCollection() {
         guard let userProfile = view?.userProfile else { return }
-        let networkClient = DefaultNetworkClient()
+        let networkClient = StatisticsDefaultNetworkClient()
         let service = StatisticsUsersServiceImpl(
             networkClient: networkClient,
             storage: storage
         )
         fetchProfile(service: service)
         fetchOrders(service: service)
-        let nftService = NftServiceImpl(
+        let nftService = StatisticsNftServiceImpl(
             networkClient: networkClient,
-            storage: NftStorageImpl()
+            storage: StatisticsNftStorageImpl()
         )
         for nftId in userProfile.nfts {
             nftService.loadNft(id: nftId) { [weak self] result in
