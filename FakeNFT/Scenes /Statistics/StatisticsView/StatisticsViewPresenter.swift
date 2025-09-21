@@ -24,7 +24,7 @@ final class StatisticsViewPresenter {
         }
     }
     // MARK: private properties
-    private let storage = UsersStorageImpl.shared
+    private let storage = StatisticsUsersStorageImpl.shared
     private var state = StatisticsViewState.initial {
         didSet {
             stateDidChanged()
@@ -55,7 +55,6 @@ final class StatisticsViewPresenter {
         case .loading:
             view?.showLoadingIndicator()
             loadStatistics()
-            // loadMockStatistics() // Для ускорения отладки работаем с моковыми данными
         case .data:
             view?.hideLoadingIndicator()
             view?.showStatistics()
@@ -67,7 +66,7 @@ final class StatisticsViewPresenter {
     }
     private func loadStatistics() {
         let networkClient = DefaultNetworkClient()
-        let service = UsersServiceImpl(networkClient: networkClient, storage: storage)
+        let service = StatisticsUsersServiceImpl(networkClient: networkClient, storage: storage)
         let _: () = service.loadUsers {[weak self] result in
             switch result {
             case .success(let users):
@@ -83,46 +82,12 @@ final class StatisticsViewPresenter {
             }
         }
     }
-    private func loadMockStatistics() {
-        let mockDescription = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-        statisticsViewModel = [
-            StatisticsProfileModel(avatarImage: "https://n1s2.hsmedia.ru/10/07/5b/10075bc9f87787e109c8bd9d93e8d66b/600x400_0x0a330c9a_8308133731545062329.jpeg", description: "Very Long Description",
-                                   name: "Maxim Sokolov",
-                                   nftCount: 0,
-                                   rating: 2),
-            StatisticsProfileModel(avatarImage: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/182.jpg",
-                                   description: mockDescription,
-                                   name: "Tina Duke",
-                                   nftCount: 0,
-                                   rating: 1),
-            StatisticsProfileModel(avatarImage: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/594.jpg",
-                                   description: mockDescription,
-                                   name: "Jimmie Reilly",
-                                   nftCount: 0,
-                                   rating: 2),
-            StatisticsProfileModel(avatarImage: "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/991.jpg",
-                                   description: mockDescription,
-                                   name: "Antony Langley",
-                                   nftCount: 0,
-                                   rating: 2),
-            StatisticsProfileModel(avatarImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Brendan_Fraser_October_2022.jpg/1200px-Brendan_Fraser_October_2022.jpg",
-                                   description: mockDescription,
-                                   name: "Brendan Fraser",
-                                   nftCount: 21,
-                                   rating: 1),
-            StatisticsProfileModel(avatarImage: "https://images.iptv.rt.ru/images/cpt8sk3ir4sqiatbcj90.jpg",
-                                   description: mockDescription,
-                                   name: "Joaquin Phoenix",
-                                   nftCount: 11,
-                                   rating: 1)]
-        state = .data
-    }
-    private func convertStoreToViewModel(_ store: [User]) -> [StatisticsProfileModel] {
+    private func convertStoreToViewModel(_ store: [StatisticsUser]) -> [StatisticsProfileModel] {
         var result: [StatisticsProfileModel] = []
         guard let users = storage.getUsers() else {return []}
         for user in users {
             guard let name = user.name else { break }
-            guard let nfts = user.nfts?.count,
+            guard let nfts = user.nfts,
                   let avatar = user.avatar,
                   let rating = user.rating,
                   let description = user.description
@@ -130,7 +95,9 @@ final class StatisticsViewPresenter {
             let vmUser = StatisticsProfileModel(avatarImage: avatar,
                                                 description: description,
                                                 name: name,
-                                                nftCount: nfts,
+                                                nftCount: nfts.count,
+                                                nfts: nfts,
+                                                likes: [],
                                                 rating: Int(rating) ?? 0)
             result.append(vmUser)
         }

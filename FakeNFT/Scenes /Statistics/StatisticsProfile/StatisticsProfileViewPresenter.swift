@@ -19,13 +19,14 @@ final class StatisticsProfileViewPresenter {
         }
     }
     func showNFTCollection() {
-        let collectionViewController = StatisticsCollectionViewController()
-        if let navController = view?.navigationController {
+        guard let view = view else { return }
+        let collectionViewController = StatisticsCollectionViewController(profile: view.profile)
+        if let navController = view.navigationController {
             navController.pushViewController(collectionViewController, animated: true)
         } else {
             let navController = UINavigationController(rootViewController: collectionViewController)
             navController.modalPresentationStyle = .fullScreen
-            view?.present(navController, animated: true)
+            view.present(navController, animated: true)
         }
     }
     // MARK: - private methods

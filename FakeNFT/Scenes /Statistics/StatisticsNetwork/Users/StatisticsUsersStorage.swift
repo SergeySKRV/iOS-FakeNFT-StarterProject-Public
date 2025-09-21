@@ -1,26 +1,26 @@
 import Foundation
 
-protocol UsersStorage: AnyObject {
-    func saveUsers(_ users: [User])
-    func getUsers() -> [User]?
+protocol StatisticsUsersStorage: AnyObject {
+    func saveUsers(_ users: [StatisticsUser])
+    func getUsers() -> [StatisticsUser]?
 }
 
-final class UsersStorageImpl: UsersStorage {
+final class StatisticsUsersStorageImpl: StatisticsUsersStorage {
     // MARK: - public properties
-    static let shared = UsersStorageImpl()
+    static let shared = StatisticsUsersStorageImpl()
     // MARK: - private properties
-    private var storage: [User] = []
+    private var storage: [StatisticsUser] = []
     private let syncQueue = DispatchQueue(label: "sync-users-queue")
     // MARK: - private methods
     private init() {
     }
     // MARK: - public methods
-    func saveUsers(_ users: [User]) {
+    func saveUsers(_ users: [StatisticsUser]) {
         syncQueue.async { [weak self] in
             self?.storage = users
         }
     }
-    func getUsers() -> [User]? {
+    func getUsers() -> [StatisticsUser]? {
         syncQueue.sync {
             storage
         }

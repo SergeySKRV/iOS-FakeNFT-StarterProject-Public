@@ -63,6 +63,7 @@ final class StatisticsTableViewCell: UITableViewCell {
             profileRectView.heightAnchor.constraint(equalTo: heightAnchor, constant: -8)
         ])
         contentView.addSubview(profileAvatarImageView)
+        profileAvatarImageView.kf.indicatorType = .activity
         NSLayoutConstraint.activate([
             profileAvatarImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             profileAvatarImageView.leadingAnchor.constraint(equalTo: profileRectView.leadingAnchor, constant: 16),

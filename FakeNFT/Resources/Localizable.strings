@@ -11,3 +11,5 @@
 "Rating.sort.title" = "По рейтингу";
 "Close.title" = "Закрыть";
 "Sort.title" = "Сортировка";
+"Statistics.NFTCollection" = "Коллекция NFT";
+"Statistics.moveToSite" = "Перейти на сайт пользователя";

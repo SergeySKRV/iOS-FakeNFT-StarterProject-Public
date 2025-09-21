@@ -2,8 +2,9 @@ import UIKit
 import Kingfisher
 
 final class StatisticsProfileViewController: UIViewController {
+    // MARK: - public properties
+    var profile: StatisticsProfileModel
     // MARK: - private properties
-    private var profile: StatisticsProfileModel
     private let presenter = StatisticsProfileViewPresenter.shared
     private let avatarImage: UIImageView = {
         let imageView = UIImageView()
@@ -31,7 +32,7 @@ final class StatisticsProfileViewController: UIViewController {
     }()
     private let webSiteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Перейти на сайт пользователя", for: .normal)
+        button.setTitle(NSLocalizedString("Statistics.moveToSite", comment: "Коллекция NFT"), for: .normal)
         button.titleLabel?.font = Fonts.sfProRegular15
         button.setTitleColor(UIColor.yaPrimary, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +42,7 @@ final class StatisticsProfileViewController: UIViewController {
         button.addTarget(self, action: #selector(webButtonTouch), for: .touchUpInside)
         return button
     }()
-   private let collectionTableView: UITableView = {
+    private let collectionTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StatisticsProfileTableViewCell.self,
@@ -129,7 +130,7 @@ extension StatisticsProfileViewController: UITableViewDataSource {
         let cell = StatisticsProfileTableViewCell(style: .default,
                                                   reuseIdentifier: "StatisticsProfileTableViewCell",
                                                   nftCount: profile.nftCount)
-       return cell
+        return cell
     }
 }
 extension StatisticsProfileViewController: UITableViewDelegate {
