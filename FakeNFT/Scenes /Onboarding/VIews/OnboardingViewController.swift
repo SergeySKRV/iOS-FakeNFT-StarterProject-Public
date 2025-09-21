@@ -212,8 +212,8 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     }
 
     private func resetProgress(from index: Int) {
-        for index in index..<paginationProgressConstraints.count {
-            paginationProgressConstraints[index].constant = 0
+        for i in index..<paginationProgressConstraints.count {
+            paginationProgressConstraints[i].constant = 0
         }
         view.layoutIfNeeded()
     }
