@@ -1,3 +1,4 @@
+/*
 //
 //  FavoriteNFTAssembly.swift
 //  FakeNFT
@@ -31,3 +32,4 @@ final class FavoriteNFTAssembly {
         return viewController
     }
 }
+*/
