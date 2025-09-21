@@ -5,7 +5,7 @@ typealias StatisticsUsersCompletion = (Result<[StatisticsUser], Error>) -> Void
 protocol StatisticsUsersService {
     func loadUsers(completion: @escaping StatisticsUsersCompletion)
     func loadProfile(completion: @escaping (Result<StatisticsProfile, Error>) -> Void)
-    func loadNft(id: String, completion: @escaping (Result<Nft, Error>) -> Void)
+    func loadNft(id: String, completion: @escaping (Result<StatisticsNft, Error>) -> Void)
 }
 
 final class StatisticsUsersServiceImpl: StatisticsUsersService {
@@ -32,7 +32,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
     }
     func loadNft(id: String, completion: @escaping NftCompletion) {
         let request = NFTRequest(id: id)
-        networkClient.send(request: request, type: Nft.self) { [weak storage] result in
+        networkClient.send(request: request, type: StatisticsNft.self) { [weak storage] result in
             switch result {
             case .success(let nft):
                 // storage?.saveNft(nft)

@@ -34,7 +34,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
     }()
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = Fonts.sfProMedium10
+        label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         label.textColor = UIColor.yaPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
