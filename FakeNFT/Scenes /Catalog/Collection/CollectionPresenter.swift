@@ -90,7 +90,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     func changeLike(for indexPath: IndexPath, isLiked: Bool) {
         collectionView?.showLoadIndicator()
         catalogService.putProfile(id: nfts[indexPath.row].id, completion: { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .success(let profile):
                 self.profile = profile
@@ -117,7 +117,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         let nftId = nfts[indexPath.row].id
         
         catalogService.putOrders(id: nftId) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             
             switch result {
             case .success:
@@ -176,7 +176,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     
     private func getLikes() {
         catalogService.getProfile(completion: { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .success(let profile):
                 self.profile = profile
@@ -199,7 +199,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     
     private func getOrders() {
         catalogService.getOrders(completion: { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .success:
                 self.collectionView?.reloadNftCollectionView()
