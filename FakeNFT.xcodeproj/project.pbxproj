@@ -51,6 +51,7 @@
 		4AC1E4672E8025E70015BD68 /* OnboardingViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E4572E8025E70015BD68 /* OnboardingViewProtocol.swift */; };
 		4AC1E4682E8025E70015BD68 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E45A2E8025E70015BD68 /* GradientView.swift */; };
 		4AC1E4692E8025E70015BD68 /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E45B2E8025E70015BD68 /* SlideView.swift */; };
+		4AC1E46B2E802A360015BD68 /* ReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E46A2E802A360015BD68 /* ReviewManager.swift */; };
 		4AD735542E71EEC2005D7483 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD735532E71EEC2005D7483 /* SF-Pro-Text-Bold.otf */; };
 		4AD735562E71EED1005D7483 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD735552E71EED1005D7483 /* SF-Pro-Text-Regular.otf */; };
 		4AD735EA2E74833A005D7483 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD735E92E74833A005D7483 /* WebViewController.swift */; };
@@ -125,6 +126,7 @@
 		4AC1E45D2E8025E70015BD68 /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
 		4AC1E45E2E8025E70015BD68 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4AC1E45F2E8025E70015BD68 /* OnboardingLocalizationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLocalizationHelper.swift; sourceTree = "<group>"; };
+		4AC1E46A2E802A360015BD68 /* ReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManager.swift; sourceTree = "<group>"; };
 		4AD735532E71EEC2005D7483 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		4AD735552E71EED1005D7483 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		4AD735E92E74833A005D7483 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				4AC1E46A2E802A360015BD68 /* ReviewManager.swift */,
 				4AC1E4532E8025C50015BD68 /* AppConstants.swift */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
@@ -654,6 +657,7 @@
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
+				4AC1E46B2E802A360015BD68 /* ReviewManager.swift in Sources */,
 				0CFCB7492A7808900009A829 /* CatalogController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,

@@ -1,3 +1,10 @@
+//
+//  AppConstants.swift
+//  FakeNFT
+//
+//  Created by Сергей Скориков on 16.09.2025.
+//
+
 import Foundation
 
 // MARK: - App Constants
