@@ -81,8 +81,7 @@ final class CatalogService: CatalogServiceProtocol {
     
     func getProfile(completion: @escaping (Result<ProfileResult, Error>) -> Void) {
         let request = ProfileRequest()
-        networkClient.send(request: request,
-                           type: ProfileResult.self) { [weak self] result in
+        networkClient.send(request: request,type: ProfileResult.self) { [weak self] result in
             switch result {
             case .success(let profile):
                 if !profile.likes.isEmpty {
@@ -184,7 +183,7 @@ final class CatalogService: CatalogServiceProtocol {
             }
         }
     }
-  
+    
     func orderStatus(_ id: String) -> Bool {
         catalogStorage.findInOrders(id)
     }

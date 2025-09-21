@@ -272,10 +272,10 @@ final class CollectionViewController: UIViewController {
 
 // MARK: - CollectionViewControllerProtocol
 extension CollectionViewController: CollectionViewControllerProtocol {
-    func openAlert(title: String, message: String?, alertStyle: UIAlertController.Style, actionTitles: [String], actionStyles: [UIAlertAction.Style], actions: [((UIAlertAction) -> Void)]) {
-        // TODO: -
-    }
     
+    func openAlert(title: String, message: String?, alertStyle: UIAlertController.Style, actionTitles: [String], actionStyles: [UIAlertAction.Style], actions: [((UIAlertAction) -> Void)]) {
+        // TODO: - подготовка алерта
+    }
     
     func collectionViewData(data: CollectionViewData) {
         DispatchQueue.main.async {
@@ -340,7 +340,7 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
 extension CollectionViewController: CollectionViewCellDelegate {
     func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool) {
         presenter.changeLike(for: indexPath, isLiked: isLiked)
-        nftCollectionView.reloadData() // Добавил от Ильи
+        nftCollectionView.reloadData()
     }
     func cartButtonDidChange(for indexPath: IndexPath) {
         presenter.changeOrder(for: indexPath)
@@ -354,7 +354,7 @@ extension CollectionViewController: ProfilePresenterOutput {
         let webViewController = WebViewController(urlString: urlString)
         let navigationController = UINavigationController(rootViewController: webViewController)
         navigationController.modalPresentationStyle = .fullScreen
-        navigationController.modalTransitionStyle = .crossDissolve // Плавный переход
+        navigationController.modalTransitionStyle = .crossDissolve
         present(navigationController, animated: true)
     }
 }

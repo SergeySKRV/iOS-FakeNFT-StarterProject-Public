@@ -119,14 +119,14 @@ struct DefaultNetworkClient: NetworkClient {
         urlRequest.httpMethod = request.httpMethod.rawValue
         urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
-        // Убрали дублирование заголовков Content-Type
         if let dto = request.dto {
             do {
                 let jsonData = try encoder.encode(dto)
                 urlRequest.httpBody = jsonData
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             } catch {
-                assertionFailure("Failed to encode DTO: \(error)")
+                print("Failed to encode DTO: \(error)")
+                //assertionFailure("Failed to encode DTO: \(error)")
                 return nil
             }
         } else if let body = request.body {

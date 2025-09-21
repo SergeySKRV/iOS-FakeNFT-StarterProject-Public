@@ -107,6 +107,4 @@ final class CatalogPresenter: CatalogPresenterProtocol {
             actionTitles: [cancelText]
         )
     }
-     
-
 }
