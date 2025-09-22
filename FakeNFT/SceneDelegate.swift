@@ -10,6 +10,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         let tabBarController = window?.rootViewController as? TabBarController
-//        tabBarController?.servicesAssembly = servicesAssembly
+        tabBarController?.servicesAssembly = servicesAssembly
     }
 }
