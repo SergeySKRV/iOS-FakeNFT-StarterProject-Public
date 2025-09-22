@@ -1,17 +1,8 @@
-"Name.sort.title" = "По имени";
-"Rating.sort.title" = "По рейтингу";
-"Close.title" = "Закрыть";
-"Sort.title" = "Сортировка";
-"Statistics.NFTCollection" = "Коллекция NFT";
-"Statistics.moveToSite" = "Перейти на сайт пользователя";
-
-
 // MARK: - Tab Bar Items
 "Tab.catalog" = "Каталог";
 "Tab.profile" = "Профиль";
 "Tab.cart" = "Корзина";
 "Tab.statistics" = "Статистика";
-
 
 // MARK: - Catalog
 "Catalog.openNft" = "Открыть Nft";
