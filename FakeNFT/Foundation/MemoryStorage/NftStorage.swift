@@ -13,7 +13,7 @@ final class NftStorageImpl: NftStorage {
 
     func saveNft(_ nft: Nft) {
         syncQueue.async { [weak self] in
-            self?.storage[nft.id] = nft
+            self?.storage[nft.id ?? ""] = nft
         }
     }
 
