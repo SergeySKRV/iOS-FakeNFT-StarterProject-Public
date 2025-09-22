@@ -77,14 +77,14 @@
 		4AC1E53B2E805B870015BD68 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E5302E805B870015BD68 /* NftImageCollectionViewCell.swift */; };
 		4AC1E53C2E805B870015BD68 /* NftDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E5332E805B870015BD68 /* NftDetailPresenter.swift */; };
 		4AC1E53E2E805BC80015BD68 /* TestCatalogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1E53D2E805BC80015BD68 /* TestCatalogController.swift */; };
-		4AC1E5432E80768C0015BD68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC1E5422E80768C0015BD68 /* LaunchScreen.storyboard */; };
 		4AD735542E71EEC2005D7483 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD735532E71EEC2005D7483 /* SF-Pro-Text-Bold.otf */; };
 		4AD735562E71EED1005D7483 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD735552E71EED1005D7483 /* SF-Pro-Text-Regular.otf */; };
 		4AD735EA2E74833A005D7483 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD735E92E74833A005D7483 /* WebViewController.swift */; };
 		4AD735FD2E755FE5005D7483 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AD735FC2E755FE5005D7483 /* SF-Pro-Text-Medium.otf */; };
+		4AF1D6F92E81394B004EB261 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF1D6F82E81394B004EB261 /* LaunchScreen.storyboard */; };
+		4AF1D6FE2E8139A8004EB261 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4AF1D6FD2E8139A8004EB261 /* Localizable.strings */; };
 		558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558E39E62C68CE0900FB86AC /* NftService.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
-		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,18 +178,19 @@
 		4AC1E5342E805B870015BD68 /* NftDetailAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDetailAssembly.swift; sourceTree = "<group>"; };
 		4AC1E5352E805B870015BD68 /* NftDetailInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDetailInput.swift; sourceTree = "<group>"; };
 		4AC1E53D2E805BC80015BD68 /* TestCatalogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCatalogController.swift; sourceTree = "<group>"; };
-		4AC1E5402E80768C0015BD68 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		4AC1E5412E80768C0015BD68 /* LaunchScreen.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = LaunchScreen.strings; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		4AC1E5442E807F050015BD68 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4AC1E5452E807F060015BD68 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		4AD735532E71EEC2005D7483 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		4AD735552E71EED1005D7483 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		4AD735E92E74833A005D7483 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		4AD735FC2E755FE5005D7483 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		4AF1D6F62E81394B004EB261 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4AF1D6F72E81394B004EB261 /* LaunchScreen.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = LaunchScreen.strings; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		4AF1D6FA2E8139A8004EB261 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4AF1D6FB2E8139A8004EB261 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4AF1D6FC2E8139A8004EB261 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		558E39E62C68CE0900FB86AC /* NftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftService.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D82A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
-		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -589,10 +590,10 @@
 		E1CD40DA2A96BE9B00BE7FE8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4AC1E5422E80768C0015BD68 /* LaunchScreen.storyboard */,
+				4AF1D6FD2E8139A8004EB261 /* Localizable.strings */,
+				4AF1D6F82E81394B004EB261 /* LaunchScreen.storyboard */,
 				3F68069C29CBBAF100B4F915 /* Main.storyboard */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
-				E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -723,10 +724,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AD735562E71EED1005D7483 /* SF-Pro-Text-Regular.otf in Resources */,
-				4AC1E5432E80768C0015BD68 /* LaunchScreen.storyboard in Resources */,
 				4AD735542E71EEC2005D7483 /* SF-Pro-Text-Bold.otf in Resources */,
 				4AD735FD2E755FE5005D7483 /* SF-Pro-Text-Medium.otf in Resources */,
-				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
+				4AF1D6F92E81394B004EB261 /* LaunchScreen.storyboard in Resources */,
+				4AF1D6FE2E8139A8004EB261 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				3F68069E29CBBAF100B4F915 /* Main.storyboard in Resources */,
 			);
@@ -869,14 +870,23 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		4AC1E5422E80768C0015BD68 /* LaunchScreen.storyboard */ = {
+		4AF1D6F82E81394B004EB261 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4AC1E5402E80768C0015BD68 /* LaunchScreen.storyboard */,
-				4AC1E5412E80768C0015BD68 /* LaunchScreen.strings */,
-				4AC1E5442E807F050015BD68 /* de */,
+				4AF1D6F62E81394B004EB261 /* LaunchScreen.storyboard */,
+				4AF1D6F72E81394B004EB261 /* LaunchScreen.strings */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		4AF1D6FD2E8139A8004EB261 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4AF1D6FA2E8139A8004EB261 /* Localizable.strings */,
+				4AF1D6FB2E8139A8004EB261 /* Localizable.strings */,
+				4AF1D6FC2E8139A8004EB261 /* Localizable.strings */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
