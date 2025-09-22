@@ -303,8 +303,7 @@ final class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     private func goToMainApp() {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
 
-        let tabBarController = TabBarController()
-        tabBarController.servicesAssembly = sceneDelegate.servicesAssembly
+        let tabBarController = TabBarController(servicesAssembly: sceneDelegate.servicesAssembly)
 
         UIView.transition(
             with: sceneDelegate.window!,

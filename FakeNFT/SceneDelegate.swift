@@ -2,14 +2,12 @@ import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
-    // MARK: - UI Properties
     var window: UIWindow?
     let servicesAssembly = ServicesAssembly(
         networkClient: DefaultNetworkClient(),
         nftStorage: NftStorageImpl()
     )
 
-    // MARK: - Lifecycle
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
@@ -21,10 +19,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let onboardingVC = OnboardingViewController()
             window?.rootViewController = onboardingVC
         } else {
-            let tabBarController = TabBarController()
-            tabBarController.servicesAssembly = servicesAssembly
+            let tabBarController = TabBarController(servicesAssembly: servicesAssembly)
             window?.rootViewController = tabBarController
         }
+
         window?.makeKeyAndVisible()
     }
 
