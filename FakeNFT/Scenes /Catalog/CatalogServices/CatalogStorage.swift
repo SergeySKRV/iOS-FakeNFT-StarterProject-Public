@@ -56,10 +56,10 @@ final class CatalogStorage: CatalogStorageProtocol {
         orders.contains(nft)
     }
     
-        func setOrders(_ nfts: Set<String>) {
-            syncQueue.async { [weak self] in
+    func setOrders(_ nfts: Set<String>) {
+        syncQueue.async { [weak self] in
                 self?.orders = nfts
-            }
+        }
     }
 }
 

@@ -1,5 +1,91 @@
 import UIKit
 
+// MARK: - TabBarController
+final class TabBarController: UITabBarController {
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+
+        if viewControllers?.isEmpty ?? true {
+            setupViewControllers()
+        }
+    }
+
+    // MARK: - Private Methods
+    private func setupViewControllers() {
+        // Catalog зависимости
+        let networkClient = DefaultNetworkClient()
+        let catalogStorage = CatalogStorage()
+        let catalogService = CatalogService(
+            networkClient: networkClient,
+            catalogStorage: catalogStorage
+        )
+        let sortStorage = SortStorage()
+        let catalogPresenter = CatalogPresenter(
+            catalogService: catalogService,
+            sortStorage: sortStorage
+        )
+
+        // Профиль
+        let profileController = ProfileViewController()
+        let profileNav = UINavigationController(rootViewController: profileController)
+        profileNav.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("Tab.profile", comment: ""),
+            image: UIImage(resource: .profileIcon),
+            tag: 0
+        )
+
+        // Каталог
+        let catalogController = CatalogViewController(presenter: catalogPresenter)
+        let catalogNav = UINavigationController(rootViewController: catalogController)
+        catalogNav.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("Tab.catalog", comment: ""),
+            image: UIImage(resource: .catalogIcon),
+            tag: 1
+        )
+
+        // Корзина
+        let cartController = ShoppingCartViewController()
+        let cartNav = UINavigationController(rootViewController: cartController)
+        cartNav.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("Tab.cart", comment: ""),
+            image: UIImage(resource: .cartIcon),
+            tag: 2
+        )
+
+        // Статистика
+        let statisticsController = StatisticViewController()
+        let statisticsNav = UINavigationController(rootViewController: statisticsController)
+        statisticsNav.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("Tab.statistics", comment: ""),
+            image: UIImage(resource: .statisticsIcon),
+            tag: 3
+        )
+
+        // Устанавливаем контроллеры
+        viewControllers = [profileNav, catalogNav, cartNav, statisticsNav]
+    }
+
+    private func setupUI() {
+        view.backgroundColor = .yaSecondary
+
+        // Активный цвет (иконка + текст)
+        tabBar.tintColor = .yaBlueUniversal
+
+        // Неактивный цвет
+        tabBar.unselectedItemTintColor = .yaPrimary
+
+        // Цвет фона таббара
+        tabBar.backgroundColor = .yaSecondary
+        tabBar.isTranslucent = false
+    }
+}
+
+
+/*
+import UIKit
+
 final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
@@ -9,7 +95,7 @@ final class TabBarController: UITabBarController {
         setUpViewControllers()
         setupDelegate()
         setupObservers()
-        setBadgeValue(getCartItemsCount() > 0 ? "\(getCartItemsCount())" : nil, at: 2)
+        //setBadgeValue(getCartItemsCount() > 0 ? "\(getCartItemsCount())" : nil, at: 2)
     }
     
     deinit {
@@ -17,9 +103,9 @@ final class TabBarController: UITabBarController {
         NotificationCenter.default.removeObserver(self)
     }
 }
-
+*/
 // MARK: -  Appearance Setup
-
+/*
 extension TabBarController {
     
     private func setupAppearance() {
@@ -54,9 +140,10 @@ extension TabBarController {
          */
     }
 }
-
+*/
 // MARK: - ViewControllers Factory
 
+/*
 extension TabBarController {
     
     private func setUpViewControllers() {
@@ -92,9 +179,9 @@ extension TabBarController {
         //delegate = self
     }
 }
-
+*/
 // MARK: - TabBar Items Setup
-
+/*
 extension TabBarController {
     
     private func wrapInNavigationController(_ controller: UIViewController, tab: Tab) -> UINavigationController {
@@ -153,12 +240,13 @@ extension TabBarController {
     
     private func getCartItemsCount() -> Int {
         // TODO: количество предметов в корзине
-        return 0
+        //let badgValue = catalogStorage.orders.count
+        return 0 //badgValue
     }
 }
-
+*/
 // MARK: - Additional Setup
-
+/*
 extension TabBarController {
     
     // MARK: - Observers
@@ -258,4 +346,5 @@ extension Notification.Name {
     static let cartItemCountDidChange = Notification.Name("cartItemCountDidChange")
     static let unreadMessagesCountDidChange = Notification.Name("unreadMessagesCountDidChange")
 }
+*/
 

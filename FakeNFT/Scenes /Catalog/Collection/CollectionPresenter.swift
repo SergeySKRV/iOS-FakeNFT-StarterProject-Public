@@ -115,7 +115,6 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         collectionView?.showLoadIndicator()
         
         let nftId = nfts[indexPath.row].id
-        
         catalogService.putOrders(id: nftId) { [weak self] result in
             guard let self else { return }
             
