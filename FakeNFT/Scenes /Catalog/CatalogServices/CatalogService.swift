@@ -154,7 +154,6 @@ final class CatalogService: CatalogServiceProtocol {
         }
     }
     
-    
     func putOrders(id: String, completion: @escaping (Result<OrdersResult, Error>) -> Void) {
         var orders = catalogStorage.orders
         if catalogStorage.findInOrders(id) {

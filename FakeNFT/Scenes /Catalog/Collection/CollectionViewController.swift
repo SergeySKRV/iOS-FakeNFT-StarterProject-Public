@@ -338,12 +338,14 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
 
 // MARK: - CollectionViewCellDelegate
 extension CollectionViewController: CollectionViewCellDelegate {
+    
     func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool) {
         presenter.changeLike(for: indexPath, isLiked: isLiked)
         nftCollectionView.reloadData()
     }
     func cartButtonDidChange(for indexPath: IndexPath) {
         presenter.changeOrder(for: indexPath)
+        nftCollectionView.reloadData()
     }
 }
 

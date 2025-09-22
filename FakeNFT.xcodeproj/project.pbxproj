@@ -28,6 +28,11 @@
 		27BE0AA22E79124700298A9C /* AlertCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0AA12E79124700298A9C /* AlertCatalogView.swift */; };
 		27BE0AAC2E7A65D700298A9C /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0AAB2E7A65D700298A9C /* ProfileRequest.swift */; };
 		27BE0AAE2E7A661000298A9C /* ProfilePutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0AAD2E7A661000298A9C /* ProfilePutRequest.swift */; };
+		27BE0B1D2E81C7DF00298A9C /* TabBarController+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B1C2E81C7DF00298A9C /* TabBarController+Appearance.swift */; };
+		27BE0B1F2E81C9FF00298A9C /* TabBarController+ViewControllersFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B1E2E81C9FF00298A9C /* TabBarController+ViewControllersFactory.swift */; };
+		27BE0B212E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B202E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift */; };
+		27BE0B232E81CABA00298A9C /* TabBarController+AdditionalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B222E81CABA00298A9C /* TabBarController+AdditionalSetup.swift */; };
+		27BE0B252E81CB1800298A9C /* TabBarController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */; };
 		27CBAE022E62AD7D00428248 /* CatalogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE012E62AD7D00428248 /* CatalogVC.swift */; };
 		27CBAE072E62AF7300428248 /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */; };
 		27CBAF1B2E63FF5500428248 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAF1A2E63FF5500428248 /* CatalogPresenter.swift */; };
@@ -95,6 +100,11 @@
 		27BE0AA12E79124700298A9C /* AlertCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCatalogView.swift; sourceTree = "<group>"; };
 		27BE0AAB2E7A65D700298A9C /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
 		27BE0AAD2E7A661000298A9C /* ProfilePutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePutRequest.swift; sourceTree = "<group>"; };
+		27BE0B1C2E81C7DF00298A9C /* TabBarController+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+Appearance.swift"; sourceTree = "<group>"; };
+		27BE0B1E2E81C9FF00298A9C /* TabBarController+ViewControllersFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+ViewControllersFactory.swift"; sourceTree = "<group>"; };
+		27BE0B202E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+TabBarItemsSetup.swift"; sourceTree = "<group>"; };
+		27BE0B222E81CABA00298A9C /* TabBarController+AdditionalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+AdditionalSetup.swift"; sourceTree = "<group>"; };
+		27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+Types.swift"; sourceTree = "<group>"; };
 		27CBAE012E62AD7D00428248 /* CatalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogVC.swift; sourceTree = "<group>"; };
 		27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		27CBAE182E62C5ED00428248 /* Catalog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Catalog.md; sourceTree = "<group>"; };
@@ -397,6 +407,11 @@
 			isa = PBXGroup;
 			children = (
 				E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */,
+				27BE0B1C2E81C7DF00298A9C /* TabBarController+Appearance.swift */,
+				27BE0B1E2E81C9FF00298A9C /* TabBarController+ViewControllersFactory.swift */,
+				27BE0B202E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift */,
+				27BE0B222E81CABA00298A9C /* TabBarController+AdditionalSetup.swift */,
+				27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */,
 			);
 			path = TabBarController;
 			sourceTree = "<group>";
@@ -568,6 +583,7 @@
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
+				27BE0B252E81CB1800298A9C /* TabBarController+Types.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				27CBAE072E62AF7300428248 /* CatalogTableViewCell.swift in Sources */,
 				27BE0AAC2E7A65D700298A9C /* ProfileRequest.swift in Sources */,
@@ -581,6 +597,7 @@
 				27BE0AA22E79124700298A9C /* AlertCatalogView.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
+				27BE0B232E81CABA00298A9C /* TabBarController+AdditionalSetup.swift in Sources */,
 				558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
@@ -592,9 +609,12 @@
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				27CBAF1B2E63FF5500428248 /* CatalogPresenter.swift in Sources */,
+				27BE0B1F2E81C9FF00298A9C /* TabBarController+ViewControllersFactory.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
+				27BE0B1D2E81C7DF00298A9C /* TabBarController+Appearance.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
+				27BE0B212E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				27BE0AAE2E7A661000298A9C /* ProfilePutRequest.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
