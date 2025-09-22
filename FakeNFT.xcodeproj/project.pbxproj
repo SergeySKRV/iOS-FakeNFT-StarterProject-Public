@@ -110,8 +110,8 @@
 		88FC50F02E81A5AB00CD08C8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		88FC50F32E81A5B500CD08C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		88FC50FA2E81A64400CD08C8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		88FC51012E81A8AB00CD08C8 /* LaunchScreen.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = LaunchScreen.strings; sourceTree = "<group>"; };
-		88FC51022E81A8B200CD08C8 /* LaunchScreen.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = LaunchScreen.strings; sourceTree = "<group>"; };
+		88FC51032E81AB2600CD08C8 /* en */ = {isa = PBXFileReference; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		88FC51052E81AB3700CD08C8 /* ru */ = {isa = PBXFileReference; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -350,7 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				88FC50DF2E819F7000CD08C8 /* Localizable.strings */,
-				88FC51012E81A8AB00CD08C8 /* LaunchScreen.strings */,
+				88FC51042E81AB2600CD08C8 /* LaunchScreen.strings */,
 			);
 			path = en.lproj;
 			sourceTree = "<group>";
@@ -360,7 +360,7 @@
 			children = (
 				88FC50F12E81A5AB00CD08C8 /* Localizable.strings */,
 				88FC50DA2E819D8E00CD08C8 /* Main.strings */,
-				88FC51022E81A8B200CD08C8 /* LaunchScreen.strings */,
+				88FC51062E81AB3700CD08C8 /* LaunchScreen.strings */,
 			);
 			path = ru.lproj;
 			sourceTree = "<group>";
@@ -657,6 +657,22 @@
 				88FC50FA2E81A64400CD08C8 /* de */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		88FC51042E81AB2600CD08C8 /* LaunchScreen.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88FC51032E81AB2600CD08C8 /* en */,
+			);
+			name = LaunchScreen.strings;
+			sourceTree = "<group>";
+		};
+		88FC51062E81AB3700CD08C8 /* LaunchScreen.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88FC51052E81AB3700CD08C8 /* ru */,
+			);
+			name = LaunchScreen.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
