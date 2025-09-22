@@ -10,9 +10,20 @@ import ProgressHUD
 
 final class UIBlockingProgressHUD {
     private static var window: UIWindow? {
-        return UIApplication.shared.windows.first
+        if #available(iOS 15.0, *) {
+            
+            return UIApplication.shared.connectedScenes
+                .filter { $0.activationState == .foregroundActive }
+                .compactMap { $0 as? UIWindowScene }
+                .first?
+                .windows
+                .first { $0.isKeyWindow }
+        } else {
+            
+            return UIApplication.shared.windows.first
+        }
     }
-
+    
     static func show() {
         window?.isUserInteractionEnabled = false
         ProgressHUD.show()
@@ -23,4 +34,3 @@ final class UIBlockingProgressHUD {
         ProgressHUD.dismiss()
     }
 }
-

@@ -7,7 +7,12 @@
 
 import Foundation
 
-// MARK: - Presenter Output Contract
+// MARK: - Presenter Output Contract - для вызова веб вью
 protocol ProfilePresenterOutput: AnyObject {
     func showWebViewController(urlString: String)
+}
+
+protocol CollectionViewCellDelegate: AnyObject {
+    func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool)
+    func cartButtonDidChange(for indexPath: IndexPath)
 }

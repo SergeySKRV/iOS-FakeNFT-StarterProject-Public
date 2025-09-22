@@ -62,7 +62,8 @@ extension TabBarController {
     private func setUpViewControllers() {
         
         let networkClient = DefaultNetworkClient()
-        let catalogService = CatalogService(networkClient: networkClient)
+        let catalogStorage = CatalogStorage()
+        let catalogService = CatalogService(networkClient: networkClient, catalogStorage: catalogStorage)
         let sortStorage = SortStorage()
         let catalogPresenter = CatalogPresenter(catalogService: catalogService, sortStorage: sortStorage)
         

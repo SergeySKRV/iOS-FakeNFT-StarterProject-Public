@@ -20,23 +20,21 @@ protocol CollectionPresenterProtocol: AnyObject {
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
-    func changeLike(for indexPath: IndexPath, isLiked: Bool) {}
-    
-    func changeOrder(for indexPath: IndexPath) {}
+    func openWebsite() {
+        view?.showWebViewController(urlString: RequestConstants.stubAuthorUrl)
+    }
     
     // MARK: - Public Properties
     var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
     var authorURL: String?
+    var profile: ProfileResult?
     weak var collectionView: CollectionViewControllerProtocol?
     private weak var view: ProfilePresenterOutput? // webview
-    
     // MARK: - Private Properties
     private let catalogService: CatalogServiceProtocol
-
     
     // MARK: - Initializers
-    
     init(collectionNft: NFTCollection?, catalogService: CatalogServiceProtocol) {
         self.collectionNft = collectionNft
         self.catalogService = catalogService
@@ -58,9 +56,19 @@ final class CollectionPresenter: CollectionPresenterProtocol {
                 case .success(let nft):
                     self.nfts.append(nft)
                     self.collectionView?.reloadNftCollectionView()
+                    self.collectionView?.hideLoadIndicator()
                 case .failure(let error):
-                    print(error)
-                    // TODO: - обработать ошибку алертом
+                    let errorModel = makeErrorModel(error)
+                    self.collectionView?.hideLoadIndicator()
+                    collectionView?.openAlert(
+                        title: errorModel.title,
+                        message: errorModel.message,
+                        alertStyle: .alert,
+                        actionTitles: errorModel.actionTitles,
+                        actionStyles: [.default, .default],
+                        actions: [{ _ in }, { _ in
+                            self.getNfts()}]
+                    )
                 }
                 self.collectionView?.hideLoadIndicator()
             })
@@ -69,17 +77,68 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     
     func loadCollectionData() {
         self.prepare()
-        self.collectionView?.hideLoadIndicator()
         loadAuthor()
+        getLikes()
+        getOrders()
+        self.collectionView?.hideLoadIndicator()
     }
     
     func getModel(for indexPath: IndexPath) -> NFTCellModel {
         self.convertToCellModel(nft: nfts[indexPath.row])
     }
     
-    func openWebsite() {
-        view?.showWebViewController(urlString: "https://practicum.yandex.ru/ios-developer")
+    func changeLike(for indexPath: IndexPath, isLiked: Bool) {
+        collectionView?.showLoadIndicator()
+        catalogService.putProfile(id: nfts[indexPath.row].id, completion: { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profile):
+                self.profile = profile
+                self.collectionView?.reloadNftCollectionView()
+                self.collectionView?.hideLoadIndicator()
+            case .failure(let error):
+                let errorModel = makePutErrorModel(error)
+                self.collectionView?.hideLoadIndicator()
+                collectionView?.openAlert(
+                    title: errorModel.title,
+                    message: errorModel.message,
+                    alertStyle: .alert,
+                    actionTitles: errorModel.actionTitles,
+                    actionStyles: [.default],
+                    actions: [{ _ in }]
+                )
+            }
+        })
     }
+    
+    func changeOrder(for indexPath: IndexPath) {
+        collectionView?.showLoadIndicator()
+        
+        let nftId = nfts[indexPath.row].id
+        
+        catalogService.putOrders(id: nftId) { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success:
+                // После успешного обновления заказа, обновляем данные
+                self.getOrders()
+            case .failure(let error):
+                let errorModel = self.makePutErrorModel(error)
+                self.collectionView?.hideLoadIndicator()
+                self.collectionView?.openAlert(
+                    title: errorModel.title,
+                    message: errorModel.message,
+                    alertStyle: .alert,
+                    actionTitles: errorModel.actionTitles,
+                    actionStyles: [.default],
+                    actions: [{ _ in }]
+                )
+            }
+            self.collectionView?.hideLoadIndicator()
+        }
+    }
+    
     
     // MARK: - Private Methods
     private func prepare() {
@@ -105,8 +164,8 @@ final class CollectionPresenter: CollectionPresenterProtocol {
             name: nft.name.components(separatedBy: " ").first ?? "",
             image: nft.images.first,
             rating: nft.rating,
-            isLiked: false,
-            isInCart: false,
+            isLiked: catalogService.likeStatus(nft.id),
+            isInCart: catalogService.orderStatus(nft.id),
             price: nft.price
         )
     }
@@ -114,5 +173,86 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     private func loadAuthor() {
         self.authorURL = RequestConstants.stubAuthorUrl
     }
+    
+    private func getLikes() {
+        catalogService.getProfile(completion: { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profile):
+                self.profile = profile
+                self.collectionView?.reloadNftCollectionView()
+            case .failure(let error):
+                let errorModel = makeErrorModel(error)
+                self.collectionView?.hideLoadIndicator()
+                collectionView?.openAlert(
+                    title: errorModel.title,
+                    message: errorModel.message,
+                    alertStyle: .alert,
+                    actionTitles: errorModel.actionTitles,
+                    actionStyles: [.default, .default],
+                    actions: [{ _ in }, { _ in
+                        self.getLikes()}]
+                )
+            }
+        })
+    }
+    
+    private func getOrders() {
+        catalogService.getOrders(completion: { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                self.collectionView?.reloadNftCollectionView()
+            case .failure(let error):
+                let errorModel = makeErrorModel(error)
+                self.collectionView?.hideLoadIndicator()
+                collectionView?.openAlert(
+                    title: errorModel.title,
+                    message: errorModel.message,
+                    alertStyle: .alert,
+                    actionTitles: errorModel.actionTitles,
+                    actionStyles: [.default, .default],
+                    actions: [{ _ in }, { _ in
+                        self.getOrders()}]
+                )
+            }
+        })
+    }
+    
+    private func makeErrorModel(_ error: Error) -> AlertModel {
+        let title: String = NSLocalizedString("Error.title", comment: "")
+        let message: String
+        switch error {
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "")
+        default:
+            message = NSLocalizedString("Error.unknown", comment: "")
+        }
+        
+        let actionText: String =  NSLocalizedString("Error.repeat", comment: "")
+        let cancelText: String = NSLocalizedString("Error.cancel", comment: "")
+        return AlertModel(
+            title: title,
+            message: message,
+            actionTitles: [cancelText,
+                           actionText]
+        )
+    }
+    
+    private func makePutErrorModel(_ error: Error) -> AlertModel {
+        let title: String = NSLocalizedString("Error.title", comment: "")
+        let message: String
+        switch error {
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "")
+        default:
+            message = NSLocalizedString("Error.unknown", comment: "")
+        }
+        let cancelText: String = NSLocalizedString("Error.cancel", comment: "")
+        return AlertModel(
+            title: title,
+            message: message,
+            actionTitles: [cancelText]
+        )
+    }
 }
-
