@@ -43,9 +43,11 @@
 		3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExamplePutRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558E39E62C68CE0900FB86AC /* NftService.swift */; };
+		88FC50E02E819F7100CD08C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88FC50DF2E819F7000CD08C8 /* Localizable.strings */; };
+		88FC50F22E81A5AB00CD08C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88FC50F12E81A5AB00CD08C8 /* Localizable.strings */; };
+		88FC50FC2E81A64400CD08C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88FC50FB2E81A64400CD08C8 /* Localizable.strings */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
-		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,11 +106,13 @@
 		3FC8C39029D2453B0081F015 /* ExamplePutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePutRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		558E39E62C68CE0900FB86AC /* NftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftService.swift; sourceTree = "<group>"; };
+		88FC50D92E819D7600CD08C8 /* LaunchScreen.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = LaunchScreen.strings; sourceTree = "<group>"; };
+		88FC50DA2E819D8E00CD08C8 /* Main.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Main.strings; sourceTree = "<group>"; };
+		88FC50F02E81A5AB00CD08C8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		88FC50F32E81A5B500CD08C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		88FC50FA2E81A64400CD08C8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		E1CD40D82A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
-		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -341,6 +345,32 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		88FC50D12E819BD200CD08C8 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				88FC50DF2E819F7000CD08C8 /* Localizable.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		88FC50D62E819D2A00CD08C8 /* ru.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				88FC50F12E81A5AB00CD08C8 /* Localizable.strings */,
+				88FC50DA2E819D8E00CD08C8 /* Main.strings */,
+				88FC50D92E819D7600CD08C8 /* LaunchScreen.strings */,
+			);
+			path = ru.lproj;
+			sourceTree = "<group>";
+		};
+		88FC50F42E81A5FF00CD08C8 /* de.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				88FC50FB2E81A64400CD08C8 /* Localizable.strings */,
+			);
+			path = de.lproj;
+			sourceTree = "<group>";
+		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,11 +391,13 @@
 		E1CD40DA2A96BE9B00BE7FE8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				88FC50F42E81A5FF00CD08C8 /* de.lproj */,
+				88FC50D62E819D2A00CD08C8 /* ru.lproj */,
+				88FC50D12E819BD200CD08C8 /* en.lproj */,
 				881AF1302E6E4C6700DDD465 /* CustomFonts */,
 				3F68069C29CBBAF100B4F915 /* Main.storyboard */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
-				E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -466,6 +498,7 @@
 				en,
 				Base,
 				ru,
+				de,
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
 			packageReferences = (
@@ -489,8 +522,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
-				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
+				88FC50E02E819F7100CD08C8 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
+				88FC50FC2E81A64400CD08C8 /* Localizable.strings in Resources */,
+				88FC50F22E81A5AB00CD08C8 /* Localizable.strings in Resources */,
 				3F68069E29CBBAF100B4F915 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,7 +621,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3F68069D29CBBAF100B4F915 /* Base */,
-				E1CD40D82A96BE7D00BE7FE8 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -595,9 +629,32 @@
 			isa = PBXVariantGroup;
 			children = (
 				3F6806A229CBBAF200B4F915 /* Base */,
-				E1CD40D92A96BE7D00BE7FE8 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		88FC50DF2E819F7000CD08C8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88FC50F32E81A5B500CD08C8 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		88FC50F12E81A5AB00CD08C8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88FC50F02E81A5AB00CD08C8 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		88FC50FB2E81A64400CD08C8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88FC50FA2E81A64400CD08C8 /* de */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
