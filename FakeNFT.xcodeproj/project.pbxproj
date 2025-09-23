@@ -35,9 +35,18 @@
 		27BE0B252E81CB1800298A9C /* TabBarController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */; };
 		27BE0B992E823C2200298A9C /* CatalogRequestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */; };
 		27BE0B9B2E823DCA00298A9C /* CatalogFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */; };
+		27BE0E0A2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */; };
+		27BE0E0B2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */; };
+		27BE0E0C2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */; };
+		27BE0E0E2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */; };
+		27BE0E0F2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */; };
+		27BE0E102E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */; };
 		27CBAE022E62AD7D00428248 /* CatalogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE012E62AD7D00428248 /* CatalogVC.swift */; };
 		27CBAE072E62AF7300428248 /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */; };
 		27CBAF1B2E63FF5500428248 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAF1A2E63FF5500428248 /* CatalogPresenter.swift */; };
+		27CF22E92E8329F000B3866B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27CF22E82E8329F000B3866B /* Localizable.strings */; };
+		27CF22EA2E8329F000B3866B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27CF22E82E8329F000B3866B /* Localizable.strings */; };
+		27CF22EB2E8329F000B3866B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27CF22E82E8329F000B3866B /* Localizable.strings */; };
 		27F62EFC2E66288900A1FF57 /* CatalogSceneConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F62EFB2E66288900A1FF57 /* CatalogSceneConfiguration.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
@@ -60,7 +69,6 @@
 		558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558E39E62C68CE0900FB86AC /* NftService.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
-		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,11 +117,15 @@
 		27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+Types.swift"; sourceTree = "<group>"; };
 		27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestConstants.swift; sourceTree = "<group>"; };
 		27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFonts.swift; sourceTree = "<group>"; };
-		27BE0D4E2E824B5F00298A9C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular1.otf"; sourceTree = "<group>"; };
+		27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold1.otf"; sourceTree = "<group>"; };
 		27CBAE012E62AD7D00428248 /* CatalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogVC.swift; sourceTree = "<group>"; };
 		27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		27CBAE182E62C5ED00428248 /* Catalog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Catalog.md; sourceTree = "<group>"; };
 		27CBAF1A2E63FF5500428248 /* CatalogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPresenter.swift; sourceTree = "<group>"; };
+		27CF22E52E8329F000B3866B /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "en.lproj/Localizable 2.strings"; sourceTree = "<group>"; };
+		27CF22E62E8329F000B3866B /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		27CF22E72E8329F000B3866B /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "de.lproj/Localizable 2.strings"; sourceTree = "<group>"; };
 		27F62EFB2E66288900A1FF57 /* CatalogSceneConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogSceneConfiguration.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -122,7 +134,6 @@
 		3F68069829CBBAF100B4F915 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3F68069A29CBBAF100B4F915 /* ProductDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewController.swift; sourceTree = "<group>"; };
 		3F68069F29CBBAF200B4F915 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3F6806A229CBBAF200B4F915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F6806A429CBBAF200B4F915 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F6806A929CBBAF200B4F915 /* FakeNFTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FakeNFTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6806AD29CBBAF200B4F915 /* ExampleUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUnitTests.swift; sourceTree = "<group>"; };
@@ -138,8 +149,6 @@
 		558E39E62C68CE0900FB86AC /* NftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftService.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -426,9 +435,11 @@
 		E1CD40DA2A96BE9B00BE7FE8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27CF22E82E8329F000B3866B /* Localizable.strings */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
-				E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */,
+				27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */,
+				27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -534,9 +545,9 @@
 			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
-				Base,
 				ru,
+				Base,
+				en,
 				de,
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
@@ -560,9 +571,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27CF22EB2E8329F000B3866B /* Localizable.strings in Resources */,
+				27BE0E0B2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
-				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
+				27BE0E0E2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +583,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27BE0E102E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */,
+				27CF22EA2E8329F000B3866B /* Localizable.strings in Resources */,
+				27BE0E0A2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -577,6 +593,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27BE0E0F2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */,
+				27CF22E92E8329F000B3866B /* Localizable.strings in Resources */,
+				27BE0E0C2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,12 +688,19 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		27CF22E82E8329F000B3866B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27CF22E52E8329F000B3866B /* Localizable.strings */,
+				27CF22E62E8329F000B3866B /* Localizable.strings */,
+				27CF22E72E8329F000B3866B /* Localizable.strings */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3F6806A229CBBAF200B4F915 /* Base */,
-				E1CD40D92A96BE7D00BE7FE8 /* ru */,
-				27BE0D4E2E824B5F00298A9C /* de */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
