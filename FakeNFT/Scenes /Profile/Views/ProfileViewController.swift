@@ -73,6 +73,17 @@ final class ProfileViewController: UIViewController {
     var servicesAssembly: ServicesAssembly!
     private var presenter: ProfilePresenterProtocol!
 
+    // MARK: - Init
+    init(servicesAssembly: ServicesAssembly) {
+        self.servicesAssembly = servicesAssembly
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        assertionFailure("init(coder:) has not been implemented")
+        return nil
+    }
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
