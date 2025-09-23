@@ -29,8 +29,8 @@
 		278365362E833B6900A11759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 278365352E833B6900A11759 /* Localizable.strings */; };
 		278365372E833B6900A11759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 278365352E833B6900A11759 /* Localizable.strings */; };
 		278365382E833B6900A11759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 278365352E833B6900A11759 /* Localizable.strings */; };
-		2783653A2E833EDF00A11759 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 278365392E833EDF00A11759 /* SF-Pro-Text-Regular.otf */; };
-		2783653C2E833EE700A11759 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2783653B2E833EE700A11759 /* SF-Pro-Text-Bold.otf */; };
+		278365422E83413900A11759 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2783653F2E83413900A11759 /* SF-Pro-Text-Regular.otf */; };
+		278365432E83413900A11759 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2783653E2E83413900A11759 /* SF-Pro-Text-Bold.otf */; };
 		27BE0A982E77CBD700298A9C /* OrdersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0A972E77CBD700298A9C /* OrdersRequest.swift */; };
 		27BE0AA02E79108900298A9C /* OrdersPutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0A9F2E79108900298A9C /* OrdersPutRequest.swift */; };
 		27BE0AA22E79124700298A9C /* AlertCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0AA12E79124700298A9C /* AlertCatalogView.swift */; };
@@ -111,8 +111,8 @@
 		278365322E833B6900A11759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		278365332E833B6900A11759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		278365342E833B6900A11759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		278365392E833EDF00A11759 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
-		2783653B2E833EE700A11759 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		2783653E2E83413900A11759 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		2783653F2E83413900A11759 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		27BE0A972E77CBD700298A9C /* OrdersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersRequest.swift; sourceTree = "<group>"; };
 		27BE0A9F2E79108900298A9C /* OrdersPutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersPutRequest.swift; sourceTree = "<group>"; };
 		27BE0AA12E79124700298A9C /* AlertCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCatalogView.swift; sourceTree = "<group>"; };
@@ -439,8 +439,8 @@
 		E1CD40DA2A96BE9B00BE7FE8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2783653B2E833EE700A11759 /* SF-Pro-Text-Bold.otf */,
-				278365392E833EDF00A11759 /* SF-Pro-Text-Regular.otf */,
+				2783653E2E83413900A11759 /* SF-Pro-Text-Bold.otf */,
+				2783653F2E83413900A11759 /* SF-Pro-Text-Regular.otf */,
 				278365352E833B6900A11759 /* Localizable.strings */,
 				27CF22F12E832E4000B3866B /* LaunchScreen.storyboard */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
@@ -577,11 +577,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2783652A2E8337F500A11759 /* Main.storyboard in Resources */,
-				2783653C2E833EE700A11759 /* SF-Pro-Text-Bold.otf in Resources */,
 				27CF22EF2E832E1700B3866B /* Info.plist in Resources */,
+				278365422E83413900A11759 /* SF-Pro-Text-Regular.otf in Resources */,
+				278365432E83413900A11759 /* SF-Pro-Text-Bold.otf in Resources */,
 				278365382E833B6900A11759 /* Localizable.strings in Resources */,
 				27CF22F22E832E4000B3866B /* LaunchScreen.storyboard in Resources */,
-				2783653A2E833EDF00A11759 /* SF-Pro-Text-Regular.otf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
