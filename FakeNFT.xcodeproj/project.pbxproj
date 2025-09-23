@@ -109,6 +109,7 @@
 		27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+Types.swift"; sourceTree = "<group>"; };
 		27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestConstants.swift; sourceTree = "<group>"; };
 		27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFonts.swift; sourceTree = "<group>"; };
+		27BE0D4E2E824B5F00298A9C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		27CBAE012E62AD7D00428248 /* CatalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogVC.swift; sourceTree = "<group>"; };
 		27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		27CBAE182E62C5ED00428248 /* Catalog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Catalog.md; sourceTree = "<group>"; };
@@ -536,6 +537,7 @@
 				en,
 				Base,
 				ru,
+				de,
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
 			packageReferences = (
@@ -672,6 +674,7 @@
 			children = (
 				3F6806A229CBBAF200B4F915 /* Base */,
 				E1CD40D92A96BE7D00BE7FE8 /* ru */,
+				27BE0D4E2E824B5F00298A9C /* de */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
