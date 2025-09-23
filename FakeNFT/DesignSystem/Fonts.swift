@@ -1,4 +1,3 @@
-
 import UIKit
 
 /// Содержит предустановленные шрифты для приложения.
@@ -9,7 +8,7 @@ import UIKit
 struct Fonts {
 
     // MARK: - Bold Fonts
-    
+
     /// Жирный шрифт `SFProText-Bold`, размер 34pt.
     static let sfProBold34 = UIFont(name: "SFProText-Bold", size: 34)
         ?? UIFont.systemFont(ofSize: 34, weight: .bold)
@@ -38,7 +37,7 @@ struct Fonts {
     /// Средний шрифт `SFProText-Medium`, размер 10pt.
     static let sfProMedium10 = UIFont(name: "SFProText-Medium", size: 10)
         ?? UIFont.systemFont(ofSize: 10, weight: .medium)
-    
+
     // MARK: - Regular Fonts
 
     /// Обычный шрифт `SFProText-Regular`, размер 17pt.
@@ -53,4 +52,3 @@ struct Fonts {
     static let sfProRegular13 = UIFont(name: "SFProText-Regular", size: 13)
         ?? UIFont.systemFont(ofSize: 13, weight: .regular)
 }
-
