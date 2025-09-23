@@ -301,6 +301,7 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				27CF22EC2E832E1700B3866B /* Info.plist */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
@@ -446,7 +447,6 @@
 				278365352E833B6900A11759 /* Localizable.strings */,
 				27CF22F12E832E4000B3866B /* LaunchScreen.storyboard */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
-				27CF22EC2E832E1700B3866B /* Info.plist */,
 				27BE0E092E83264700298A9C /* SF-Pro-Text-Regular.otf */,
 				27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold.otf */,
 				278365292E8337F500A11759 /* Main.storyboard */,
