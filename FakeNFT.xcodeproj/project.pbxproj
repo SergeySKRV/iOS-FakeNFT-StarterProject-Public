@@ -33,6 +33,8 @@
 		27BE0B212E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B202E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift */; };
 		27BE0B232E81CABA00298A9C /* TabBarController+AdditionalSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B222E81CABA00298A9C /* TabBarController+AdditionalSetup.swift */; };
 		27BE0B252E81CB1800298A9C /* TabBarController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */; };
+		27BE0B992E823C2200298A9C /* CatalogRequestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */; };
+		27BE0B9B2E823DCA00298A9C /* CatalogFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */; };
 		27CBAE022E62AD7D00428248 /* CatalogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE012E62AD7D00428248 /* CatalogVC.swift */; };
 		27CBAE072E62AF7300428248 /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */; };
 		27CBAF1B2E63FF5500428248 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAF1A2E63FF5500428248 /* CatalogPresenter.swift */; };
@@ -105,6 +107,8 @@
 		27BE0B202E81CA6C00298A9C /* TabBarController+TabBarItemsSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+TabBarItemsSetup.swift"; sourceTree = "<group>"; };
 		27BE0B222E81CABA00298A9C /* TabBarController+AdditionalSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+AdditionalSetup.swift"; sourceTree = "<group>"; };
 		27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+Types.swift"; sourceTree = "<group>"; };
+		27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestConstants.swift; sourceTree = "<group>"; };
+		27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFonts.swift; sourceTree = "<group>"; };
 		27CBAE012E62AD7D00428248 /* CatalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogVC.swift; sourceTree = "<group>"; };
 		27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		27CBAE182E62C5ED00428248 /* Catalog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Catalog.md; sourceTree = "<group>"; };
@@ -249,6 +253,7 @@
 				27BE0A8B2E72057800298A9C /* Extensions */,
 				3F478ECE29DB474E00F6D39E /* Colors.swift */,
 				3F478ED029DB476500F6D39E /* Fonts.swift */,
+				27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -390,6 +395,7 @@
 				27BE0A9F2E79108900298A9C /* OrdersPutRequest.swift */,
 				27BE0AAB2E7A65D700298A9C /* ProfileRequest.swift */,
 				27BE0AAD2E7A661000298A9C /* ProfilePutRequest.swift */,
+				27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -594,11 +600,13 @@
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* ExamplePutService.swift in Sources */,
+				27BE0B992E823C2200298A9C /* CatalogRequestConstants.swift in Sources */,
 				27BE0AA22E79124700298A9C /* AlertCatalogView.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				27BE0B232E81CABA00298A9C /* TabBarController+AdditionalSetup.swift in Sources */,
 				558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */,
+				27BE0B9B2E823DCA00298A9C /* CatalogFonts.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
