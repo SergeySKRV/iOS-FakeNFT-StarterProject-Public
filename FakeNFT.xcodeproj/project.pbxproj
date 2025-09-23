@@ -31,6 +31,8 @@
 		278365382E833B6900A11759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 278365352E833B6900A11759 /* Localizable.strings */; };
 		278365422E83413900A11759 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2783653F2E83413900A11759 /* SF-Pro-Text-Regular.otf */; };
 		278365432E83413900A11759 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2783653E2E83413900A11759 /* SF-Pro-Text-Bold.otf */; };
+		278365472E83451B00A11759 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278365462E83451B00A11759 /* AppConstants.swift */; };
+		2783655E2E83458B00A11759 /* ReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2783655D2E83458B00A11759 /* ReviewManager.swift */; };
 		27BE0A982E77CBD700298A9C /* OrdersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0A972E77CBD700298A9C /* OrdersRequest.swift */; };
 		27BE0AA02E79108900298A9C /* OrdersPutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0A9F2E79108900298A9C /* OrdersPutRequest.swift */; };
 		27BE0AA22E79124700298A9C /* AlertCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0AA12E79124700298A9C /* AlertCatalogView.swift */; };
@@ -48,7 +50,6 @@
 		27CBAF1B2E63FF5500428248 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAF1A2E63FF5500428248 /* CatalogPresenter.swift */; };
 		27CF22ED2E832E1700B3866B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27CF22EC2E832E1700B3866B /* Info.plist */; };
 		27CF22EE2E832E1700B3866B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27CF22EC2E832E1700B3866B /* Info.plist */; };
-		27CF22EF2E832E1700B3866B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27CF22EC2E832E1700B3866B /* Info.plist */; };
 		27CF22F22E832E4000B3866B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27CF22F12E832E4000B3866B /* LaunchScreen.storyboard */; };
 		27F62EFC2E66288900A1FF57 /* CatalogSceneConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F62EFB2E66288900A1FF57 /* CatalogSceneConfiguration.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
@@ -113,6 +114,8 @@
 		278365342E833B6900A11759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2783653E2E83413900A11759 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		2783653F2E83413900A11759 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		278365462E83451B00A11759 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		2783655D2E83458B00A11759 /* ReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewManager.swift; sourceTree = "<group>"; };
 		27BE0A972E77CBD700298A9C /* OrdersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersRequest.swift; sourceTree = "<group>"; };
 		27BE0A9F2E79108900298A9C /* OrdersPutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersPutRequest.swift; sourceTree = "<group>"; };
 		27BE0AA12E79124700298A9C /* AlertCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCatalogView.swift; sourceTree = "<group>"; };
@@ -156,6 +159,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		278365542E83454B00A11759 /* Onboarding */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Onboarding; sourceTree = "<group>"; };
 		27BE093E2E66296300298A9C /* Collection */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Collection; sourceTree = "<group>"; };
 		27BE094B2E662AAE00298A9C /* CatalogModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CatalogModels; sourceTree = "<group>"; };
 		27BE09522E662C5100298A9C /* Constants */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Constants; sourceTree = "<group>"; };
@@ -296,6 +300,8 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				2783655D2E83458B00A11759 /* ReviewManager.swift */,
+				278365462E83451B00A11759 /* AppConstants.swift */,
 				27CF22EC2E832E1700B3866B /* Info.plist */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
@@ -339,6 +345,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				278365542E83454B00A11759 /* Onboarding */,
 				27CBAE0A2E62B01B00428248 /* Statistic */,
 				27CBAE092E62B00D00428248 /* Profile */,
 				27CBAE082E62AFEF00428248 /* Cart */,
@@ -465,6 +472,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				278365542E83454B00A11759 /* Onboarding */,
 				27BE093E2E66296300298A9C /* Collection */,
 				27BE094B2E662AAE00298A9C /* CatalogModels */,
 				27BE09522E662C5100298A9C /* Constants */,
@@ -577,7 +585,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2783652A2E8337F500A11759 /* Main.storyboard in Resources */,
-				27CF22EF2E832E1700B3866B /* Info.plist in Resources */,
 				278365422E83413900A11759 /* SF-Pro-Text-Regular.otf in Resources */,
 				278365432E83413900A11759 /* SF-Pro-Text-Bold.otf in Resources */,
 				278365382E833B6900A11759 /* Localizable.strings in Resources */,
@@ -627,6 +634,7 @@
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				278365472E83451B00A11759 /* AppConstants.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* ExamplePutService.swift in Sources */,
 				27BE0B992E823C2200298A9C /* CatalogRequestConstants.swift in Sources */,
 				27BE0AA22E79124700298A9C /* AlertCatalogView.swift in Sources */,
@@ -643,6 +651,7 @@
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
+				2783655E2E83458B00A11759 /* ReviewManager.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				27CBAF1B2E63FF5500428248 /* CatalogPresenter.swift in Sources */,
 				27BE0B1F2E81C9FF00298A9C /* TabBarController+ViewControllersFactory.swift in Sources */,

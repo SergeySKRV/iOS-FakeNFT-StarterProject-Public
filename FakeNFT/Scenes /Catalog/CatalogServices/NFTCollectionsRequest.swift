@@ -12,12 +12,12 @@
      var endpoint: URL? {
          URL(string: "\(RequestConstants.baseURL)/api/v1/collections/\(id)")
      }
-     var dto: Dto?
+     var body: RequestBodyConvertible?
  }
 
  struct NFTCollectionsRequest: NetworkRequest {
      var endpoint: URL? {
          URL(string: "\(RequestConstants.baseURL)/api/v1/collections")
      }
-     var dto: Dto?
+     var body: RequestBodyConvertible?
  }

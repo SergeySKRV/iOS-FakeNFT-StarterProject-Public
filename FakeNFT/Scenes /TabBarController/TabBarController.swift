@@ -3,7 +3,7 @@ import UIKit
 // MARK: - TabBarController
 final class TabBarController: UITabBarController {
     private let servicesAssembly: ServicesAssembly
-    private var presenter: ProfilePresenterProtocol!
+    //private var presenter: ProfilePresenterProtocol!
 
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
@@ -43,16 +43,16 @@ final class TabBarController: UITabBarController {
             catalogService: catalogService,
             sortStorage: sortStorage
         )
-
+/*
         // Профиль
-        let profileController = ProfileViewController(servicesAssembly: servicesAssembly)
+        //let profileController = ProfileViewController(servicesAssembly: servicesAssembly)
         let profileNav = UINavigationController(rootViewController: profileController)
         profileNav.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Tab.profile", comment: ""),
             image: UIImage(resource: .profileIcon),
             tag: 0
         )
-
+*/
         // Каталог
         let catalogController = CatalogViewController(presenter: catalogPresenter)
         let catalogNav = UINavigationController(rootViewController: catalogController)
@@ -61,7 +61,7 @@ final class TabBarController: UITabBarController {
             image: UIImage(resource: .catalogIcon),
             tag: 1
         )
-
+/*
         // Корзина
         let cartService = CartService()
         let cartController = CartViewController()
@@ -87,7 +87,7 @@ final class TabBarController: UITabBarController {
         )
 
         // Устанавливаем контроллеры*/
-        viewControllers = [profileNav, catalogNav, cartNav, statisticsNav]
+        viewControllers = [/*profileNav,*/ catalogNav/*, cartNav, statisticsNav*/]
     }
 
     private func setupUI() {
@@ -104,3 +104,4 @@ final class TabBarController: UITabBarController {
         tabBar.isTranslucent = false
     }
 }
+

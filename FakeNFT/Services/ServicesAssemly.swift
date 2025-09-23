@@ -1,10 +1,10 @@
 final class ServicesAssembly {
 
-    private let networkClient: NetworkClient
+    private let networkClient: NetworkClientProtocol
     private let nftStorage: NftStorage
 
     init(
-        networkClient: NetworkClient,
+        networkClient: NetworkClientProtocol,
         nftStorage: NftStorage
     ) {
         self.networkClient = networkClient
