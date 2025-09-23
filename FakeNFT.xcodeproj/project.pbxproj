@@ -35,12 +35,12 @@
 		27BE0B252E81CB1800298A9C /* TabBarController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */; };
 		27BE0B992E823C2200298A9C /* CatalogRequestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */; };
 		27BE0B9B2E823DCA00298A9C /* CatalogFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */; };
-		27BE0E0A2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */; };
-		27BE0E0B2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */; };
-		27BE0E0C2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */; };
-		27BE0E0E2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */; };
-		27BE0E0F2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */; };
-		27BE0E102E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */; };
+		27BE0E0A2E83264700298A9C /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular.otf */; };
+		27BE0E0B2E83264700298A9C /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular.otf */; };
+		27BE0E0C2E83264700298A9C /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E092E83264700298A9C /* SF-Pro-Text-Regular.otf */; };
+		27BE0E0E2E83264F00298A9C /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold.otf */; };
+		27BE0E0F2E83264F00298A9C /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold.otf */; };
+		27BE0E102E83264F00298A9C /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold.otf */; };
 		27CBAE022E62AD7D00428248 /* CatalogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE012E62AD7D00428248 /* CatalogVC.swift */; };
 		27CBAE072E62AF7300428248 /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */; };
 		27CBAF1B2E63FF5500428248 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CBAF1A2E63FF5500428248 /* CatalogPresenter.swift */; };
@@ -120,8 +120,8 @@
 		27BE0B242E81CB1800298A9C /* TabBarController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+Types.swift"; sourceTree = "<group>"; };
 		27BE0B982E823C2100298A9C /* CatalogRequestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequestConstants.swift; sourceTree = "<group>"; };
 		27BE0B9A2E823DCA00298A9C /* CatalogFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFonts.swift; sourceTree = "<group>"; };
-		27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular1.otf"; sourceTree = "<group>"; };
-		27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold1.otf"; sourceTree = "<group>"; };
+		27BE0E092E83264700298A9C /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		27CBAE012E62AD7D00428248 /* CatalogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogVC.swift; sourceTree = "<group>"; };
 		27CBAE062E62AF7300428248 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		27CBAE182E62C5ED00428248 /* Catalog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Catalog.md; sourceTree = "<group>"; };
@@ -442,8 +442,8 @@
 				27CF22E82E8329F000B3866B /* Localizable.strings */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				27CF22EC2E832E1700B3866B /* Info.plist */,
-				27BE0E092E83264700298A9C /* SF-Pro-Text-Regular1.otf */,
-				27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold1.otf */,
+				27BE0E092E83264700298A9C /* SF-Pro-Text-Regular.otf */,
+				27BE0E0D2E83264F00298A9C /* SF-Pro-Text-Bold.otf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -576,11 +576,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				27CF22EB2E8329F000B3866B /* Localizable.strings in Resources */,
-				27BE0E0B2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */,
+				27BE0E0B2E83264700298A9C /* SF-Pro-Text-Regular.otf in Resources */,
 				27CF22EF2E832E1700B3866B /* Info.plist in Resources */,
 				27CF22F22E832E4000B3866B /* LaunchScreen.storyboard in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
-				27BE0E0E2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */,
+				27BE0E0E2E83264F00298A9C /* SF-Pro-Text-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,9 +589,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				27CF22ED2E832E1700B3866B /* Info.plist in Resources */,
-				27BE0E102E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */,
+				27BE0E102E83264F00298A9C /* SF-Pro-Text-Bold.otf in Resources */,
 				27CF22EA2E8329F000B3866B /* Localizable.strings in Resources */,
-				27BE0E0A2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */,
+				27BE0E0A2E83264700298A9C /* SF-Pro-Text-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,9 +600,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				27CF22EE2E832E1700B3866B /* Info.plist in Resources */,
-				27BE0E0F2E83264F00298A9C /* SF-Pro-Text-Bold1.otf in Resources */,
+				27BE0E0F2E83264F00298A9C /* SF-Pro-Text-Bold.otf in Resources */,
 				27CF22E92E8329F000B3866B /* Localizable.strings in Resources */,
-				27BE0E0C2E83264700298A9C /* SF-Pro-Text-Regular1.otf in Resources */,
+				27BE0E0C2E83264700298A9C /* SF-Pro-Text-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
