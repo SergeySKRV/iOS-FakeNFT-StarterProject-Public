@@ -21,7 +21,7 @@ protocol CollectionPresenterProtocol: AnyObject {
 
 final class CollectionPresenter: CollectionPresenterProtocol {
     func openWebsite() {
-        view?.showWebViewController(urlString: RequestConstants.stubAuthorUrl)
+        view?.showWebViewController(urlString: CatalogRequestConstants.stubAuthorUrl)
     }
     
     // MARK: - Public Properties
@@ -170,7 +170,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     }
     
     private func loadAuthor() {
-        self.authorURL = RequestConstants.stubAuthorUrl
+        self.authorURL = CatalogRequestConstants.stubAuthorUrl
     }
     
     private func getLikes() {
