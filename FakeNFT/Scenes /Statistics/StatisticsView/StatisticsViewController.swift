@@ -11,8 +11,9 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     private let presenter = StatisticsViewPresenter.shared
     private let sortButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(resource: .sortIcon), for: .normal)
-        button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside) 
+        button.setImage(UIImage(resource: .sort), for: .normal)
+        button.tintColor = .yaPrimary
+        button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside)
         return button
     }()
     private let statisticsTableView: UITableView = {

@@ -1,18 +1,18 @@
 import Foundation
 
-struct CartNetworkRequest: NetworkRequest {
+struct CartNetworkRequest: StatisticsNetworkRequest {
     let endpoint: URL?
-    let httpMethod: HttpMethod
-    let dto: Dto?
+    let httpMethod: StatisticsHttpMethod
+    let dto: StatisticsDto?
     
-    init(endpoint: URL?, httpMethod: HttpMethod, dto: Dto? = nil) {
+    init(endpoint: URL?, httpMethod: StatisticsHttpMethod, dto: StatisticsDto? = nil) {
         self.endpoint = endpoint
         self.httpMethod = httpMethod
         self.dto = dto
     }
 }
 
-struct DeleteCartItemDto: Dto {
+struct DeleteCartItemDto: StatisticsDto {
     let itemId: String
     
     func asDictionary() -> [String: String] {

@@ -289,7 +289,7 @@ extension CartViewController: CartViewProtocol {
     
     func navigateToPaymentScreen() {
         let paymentVC = PaymentViewController()
-        let paymentPresenter = PaymentPresenter(view: paymentVC, cartService: CartService())
+        let paymentPresenter = PaymentPresenter(view: paymentVC, cartService: CartService(networkClient: StatisticsDefaultNetworkClient()))
         paymentVC.presenter = paymentPresenter
         
         navigationController?.pushViewController(paymentVC, animated: true)

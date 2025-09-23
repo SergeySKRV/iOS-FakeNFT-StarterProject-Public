@@ -161,6 +161,6 @@ protocol EditProfilePresenterProtocol:
         view: EditProfilePresenterOutput,
         userProfile: UserProfile,
         userService: UserProfileService,
-        imageLoaderService: ImageLoaderService
+        imageLoaderService: ProfileImageLoaderService
     )
 }

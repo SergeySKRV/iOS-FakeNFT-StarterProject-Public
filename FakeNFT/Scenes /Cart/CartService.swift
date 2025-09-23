@@ -1,12 +1,12 @@
 import Foundation
 
 final class CartService: CartServiceProtocol {
-    private let networkClient: NetworkClient
+    private let networkClient: StatisticsNetworkClient
     private let baseURL = RequestConstants.baseURL
     
     private var currentNFTIds: [String] = []
     
-    init(networkClient: NetworkClient = DefaultNetworkClient()) {
+    init(networkClient: StatisticsNetworkClient) {
         self.networkClient = networkClient
     }
     

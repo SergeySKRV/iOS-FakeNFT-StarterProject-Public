@@ -44,7 +44,7 @@ final class CartPresenter: CartPresenterProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    if self?.cartItems.count == 0 {
+                    if ((self?.cartItems.isEmpty) != nil) {
                         self?.view?.showEmptyState()
                     }
                     

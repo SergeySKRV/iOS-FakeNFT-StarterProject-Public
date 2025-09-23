@@ -3,10 +3,11 @@ import UIKit
 
 // MARK: - EditProfilePresenter
 final class EditProfilePresenter: EditProfilePresenterProtocol {
+    
     // MARK: - Properties
     private weak var view: EditProfilePresenterOutput?
     private let userService: UserProfileService
-    private let imageLoaderService: ImageLoaderService
+    private let imageLoaderService: ProfileImageLoaderService
     private var userProfile: UserProfile?
     private var hasChanges = false
 
@@ -15,7 +16,7 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
         view: EditProfilePresenterOutput,
         userProfile: UserProfile,
         userService: UserProfileService,
-        imageLoaderService: ImageLoaderService = ImageLoaderServiceImpl()
+        imageLoaderService: ProfileImageLoaderService = ImageLoaderServiceImpl()
     ) {
         self.view = view
         self.userProfile = userProfile
