@@ -1,3 +1,4 @@
+
 import UIKit
 
 /// Содержит предустановленные шрифты для приложения.
@@ -6,9 +7,9 @@ import UIKit
 /// Если системный шрифт не найден (например, отсутствует в iOS),
 /// автоматически подставляется ближайший системный шрифт с тем же размером и весом.
 struct Fonts {
-   
-    // MARK: - Bold Fonts
 
+    // MARK: - Bold Fonts
+    
     /// Жирный шрифт `SFProText-Bold`, размер 34pt.
     static let sfProBold34 = UIFont(name: "SFProText-Bold", size: 34)
         ?? UIFont.systemFont(ofSize: 34, weight: .bold)
@@ -33,6 +34,11 @@ struct Fonts {
     static let sfProBold17 = UIFont(name: "SFProText-Bold", size: 17)
         ?? UIFont.systemFont(ofSize: 17, weight: .bold)
 
+    // MARK: - Medium Fonts
+    /// Средний шрифт `SFProText-Medium`, размер 10pt.
+    static let sfProMedium10 = UIFont(name: "SFProText-Medium", size: 10)
+        ?? UIFont.systemFont(ofSize: 10, weight: .medium)
+    
     // MARK: - Regular Fonts
 
     /// Обычный шрифт `SFProText-Regular`, размер 17pt.
@@ -48,21 +54,3 @@ struct Fonts {
         ?? UIFont.systemFont(ofSize: 13, weight: .regular)
 }
 
-extension UIFont {
-
-    // Headline Fonts
-    static var headline1 = UIFont.systemFont(ofSize: 34, weight: .bold)
-    static var headline2 = UIFont.systemFont(ofSize: 28, weight: .bold)
-    static var headline3 = UIFont.systemFont(ofSize: 22, weight: .bold)
-    static var headline4 = UIFont.systemFont(ofSize: 20, weight: .bold)
-
-    // Body Fonts
-    static var bodyRegular = UIFont.systemFont(ofSize: 17, weight: .regular)
-    static var bodyBold = UIFont.systemFont(ofSize: 17, weight: .bold)
-
-    // Caption Fonts
-    static var caption1 = UIFont.systemFont(ofSize: 15, weight: .regular)
-    static var caption2 = UIFont.systemFont(ofSize: 13, weight: .regular)
-    
-    static var medium10 = UIFont.systemFont(ofSize: 10, weight: .medium)
-}
