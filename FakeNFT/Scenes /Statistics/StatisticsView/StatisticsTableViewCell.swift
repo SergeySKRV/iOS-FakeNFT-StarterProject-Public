@@ -1,5 +1,5 @@
-import UIKit
 import Kingfisher
+import UIKit
 
 final class StatisticsTableViewCell: UITableViewCell {
     // MARK: - private properties

@@ -93,7 +93,7 @@ final class StatisticsCollectionPresenter {
         service.getOrders { [weak self] result in
             switch result {
             case .success(let order):
-                self?.orders  = order.nfts ?? []
+                self?.orders = order.nfts ?? []
             case .failure(let error):
                 print("error while fetching order \(error)")
             }

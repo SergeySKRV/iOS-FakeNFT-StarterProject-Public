@@ -9,7 +9,6 @@ protocol StatisticsUsersService {
 }
 
 final class StatisticsUsersServiceImpl: StatisticsUsersService {
-    
     // MARK: - private properties
     private let networkClient: StatisticsDefaultNetworkClient
     private let storage: StatisticsUsersStorage
@@ -33,7 +32,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
     }
     func loadNft(id: String, completion: @escaping (Result<StatisticsNft, any Error>) -> Void) {
         let request = StatisticsNFTRequest(id: id)
-        networkClient.send(request: request, type: StatisticsNft.self) { [weak storage] result in
+        networkClient.send(request: request, type: StatisticsNft.self) {result in
             switch result {
             case .success(let nft):
                 // storage?.saveNft(nft)
@@ -45,7 +44,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
     }
     func loadProfile(completion: @escaping (Result<StatisticsProfile, any Error>) -> Void) {
         let request = StatisticsProfileRequest()
-        networkClient.send(request: request, type: StatisticsProfile.self) { [weak storage] result in
+        networkClient.send(request: request, type: StatisticsProfile.self) {result in
             switch result {
             case .success(let profile):
                 completion(.success(profile))
@@ -59,7 +58,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
         let param = likes.isEmpty ? "null" : likes.joined(separator: ",")
         let dto = StatisticsProfileDtoObject(param1: param)
         let request = StatisticsProfilePutRequest(dto: dto)
-        networkClient.send(request: request, type: StatisticsProfile.self) { [weak storage] result in
+        networkClient.send(request: request, type: StatisticsProfile.self) {result in
             switch result {
             case .success(let profile):
                 completion(.success(profile))
@@ -71,7 +70,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
     }
     func getOrders(completion: @escaping (Result<StatisticsOrder, any Error>) -> Void) {
         let request = StatisticsOrderRequest()
-        networkClient.send(request: request, type: StatisticsOrder.self) { [weak storage] result in
+        networkClient.send(request: request, type: StatisticsOrder.self) {result in
             switch result {
             case .success(let order):
                 completion(.success(order))
@@ -85,7 +84,7 @@ final class StatisticsUsersServiceImpl: StatisticsUsersService {
         let param = order.isEmpty ? "null" : order.joined(separator: ", ")
         let dto = StatisticsOrderDtoObject(param1: param)
         let request = StatisticsOrderPutRequest(dto: dto)
-        networkClient.send(request: request, type: StatisticsOrder.self) { [weak self] result in
+        networkClient.send(request: request, type: StatisticsOrder.self) {result in
             switch result {
             case .success(let order):
                 completion(.success(order))

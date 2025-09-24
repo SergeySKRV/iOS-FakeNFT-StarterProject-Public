@@ -1,5 +1,5 @@
-import UIKit
 import Kingfisher
+import UIKit
 
 final class StatisticsCollectionViewCell: UICollectionViewCell {
     var presenter: StatisticsCollectionPresenter?
@@ -48,7 +48,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
     // MARK: - public methods
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureView()
+       configureView()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -60,27 +60,33 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
-            nftImageView.heightAnchor.constraint(equalToConstant: 108)])
+            nftImageView.heightAnchor.constraint(equalToConstant: 108)
+        ])
         contentView.addSubview(likeButton)
         NSLayoutConstraint.activate([
             likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12),
-            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12)])
+            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12)
+        ])
         contentView.addSubview(ratingImage)
         NSLayoutConstraint.activate([
             ratingImage.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
-            ratingImage.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 8)])
+            ratingImage.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 8)
+        ])
         contentView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: ratingImage.leadingAnchor),
-            nameLabel.topAnchor.constraint(equalTo: ratingImage.bottomAnchor, constant: 5)])
+            nameLabel.topAnchor.constraint(equalTo: ratingImage.bottomAnchor, constant: 5)
+        ])
         contentView.addSubview(priceLabel)
         NSLayoutConstraint.activate([
             priceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            priceLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4)])
+            priceLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4)
+        ])
         contentView.addSubview(cartButton)
         NSLayoutConstraint.activate([
             cartButton.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 40),
-            cartButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)])
+            cartButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
+        ])
     }
     func configureCellData() {
         guard let nftCard = nftCard else { return }

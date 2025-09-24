@@ -91,6 +91,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         collectionView?.showLoadIndicator()
         catalogService.putProfile(id: nfts[indexPath.row].id, completion: { [weak self] result in
             guard let self else { return }
+            print(result)
             switch result {
             case .success(let profile):
                 self.profile = profile

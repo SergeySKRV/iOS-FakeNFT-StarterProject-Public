@@ -11,8 +11,5 @@ struct StatisticsOrderPutRequest: StatisticsNetworkRequest {
 struct StatisticsOrderDtoObject: StatisticsDto {
     let param1: String
     func asDictionary() -> [String: String] {
-        [
-            "nfts": param1
-        ]
-    }
+                        ["nfts": param1] }
 }

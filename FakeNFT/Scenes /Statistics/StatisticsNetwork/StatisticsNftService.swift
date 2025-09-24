@@ -7,7 +7,6 @@ protocol StatisticsNftService {
 }
 
 final class StatisticsNftServiceImpl: StatisticsNftService {
-    
     private let networkClient: StatisticsNetworkClient
     private let storage: StatisticsNftStorage
 
