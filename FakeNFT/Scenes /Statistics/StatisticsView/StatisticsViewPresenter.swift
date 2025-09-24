@@ -38,6 +38,7 @@ final class StatisticsViewPresenter {
         default: currentSortMode = .nft
         }
         state = .loading
+        view?.setupNavigationBar()
     }
     func showProfile(indexPath: IndexPath) {
         let profileViewController = StatisticsProfileViewController(profile: statisticsViewModel[indexPath.row])
