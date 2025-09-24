@@ -28,6 +28,7 @@ final class StatisticsProfileTableViewCell: UITableViewCell {
     }
     // MARK: - private methods
     private func configureCell() {
+        contentView.backgroundColor = .yaSecondary
         selectionStyle = .none
         contentView.addSubview(collectionLabel)
         collectionLabel.textColor = nftCount ?? 0 > 0 ? UIColor.yaPrimary : UIColor.yaLightGray
