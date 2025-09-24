@@ -48,16 +48,6 @@ final class ProfileViewController: UIViewController {
         return label
     }()
 
-    private lazy var editButton: UIButton = {
-        let button = UIButton(type: .custom)
-        let image = UIImage(resource: .edit).withRenderingMode(.alwaysTemplate)
-        button.setImage(image, for: .normal)
-        button.tintColor = .yaPrimary
-        button.addTarget(self, action: #selector(editProfileTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,22 +63,21 @@ final class ProfileViewController: UIViewController {
     var servicesAssembly: ServicesAssembly!
     private var presenter: ProfilePresenterProtocol!
 
-    // MARK: - Init
     init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
-        super.init(nibName: nil, bundle: nil)
-    }
+           self.servicesAssembly = servicesAssembly
+           super.init(nibName: nil, bundle: nil)
+       }
 
-    required init?(coder: NSCoder) {
-        assertionFailure("init(coder:) has not been implemented")
-        return nil
-    }
+       required init?(coder: NSCoder) {
+           super.init(coder: coder)
+       }
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
+        setupNavigationBar()
         setupPresenter()
         presenter.viewDidLoad()
     }
@@ -108,7 +97,6 @@ final class ProfileViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(websiteLabel)
-        view.addSubview(editButton)
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
@@ -129,16 +117,22 @@ final class ProfileViewController: UIViewController {
             websiteLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
             websiteLabel.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor),
 
-            editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
-            editButton.widthAnchor.constraint(equalToConstant: 42),
-            editButton.heightAnchor.constraint(equalToConstant: 42),
-
             tableView.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor, constant: 40),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+
+    private func setupNavigationBar() {
+        let editButton = UIBarButtonItem(
+            image: UIImage(resource: .edit).withRenderingMode(.alwaysTemplate),
+            style: .plain,
+            target: self,
+            action: #selector(editProfileTapped)
+        )
+        editButton.tintColor = .yaPrimary
+        navigationItem.rightBarButtonItem = editButton
     }
 
     private func setupPresenter() {
@@ -166,7 +160,6 @@ final class ProfileViewController: UIViewController {
         nameLabel.isHidden = true
         descriptionLabel.isHidden = true
         websiteLabel.isHidden = true
-        editButton.isHidden = true
         tableView.isHidden = true
 
         ProgressHUD.show()
@@ -179,16 +172,13 @@ final class ProfileViewController: UIViewController {
         nameLabel.isHidden = false
         descriptionLabel.isHidden = false
         websiteLabel.isHidden = false
-        editButton.isHidden = false
         tableView.isHidden = false
     }
 }
 
 // MARK: - TableView DataSource and Delegate
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
+    func numberOfSections(in tableView: UITableView) -> Int { 1 }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.tableView(tableView, numberOfRowsInSection: section)
@@ -241,7 +231,6 @@ extension ProfileViewController: ProfilePresenterOutput {
         }
     }
 
-
     func showWebViewController(urlString: String) {
         let webViewController = WebViewController(urlString: urlString)
         let navigationController = UINavigationController(rootViewController: webViewController)
@@ -274,13 +263,8 @@ extension ProfileViewController: ProfilePresenterOutput {
         present(alert, animated: true)
     }
 
-    func showLoading() {
-        showLoadingState()
-    }
-
-    func hideLoading() {
-        hideLoadingState()
-    }
+    func showLoading() { showLoadingState() }
+    func hideLoading() { hideLoadingState() }
 }
 
 // MARK: - EditProfileViewControllerDelegate
