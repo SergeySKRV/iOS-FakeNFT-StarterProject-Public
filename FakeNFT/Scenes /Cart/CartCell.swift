@@ -124,7 +124,7 @@ final class CartCell: UITableViewCell {
     }
     
     func configure(with item: CartItem) {
-        nameLabel.text = item.name
+        nameLabel.text = item.name.components(separatedBy: " ")[0]
         priceLabel.text = String(format: "%.2f \(item.currency)", item.price)
         ratingView.setRating(item.rating)
         
@@ -134,7 +134,6 @@ final class CartCell: UITableViewCell {
         currentImageUrl = item.image
         nftImageView.kf.setImage(with: URL(string: item.image), placeholder: UIImage(resource: .avatarStub))
         nftImageView.kf.indicatorType = .activity
-        //loadImage(from: item.image)
     }
     
     func getNFTImage() -> UIImage? {
