@@ -38,6 +38,7 @@ final class StatisticsViewPresenter {
         default: currentSortMode = .nft
         }
         state = .loading
+        view?.setupNavigationBar()
     }
     func showProfile(indexPath: IndexPath) {
         let profileViewController = StatisticsProfileViewController(profile: statisticsViewModel[indexPath.row])
@@ -85,13 +86,13 @@ final class StatisticsViewPresenter {
     private func convertStoreToViewModel(_ store: [StatisticsUser]) -> [StatisticsProfileModel] {
         var result: [StatisticsProfileModel] = []
         guard let users = storage.getUsers() else {return []}
+    
         for user in users {
-            guard let name = user.name else { break }
-            guard let nfts = user.nfts,
-                  let avatar = user.avatar,
-                  let rating = user.rating,
-                  let description = user.description
-            else { continue }
+            let name = user.name ?? "John Doe"
+            let nfts = user.nfts ?? []
+            let avatar = user.avatar ?? ""
+            let rating = Double(user.rating ?? "0.0") ?? 0.0
+            let description = user.description ?? ""
             let vmUser = StatisticsProfileModel(avatarImage: avatar,
                                                 description: description,
                                                 name: name,

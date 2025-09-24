@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ImageLoaderService {
+protocol ProfileImageLoaderService {
     /// Загружает изображение по URL-строке.
     /// - Parameters:
     ///   - urlString: Строка с URL.
@@ -15,7 +15,7 @@ protocol ImageLoaderService {
     func loadImage(from urlString: String?, completion: @escaping (UIImage?) -> Void)
 }
 
-final class ImageLoaderServiceImpl: ImageLoaderService {
+final class ImageLoaderServiceImpl: ProfileImageLoaderService {
     private let cache = NSCache<NSString, UIImage>()
 
     func loadImage(from urlString: String?, completion: @escaping (UIImage?) -> Void) {

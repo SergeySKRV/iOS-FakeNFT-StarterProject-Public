@@ -9,12 +9,6 @@ protocol StatisticsView: AnyObject, ErrorView {
 final class StatisticsViewController: UIViewController, StatisticsView {
     // MARK: - private properties
     private let presenter = StatisticsViewPresenter.shared
-    private let sortButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(resource: .sortIcon), for: .normal)
-        button.addTarget(self, action: #selector(filtersButtonTouch), for: .touchUpInside) 
-        return button
-    }()
     private let statisticsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.contentMode = .scaleToFill
@@ -34,6 +28,16 @@ final class StatisticsViewController: UIViewController, StatisticsView {
         configureView()
         showStatistics()
     }
+    func setupNavigationBar() {
+        let forwardButton = UIBarButtonItem(
+            image: UIImage(resource: .sort),
+            style: .plain,
+            target: self,
+            action: #selector(filtersButtonTouch)
+        )
+        forwardButton.tintColor = UIColor.yaPrimary
+        navigationItem.rightBarButtonItem  = forwardButton
+    }
     func showStatistics() {
         statisticsTableView.reloadData()
     }
@@ -45,18 +49,10 @@ final class StatisticsViewController: UIViewController, StatisticsView {
     }
     // MARK: - private methods
     private func configureView() {
-        view.addSubview(sortButton)
-        sortButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
-            sortButton.widthAnchor.constraint(equalToConstant: 42),
-            sortButton.heightAnchor.constraint(equalToConstant: 42)
-        ])
         view.addSubview(statisticsTableView)
         statisticsTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            statisticsTableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 16),
+            statisticsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             statisticsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             statisticsTableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             statisticsTableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -32)

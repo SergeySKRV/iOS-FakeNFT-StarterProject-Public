@@ -7,7 +7,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     private weak var view: ProfilePresenterOutput?
     private let userService: UserProfileService
     private let servicesAssembly: ServicesAssembly
-    private let imageLoader: ImageLoaderService
+    private let imageLoader: ProfileImageLoaderService
 
     // MARK: - State
     private var userProfile: UserProfile?

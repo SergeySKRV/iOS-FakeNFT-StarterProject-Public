@@ -33,7 +33,7 @@ final class TabBarController: UITabBarController {
     private func setupViewControllers() {
         // Catalog зависимости
         let networkClient = DefaultNetworkClient()
-        let catalogStorage = CatalogStorage()
+        /*let catalogStorage = CatalogStorage()
         let catalogService = CatalogService(
             networkClient: networkClient,
             catalogStorage: catalogStorage
@@ -43,7 +43,7 @@ final class TabBarController: UITabBarController {
             catalogService: catalogService,
             sortStorage: sortStorage
         )
-
+*/
         // Профиль
         let profileController = ProfileViewController(servicesAssembly: servicesAssembly)
         let profileNav = UINavigationController(rootViewController: profileController)
@@ -54,16 +54,16 @@ final class TabBarController: UITabBarController {
         )
 
         // Каталог
-        let catalogController = CatalogViewController(presenter: catalogPresenter)
+        /* let catalogController = CatalogViewController(presenter: catalogPresenter)
         let catalogNav = UINavigationController(rootViewController: catalogController)
         catalogNav.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Tab.catalog", comment: ""),
             image: UIImage(resource: .catalogIcon),
             tag: 1
-        )
+        )*/
 
         // Корзина
-        let cartService = CartService()
+        let cartService = CartService(networkClient: StatisticsDefaultNetworkClient())
         let cartController = CartViewController()
         let cartPresenter = CartPresenter(
             view: cartController,
@@ -87,7 +87,7 @@ final class TabBarController: UITabBarController {
         )
 
         // Устанавливаем контроллеры*/
-        viewControllers = [profileNav, catalogNav, cartNav, statisticsNav]
+        viewControllers = [profileNav, /*catalogNav, */ cartNav, statisticsNav]
     }
 
     private func setupUI() {
