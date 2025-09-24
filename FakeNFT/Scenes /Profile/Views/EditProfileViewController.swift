@@ -38,16 +38,23 @@ final class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupNavigationBar()
         setupPresenter()
         presenter.viewDidLoad()
         addDismissKeyboardGesture()
+        observeTextFieldsForChanges()
     }
+
 
     // MARK: - Private Methods
     private func setupUI() {
         view.backgroundColor = .yaSecondary
+        addSubviews()
         setupConstraints()
+
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
+
 
     private func setupPresenter() {
         guard let servicesAssembly = self.servicesAssembly,
@@ -61,6 +68,14 @@ final class EditProfileViewController: UIViewController {
             userProfile: userProfile,
             userService: userService
         )
+    }
+
+    private func closeScreen() {
+        if let nav = navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 
     private func addDismissKeyboardGesture() {
@@ -128,7 +143,11 @@ final class EditProfileViewController: UIViewController {
     // MARK: - Actions
     @objc
     func backButtonTapped() {
-        presenter.backButtonTapped()
+        if hasChanges {
+            showExitConfirmationAlert()
+        } else {
+            closeScreen()
+        }
     }
 
     @objc
@@ -198,27 +217,104 @@ extension EditProfileViewController: EditProfilePresenterOutput {
             message: nil,
             preferredStyle: .alert
         )
+
         alertController.addAction(UIAlertAction(
             title: NSLocalizedString("EditProfile.cancel", comment: ""),
             style: .cancel,
             handler: nil
         ))
+
         alertController.addAction(UIAlertAction(
             title: NSLocalizedString("EditProfile.exitButton", comment: ""),
             style: .default,
             handler: { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.closeScreen()
             }
+        ))
+
+        present(alertController, animated: true)
+    }
+
+    func showPhotoOptionsAlert() {
+        let alertController = UIAlertController(
+            title: NSLocalizedString("EditProfile.photoTitle", comment: ""),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("EditProfile.photoChange", comment: ""),
+            style: .default,
+            handler: { [weak self] _ in
+                self?.showPhotoURLAlert()
+            }
+        ))
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("EditProfile.photoDelete", comment: ""),
+            style: .destructive,
+            handler: { [weak self] _ in
+                self?.profileImageView.image = UIImage(resource: .placeholderAvatar)
+                self?.avatarURLString = nil
+                self?.presenter.photoDeleted()
+            }
+        ))
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("EditProfile.photoCancel", comment: ""),
+            style: .cancel,
+            handler: nil
         ))
         present(alertController, animated: true)
     }
 
-    func showPhotoOptionsAlert() { /* твой код */ }
-    func showPhotoURLAlert() { /* твой код */ }
+    func showPhotoURLAlert() {
+            let alertController = UIAlertController(
+                title: NSLocalizedString("EditProfile.photoUrlTitle", comment: ""),
+                message: nil,
+                preferredStyle: .alert
+            )
+            alertController.addTextField { textField in
+                textField.placeholder = NSLocalizedString("EditProfile.photoUrlPlaceholder", comment: "")
+                textField.autocapitalizationType = .none
+                textField.autocorrectionType = .no
+                textField.spellCheckingType = .no
+            }
+            alertController.addAction(UIAlertAction(
+                title: NSLocalizedString("EditProfile.photoCancel", comment: ""),
+                style: .cancel,
+                handler: nil
+            ))
+            alertController.addAction(UIAlertAction(
+                title: NSLocalizedString("EditProfile.save", comment: ""),
+                style: .default,
+                handler: { [weak self] _ in
+                    if let textField = alertController.textFields?.first,
+                       let urlString = textField.text,
+                       let url = URL(string: urlString) {
+                        self?.loadImageFromURL(url) { [weak self] image in
+                            DispatchQueue.main.async {
+                                if let loadedImage = image {
+                                    self?.profileImageView.image = loadedImage
+                                    self?.avatarURLString = urlString
+                                    self?.presenter.photoURLChanged(url)
+                                }
+                            }
+                        }
+                    }
+                }
+            ))
+            present(alertController, animated: true)
+        }
 
     func showLoader() { ProgressHUD.show() }
     func hideLoader() { ProgressHUD.dismiss() }
-    func dismissViewController() { dismiss(animated: true) }
+
+    func dismissViewController() {
+        if let nav = navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
+    }
+
 
     func showAlert(title: String, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

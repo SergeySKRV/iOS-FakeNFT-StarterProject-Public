@@ -122,7 +122,13 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         self.currentNFTId = nft.id
 
         nftImageView.kf.setImage(with: nft.imageUrl)
-        nameLabel.text = nft.name
+
+        if let firstWord = nft.name.split(separator: " ").first {
+            nameLabel.text = String(firstWord)
+        } else {
+            nameLabel.text = nft.name
+        }
+
         setupRatingStars(rating: nft.rating)
         authorLabel.text = nft.author
         priceLabel.text = nft.price

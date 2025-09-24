@@ -153,10 +153,12 @@ extension FavoriteNFTViewController: FavoriteNFTViewProtocol {
 
     func showLoading() {
         activityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
     }
 
     func hideLoading() {
         activityIndicator.stopAnimating()
+        view.isUserInteractionEnabled = true
     }
 
     func showError(_ error: Error) {
@@ -170,7 +172,7 @@ extension FavoriteNFTViewController: FavoriteNFTViewProtocol {
     }
 
     func showNFTDetails(_ viewController: UIViewController) {
-        navigationController?.pushViewController(viewController, animated: true)
+        present(viewController, animated: true)
     }
 }
 

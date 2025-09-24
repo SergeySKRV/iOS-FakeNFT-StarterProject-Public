@@ -16,6 +16,7 @@ extension EditProfileViewController {
         imageView.layer.cornerRadius = 35
         imageView.clipsToBounds = true
         imageView.image = UIImage(resource: .placeholderAvatar)
+        imageView.isUserInteractionEnabled = true
         return imageView
     }
 

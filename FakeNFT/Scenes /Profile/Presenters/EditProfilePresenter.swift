@@ -62,25 +62,22 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
             likes: currentUser.likes
         )
 
+        view?.showLoader()
+
         userService.updateUserProfile(updatedProfile) { [weak self] result in
-            switch result {
-            case .success:
-                DispatchQueue.main.async {
-                    self?.view?.showLoader()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        self?.view?.hideLoader()
-                        self?.userProfile = updatedProfile
-                        self?.view?.dismissViewController()
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.view?.hideLoader()
+            DispatchQueue.main.async {
+                self?.view?.hideLoader()
+                switch result {
+                case .success:
+                    self?.userProfile = updatedProfile
+                    self?.view?.dismissViewController()
+                case .failure(let error):
                     self?.view?.showAlert(title: "Ошибка", message: "Не удалось сохранить профиль: \(error.localizedDescription)")
                 }
             }
         }
     }
+
 
     func cameraButtonTapped() {
         view?.showPhotoOptionsAlert()

@@ -107,6 +107,7 @@ final class ProfileViewController: UIViewController {
 
             nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 20),
+                nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 
             descriptionLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 30),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -242,6 +243,7 @@ extension ProfileViewController: ProfilePresenterOutput {
         let editController = EditProfileViewController(userProfile: profile)
         editController.servicesAssembly = self.servicesAssembly
         editController.delegate = self
+        editController.hidesBottomBarWhenPushed = true
         if let navController = self.navigationController {
             navController.pushViewController(editController, animated: true)
         } else {
@@ -250,6 +252,7 @@ extension ProfileViewController: ProfilePresenterOutput {
             self.present(navController, animated: true)
         }
     }
+
 
     func showError(_ error: Error) {
         hideLoadingState()

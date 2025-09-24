@@ -211,10 +211,12 @@ extension MyNFTViewController: MyNFTViewProtocol {
 
     func showLoading() {
         activityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
     }
 
     func hideLoading() {
         activityIndicator.stopAnimating()
+        view.isUserInteractionEnabled = true
     }
 
     func showError(_ error: Error) {
