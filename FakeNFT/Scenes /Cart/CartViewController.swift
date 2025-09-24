@@ -255,6 +255,7 @@ extension CartViewController: CartViewProtocol {
         tableView.isHidden = true
         totalView.isHidden = true
         emptyStateLabel.isHidden = false
+        navigationItem.rightBarButtonItem = nil
         
         clearCache()
     }
@@ -268,6 +269,9 @@ extension CartViewController: CartViewProtocol {
             tableView.isHidden = false
             totalView.isHidden = false
             emptyStateLabel.isHidden = true
+            
+            navigationItem.rightBarButtonItem = filterButton
+            
             tableView.reloadData()
         }
         
