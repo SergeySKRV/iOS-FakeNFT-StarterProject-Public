@@ -24,42 +24,41 @@ final class CatalogStorage: CatalogStorageProtocol {
     var orders: Set<String> = []
     var orderId: String?
     
-    // MARK: - Private Properties
-    private let syncQueue = DispatchQueue(label: "sync-nft-queue")
-    
     // MARK: - Public Methods
     func saveNft(_ nft: String) {
-        syncQueue.async { [weak self] in
-            self?.likes.insert(nft)
-        }
+        likes.insert(nft)
+    }
+    
+    func removeNft(_ nft: String) {
+        likes.remove(nft)
+    }
+    
+    func clearLikes() {
+        likes.removeAll()
     }
     
     func getNft(with id: String) -> String? {
-        syncQueue.sync {
-            likes.first(where: { $0 == id })
-        }
+        likes.first(where: { $0 == id })
     }
     
     func saveOrderId(orderId: String) {
-        syncQueue.async { [weak self] in
-            self?.orderId = orderId
-        }
+        self.orderId = orderId
     }
     
     func saveOrders(_ nft: String) {
-        syncQueue.async { [weak self] in
-            self?.orders.insert(nft)
-        }
+        orders.insert(nft)
+    }
+    
+    func removeOrder(_ nft: String) {
+        orders.remove(nft)
+    }
+    
+    func clearOrders() {
+        orders.removeAll()
     }
     
     func findInOrders(_ nft: String) -> Bool {
         orders.contains(nft)
-    }
-    
-    func setOrders(_ nfts: Set<String>) {
-        syncQueue.async { [weak self] in
-                self?.orders = nfts
-        }
     }
 }
 

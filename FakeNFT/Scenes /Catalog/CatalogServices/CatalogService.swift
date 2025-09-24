@@ -101,27 +101,22 @@ final class CatalogService: CatalogServiceProtocol {
     }
     
     func putProfile(id: String, completion: @escaping (Result<ProfileResult, Error>) -> Void) {
-        var likes = catalogStorage.likes
-        if let _ = catalogStorage.getNft(with: id) {
-            likes.remove(id)
-        } else {
-            likes.insert(id)
-        }
-        let request = ProfilePutRequest(likes: likes)
+        let shouldAddLike = !catalogStorage.likes.contains(id)
+        
+        let newLikes = shouldAddLike ?
+        catalogStorage.likes.union([id]) :
+        catalogStorage.likes.subtracting([id])
+        
+        let request = ProfilePutRequest(likes: newLikes)
+        
         networkClient.send(request: request, type: ProfileResult.self) { [weak self] result in
-            switch result {
-            case .success(let profile):
-                self?.catalogStorage.likes.removeAll()
-                if !profile.likes.isEmpty {
-                    profile.likes.forEach {
-                        self?.catalogStorage.saveNft($0)
-                    }
-                }
-                completion(.success(profile))
-            case .failure(let error):
-                if let networkError = error as? NetworkClientError {
-                    completion(.failure(networkError))
-                } else {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let profile):
+                    self?.catalogStorage.likes = Set(profile.likes)
+                    completion(.success(profile))
+                    
+                case .failure(let error):
                     completion(.failure(error))
                 }
             }
@@ -155,28 +150,23 @@ final class CatalogService: CatalogServiceProtocol {
     }
     
     func putOrders(id: String, completion: @escaping (Result<OrdersResult, Error>) -> Void) {
-        var orders = catalogStorage.orders
-        if catalogStorage.findInOrders(id) {
-            orders.remove(id)
+        var newOrders = catalogStorage.orders
+        
+        if newOrders.contains(id) {
+            newOrders.remove(id)
         } else {
-            orders.insert(id)
+            newOrders.insert(id)
         }
-        let request = OrdersPutRequest(id: catalogStorage.orderId ?? "", orders: orders)
+        let request = OrdersPutRequest(orders: newOrders)
+        
         networkClient.send(request: request, type: OrdersResult.self) { [weak self] result in
-            switch result {
-            case .success(let orders):
-                self?.catalogStorage.saveOrderId(orderId: orders.id)
-                self?.catalogStorage.orders.removeAll()
-                if !orders.nfts.isEmpty{
-                    orders.nfts.forEach{
-                        self?.catalogStorage.saveOrders($0)
-                    }
-                }
-                completion(.success(orders))
-            case .failure(let error):
-                if let networkError = error as? NetworkClientError {
-                    completion(.failure(networkError))
-                } else {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let orders):
+                    self?.catalogStorage.orders = Set(orders.nfts)
+                    completion(.success(orders))
+                    
+                case .failure(let error):
                     completion(.failure(error))
                 }
             }
@@ -187,3 +177,4 @@ final class CatalogService: CatalogServiceProtocol {
         catalogStorage.findInOrders(id)
     }
 }
+

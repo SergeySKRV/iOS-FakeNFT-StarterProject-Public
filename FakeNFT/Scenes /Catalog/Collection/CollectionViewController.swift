@@ -17,8 +17,8 @@ protocol CollectionViewControllerProtocol: AnyObject, AlertCatalogView {
 
 final class CollectionViewController: UIViewController {
     // MARK: - Public Properties
-    private var presenter: CollectionPresenterProtocol!
-
+    private var presenter: CollectionPresenterProtocol
+    
     // MARK: - Private Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()

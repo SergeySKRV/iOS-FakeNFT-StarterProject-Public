@@ -10,38 +10,39 @@ import Foundation
 struct ProfilePutRequest: NetworkRequest {
     // MARK: - Public Properties
     let httpMethod: HttpMethod = .put
-
-    var dto: Encodable?
-    var likes: Set<String>
-    var body: Data? {
-        return likesToString().data(using: .utf8)
-    }
-
+    let likes: Set<String>
+    
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/profile/1")
     }
     
+    var body: RequestBodyConvertible? {
+        ProfileRequestBody(likes: likes)
+    }
+    
     // MARK: - Initializers
-    init(dto: Encodable? = nil, likes: Set<String>) {
-        self.dto = dto
+    init(likes: Set<String>) {
         self.likes = likes
     }
+}
 
-    // MARK: - Public Methods
-    func likesToString()->String{
-        var likeString = "likes="
-
+struct ProfileRequestBody: RequestBodyConvertible {
+    let likes: Set<String>
+    
+    func asDictionary() -> [String: String] {
         if likes.isEmpty {
-            likeString = ""
+            return ["likes": "null"]
         } else {
-            for (index , like) in likes.enumerated() {
-                likeString += like
-                if index != likes.count - 1 {
-                    likeString += "&likes="
-                }
-            }
+            return ["likes": likes.joined(separator: ",")]
         }
-        return likeString
+    }
+    
+    func asJSONData() -> Data? {
+        return nil
+    }
+    
+    var contentType: String {
+        return "application/x-www-form-urlencoded"
     }
 }
 

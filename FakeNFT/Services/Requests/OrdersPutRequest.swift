@@ -8,39 +8,38 @@
 import Foundation
 
 struct OrdersPutRequest: NetworkRequest {
-    // MARK: - Public Properties
     let httpMethod: HttpMethod = .put
+    let orders: Set<String>
     
-    var id: String
-    var orders: Set<String>
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1")
     }
-    var body: Data? {
-        return ordersToString().data(using: .utf8)
+    
+    var body: RequestBodyConvertible? {
+        OrdersRequestBody(orders: orders)
     }
     
-    // MARK: - Initializers
-    init(id: String, orders: Set<String>) {
+    init(orders: Set<String>) {
         self.orders = orders
-        self.id = id
+    }
+}
+
+struct OrdersRequestBody: RequestBodyConvertible {
+    let orders: Set<String>
+    
+    func asDictionary() -> [String: String] {
+        if orders.isEmpty {
+            return ["nfts": "null"]
+        } else {
+            return ["nfts": orders.joined(separator: ",")]
+        }
     }
     
-    // MARK: - Public Methods
-    func ordersToString() -> String {
-        var ordersString = "nfts="
-        
-        if orders.isEmpty {
-            ordersString += ""
-        } else {
-            for (index , order) in orders.enumerated() {
-                ordersString += order
-                if index != orders.count - 1 {
-                    ordersString += "&nfts="
-                }
-            }
-        }
-        ordersString += "&id=\(id)"
-        return ordersString
+    func asJSONData() -> Data? {
+        return nil
+    }
+    
+    var contentType: String {
+        return "application/x-www-form-urlencoded"
     }
 }
