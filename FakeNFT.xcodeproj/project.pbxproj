@@ -42,7 +42,7 @@
 		4A55E2C52E828DF000D87D4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A55E2C42E828DF000D87D4A /* LaunchScreen.storyboard */; };
 		4AC1E59E2E808AEB0015BD68 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC1E59D2E808AEB0015BD68 /* SF-Pro-Text-Regular.otf */; };
 		4AC1E59F2E808AEB0015BD68 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC1E59C2E808AEB0015BD68 /* SF-Pro-Text-Bold.otf */; };
-		4AE8C0112E8336E0008EEDED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AE8C0102E8336E0008EEDED /* Main.storyboard */; };
+		4ACD43552E8471A0003B583F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4ACD43542E8471A0003B583F /* Main.storyboard */; };
 		558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558E39E62C68CE0900FB86AC /* NftService.swift */; };
 		9021BE802E634BEC00BA000C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9021BE7F2E634BEC00BA000C /* UserProfile.swift */; };
 		9021BE962E66003000BA000C /* UserProfileServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9021BE952E66003000BA000C /* UserProfileServiceImpl.swift */; };
@@ -116,7 +116,7 @@
 		4A654C9F2E833458000C66AA /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		4AC1E59C2E808AEB0015BD68 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		4AC1E59D2E808AEB0015BD68 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
-		4AE8C0102E8336E0008EEDED /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		4ACD43542E8471A0003B583F /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		558E39E62C68CE0900FB86AC /* NftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftService.swift; sourceTree = "<group>"; };
 		9021BE7F2E634BEC00BA000C /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		9021BE952E66003000BA000C /* UserProfileServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileServiceImpl.swift; sourceTree = "<group>"; };
@@ -428,7 +428,7 @@
 		E1CD40DA2A96BE9B00BE7FE8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4AE8C0102E8336E0008EEDED /* Main.storyboard */,
+				4ACD43542E8471A0003B583F /* Main.storyboard */,
 				4A654C9F2E833458000C66AA /* Untitled.swift */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				4A55E2C42E828DF000D87D4A /* LaunchScreen.storyboard */,
@@ -566,7 +566,7 @@
 				4AC1E59F2E808AEB0015BD68 /* SF-Pro-Text-Bold.otf in Resources */,
 				4AC1E59E2E808AEB0015BD68 /* SF-Pro-Text-Regular.otf in Resources */,
 				4A55E2C52E828DF000D87D4A /* LaunchScreen.storyboard in Resources */,
-				4AE8C0112E8336E0008EEDED /* Main.storyboard in Resources */,
+				4ACD43552E8471A0003B583F /* Main.storyboard in Resources */,
 				9052C6532E68946600730416 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 			);
