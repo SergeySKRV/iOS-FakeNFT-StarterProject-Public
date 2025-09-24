@@ -168,7 +168,7 @@
 		27CBAE032E62AEDB00428248 /* UIBlockingProgressHUD */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UIBlockingProgressHUD; sourceTree = "<group>"; };
 		27CBAE082E62AFEF00428248 /* Cart */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cart; sourceTree = "<group>"; };
 		27CBAE092E62B00D00428248 /* Profile */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Profile; sourceTree = "<group>"; };
-		27CBAE0A2E62B01B00428248 /* Statistic */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Statistic; sourceTree = "<group>"; };
+		27CBAE0A2E62B01B00428248 /* Statistics */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Statistics; sourceTree = "<group>"; };
 		27CBAE112E62B13A00428248 /* CatalogServices */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CatalogServices; sourceTree = "<group>"; };
 		27CBAF1E2E64000100428248 /* CatalogModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CatalogModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -346,7 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				278365542E83454B00A11759 /* Onboarding */,
-				27CBAE0A2E62B01B00428248 /* Statistic */,
+				27CBAE0A2E62B01B00428248 /* Statistics */,
 				27CBAE092E62B00D00428248 /* Profile */,
 				27CBAE082E62AFEF00428248 /* Cart */,
 				E1A1B9D82AA01C9700C3AFBC /* TabBarController */,
@@ -481,7 +481,7 @@
 				27CBAE032E62AEDB00428248 /* UIBlockingProgressHUD */,
 				27CBAE082E62AFEF00428248 /* Cart */,
 				27CBAE092E62B00D00428248 /* Profile */,
-				27CBAE0A2E62B01B00428248 /* Statistic */,
+				27CBAE0A2E62B01B00428248 /* Statistics */,
 				27CBAE112E62B13A00428248 /* CatalogServices */,
 				27CBAF1E2E64000100428248 /* CatalogModel */,
 			);
@@ -863,7 +863,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -891,7 +891,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
