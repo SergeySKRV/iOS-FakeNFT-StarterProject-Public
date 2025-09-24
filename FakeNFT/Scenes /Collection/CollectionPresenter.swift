@@ -30,7 +30,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     var authorURL: String?
     var profile: ProfileResult?
     weak var collectionView: CollectionViewControllerProtocol?
-    private weak var view: CatalogProfilePresenterOutput? // webview
+    private weak var view: ProfilePresenterOutput? // webview
     // MARK: - Private Properties
     private let catalogService: CatalogServiceProtocol
     
@@ -41,7 +41,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
     }
     
     // Метод для установки view после инициализации
-    func setProfilePresenterOutput(_ output: CatalogProfilePresenterOutput) {
+    func setProfilePresenterOutput(_ output: ProfilePresenterOutput) {
         self.view = output
     }
     

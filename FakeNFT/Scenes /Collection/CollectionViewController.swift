@@ -48,7 +48,7 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionName: UILabel = {
         let label = UILabel()
-        label.font = Fonts.sfProBold17
+        label.font = .headline3
         label.textColor = .textPrimary
         label.numberOfLines = .zero
         return label
@@ -57,7 +57,7 @@ final class CollectionViewController: UIViewController {
     private lazy var collectionAuthor: UILabel = {
         let label = UILabel()
         label.text = "Автор коллекции:"
-        label.font = Fonts.sfProRegular13
+        label.font = .caption2
         label.textColor = .textPrimary
         label.numberOfLines = .zero
         return label
@@ -65,7 +65,7 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionAuthorLink: UILabel = {
         let label = UILabel()
-        label.font = Fonts.sfProBold17
+        label.font = .caption1
         label.textColor = .yaBlueUniversal
         label.numberOfLines = .zero
         let gesture = UITapGestureRecognizer(
@@ -78,7 +78,7 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionDescription: UILabel = {
         let label = UILabel()
-        label.font = Fonts.sfProRegular13
+        label.font = .caption2
         label.textColor = .textPrimary
         label.numberOfLines = .zero
         label.sizeToFit()
@@ -350,7 +350,7 @@ extension CollectionViewController: CollectionViewCellDelegate {
 }
 
 // MARK: - ShowWebView это для вызова веб вью
-extension CollectionViewController: CatalogProfilePresenterOutput {
+extension CollectionViewController: ProfilePresenterOutput {
     
     func showWebViewController(urlString: String) {
         let webViewController = WebViewController(urlString: urlString)

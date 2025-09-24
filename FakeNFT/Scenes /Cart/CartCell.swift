@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class CartCell: UITableViewCell {
     static let reuseIdentifier = "CartCell"
@@ -25,8 +26,8 @@ final class CartCell: UITableViewCell {
         return label
     }()
     
-    private let ratingView: RatingView = {
-        let view = RatingView()
+    private let ratingView: CartRatingView = {
+        let view = CartRatingView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -131,7 +132,9 @@ final class CartCell: UITableViewCell {
         nftImageView.backgroundColor = .lightGray
         
         currentImageUrl = item.image
-        loadImage(from: item.image)
+        nftImageView.kf.setImage(with: URL(string: item.image), placeholder: UIImage(resource: .avatarStub))
+        nftImageView.kf.indicatorType = .activity
+        //loadImage(from: item.image)
     }
     
     func getNFTImage() -> UIImage? {

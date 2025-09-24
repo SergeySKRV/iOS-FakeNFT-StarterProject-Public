@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Presenter Output Contract - для вызова веб вью
-protocol CatalogProfilePresenterOutput: AnyObject {
+protocol ProfilePresenterOutput: AnyObject {
     func showWebViewController(urlString: String)
 }
 

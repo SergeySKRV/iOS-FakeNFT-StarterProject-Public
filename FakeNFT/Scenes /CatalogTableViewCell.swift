@@ -23,7 +23,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var catalogLabel: UILabel = {
         let label = UILabel()
-        label.font = Fonts.sfProBold17
+        label.font = .bodyBold
         label.textColor = .textPrimary
         label.numberOfLines = .zero
         return label

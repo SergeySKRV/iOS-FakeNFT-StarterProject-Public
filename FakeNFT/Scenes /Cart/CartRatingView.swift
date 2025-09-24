@@ -1,6 +1,6 @@
 import UIKit
 
-final class RatingView: UIStackView {
+final class CartRatingView: UIStackView {
     private var starImageViews: [UIImageView] = []
     
     override init(frame: CGRect) {

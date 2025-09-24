@@ -51,7 +51,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private lazy var nftName: UILabel = {
         let label = UILabel()
-        label.font = Fonts.sfProBold17
+        label.font = .bodyBold
         label.textColor = .textPrimary
         label.numberOfLines = .zero
         return label
@@ -59,7 +59,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private lazy var nftPrice: UILabel = {
         let label = UILabel()
-        label.font = Fonts.sfProMedium10
+        label.font = .medium10
         label.textColor = .textPrimary
         label.numberOfLines = .zero
         return label
