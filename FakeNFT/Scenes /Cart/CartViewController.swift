@@ -263,20 +263,18 @@ extension CartViewController: CartViewProtocol {
         cartItems = items
         
         if items.isEmpty {
-            tableView.isHidden = true
-            totalView.isHidden = true
-            emptyStateLabel.isHidden = false
+            showEmptyState()
         } else {
             tableView.isHidden = false
             totalView.isHidden = false
             emptyStateLabel.isHidden = true
             tableView.reloadData()
-            updateTotalPrice()
         }
         
         let totalPrice = items.reduce(0) { $0 + $1.price }
         cacheCartData(count: items.count, price: totalPrice)
     }
+    
     
     func updateTotalPrice() {
         nftCountLabel.text = "\(cartItems.count) NFT"

@@ -35,8 +35,10 @@ final class CartPresenter: CartPresenterProtocol {
         guard index < cartItems.count else { return }
         let itemId = cartItems[index].id
         let itemToDelete = cartItems[index]
+        let currentItems = cartItems
         
         cartItems.remove(at: index)
+        
         view?.displayCartItems(cartItems)
         view?.updateTotalPrice()
         
@@ -44,13 +46,13 @@ final class CartPresenter: CartPresenterProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    if ((self?.cartItems.isEmpty) != nil) {
+                    if self?.cartItems.isEmpty == true {
                         self?.view?.showEmptyState()
                     }
                     
                 case .failure(let error):
-                    self?.cartItems.insert(itemToDelete, at: index)
-                    self?.view?.displayCartItems(self?.cartItems ?? [])
+                    self?.cartItems = currentItems
+                    self?.view?.displayCartItems(currentItems)
                     self?.view?.updateTotalPrice()
                     
                     self?.view?.showError(message: "Не удалось удалить элемент")
