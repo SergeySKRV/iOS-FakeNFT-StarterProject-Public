@@ -12,3 +12,5 @@ enum RequestConstants {
     /// Токен авторизации для доступа к API.
     static let token = "45c5b907-7b41-4702-bced-d61034c05bae"
 }
+
+
