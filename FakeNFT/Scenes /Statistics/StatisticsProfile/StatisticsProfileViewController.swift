@@ -44,6 +44,7 @@ final class StatisticsProfileViewController: UIViewController {
     }()
     private let collectionTableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .yaSecondary
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(StatisticsProfileTableViewCell.self,
                            forCellReuseIdentifier: "StatisticsProfileTableViewCell")
