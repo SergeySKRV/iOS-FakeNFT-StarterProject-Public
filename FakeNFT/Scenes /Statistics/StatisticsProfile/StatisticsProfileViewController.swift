@@ -124,18 +124,20 @@ final class StatisticsProfileViewController: UIViewController {
 // MARK: - extensions
 extension StatisticsProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = StatisticsProfileTableViewCell(style: .default,
+        let cell = StatisticsProfileTableViewCell(
+                                                  style: .default,
                                                   reuseIdentifier: "StatisticsProfileTableViewCell",
-                                                  nftCount: profile.nftCount)
+                                                  nftCount: profile.nftCount
+                                                 )
         return cell
     }
 }
 extension StatisticsProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if profile.nftCount>0 {
+        if profile.nftCount > 0 {
             presenter.showNFTCollection()
         }
     }

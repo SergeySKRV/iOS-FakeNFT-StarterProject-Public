@@ -17,7 +17,6 @@ protocol StatisticsDto {
     func asDictionary() -> [String: String]
 }
 
-// default values
 extension StatisticsNetworkRequest {
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }

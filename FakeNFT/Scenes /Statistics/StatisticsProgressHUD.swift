@@ -1,10 +1,9 @@
-import UIKit
 import ProgressHUD
+import UIKit
 
 final class StatisticsUIBlockingProgressHUD {
     // MARK: - private properties
     private static var window: UIWindow? {
-        // UIApplication.shared.windows.first
         return UIApplication
             .shared
             .connectedScenes

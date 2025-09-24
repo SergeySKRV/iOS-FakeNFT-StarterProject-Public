@@ -1,5 +1,5 @@
-import UIKit
 import Kingfisher
+import UIKit
 
 protocol StatisticsViewPresenterProtocol {
     func viewDidLoad()
@@ -73,7 +73,8 @@ final class StatisticsViewPresenter {
             case .success(let users):
                 for _ in users {
                     self?.statisticsViewModel = self?.convertStoreToViewModel(users).sorted {
-                        $0.nftCount > $1.nftCount} ?? []
+                        $0.nftCount > $1.nftCount
+                        } ?? []
                     self?.sortViewModel()
                 }
                 self?.state = .data
@@ -93,13 +94,15 @@ final class StatisticsViewPresenter {
             let avatar = user.avatar ?? ""
             let rating = Double(user.rating ?? "0.0") ?? 0.0
             let description = user.description ?? ""
-            let vmUser = StatisticsProfileModel(avatarImage: avatar,
+            let vmUser = StatisticsProfileModel(
+                                                avatarImage: avatar,
                                                 description: description,
                                                 name: name,
                                                 nftCount: nfts.count,
                                                 nfts: nfts,
                                                 likes: [],
-                                                rating: Int(rating) ?? 0)
+                                                rating: Int(rating)
+                                                )
             result.append(vmUser)
         }
         return result

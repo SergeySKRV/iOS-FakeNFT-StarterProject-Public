@@ -112,10 +112,12 @@ extension StatisticsViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatisticsTableViewCell")
                 as? StatisticsTableViewCell
         else { return UITableViewCell() }
-        cell.configureCellData(number: indexPath.item+1,
+        cell.configureCellData(
+                               number: indexPath.item + 1,
                                avatarImage: presenter.statisticsViewModel[indexPath.item].avatarImage,
                                nameOfUser: presenter.statisticsViewModel[indexPath.item].name,
-                               numberOfNFT: presenter.statisticsViewModel[indexPath.item].nftCount)
+                               numberOfNFT: presenter.statisticsViewModel[indexPath.item].nftCount
+                              )
         return cell
     }
 }

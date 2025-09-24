@@ -105,25 +105,30 @@ final class StatisticsCollectionViewController: UIViewController, StatisticsColl
 }
 // MARK: - extensions
 extension StatisticsCollectionViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter.statisticsCollectionViewModel.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = nftCollectionView.dequeueReusableCell(withReuseIdentifier: "StatisticsCollectionViewCell",
-                                                               for: indexPath)
+       guard let cell = nftCollectionView.dequeueReusableCell(
+            withReuseIdentifier: "StatisticsCollectionViewCell",
+            for: indexPath
+                                                              )
                 as? StatisticsCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.presenter = presenter
-        cell.nftCard = presenter.statisticsCollectionViewModel[indexPath.row]
+        cell.nftCard = presenter.statisticsCollectionViewModel[indexPath.item]
         cell.configureCellData()
         return cell
     }
 }
 
 extension StatisticsCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+                        ) -> CGSize {
         return CGSize(
             width: (collectionView.bounds.width - 18) / 3,
             height: 192

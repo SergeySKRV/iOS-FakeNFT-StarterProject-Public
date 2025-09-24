@@ -9,29 +9,37 @@ enum StatisticsNetworkClientError: Error {
 
 protocol StatisticsNetworkClient {
     @discardableResult
-    func send(request: StatisticsNetworkRequest,
+    func send(
+              request: StatisticsNetworkRequest,
               completionQueue: DispatchQueue,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> StatisticsNetworkTask?
+              onResponse: @escaping (Result<Data, Error>) -> Void
+              ) -> StatisticsNetworkTask?
 
     @discardableResult
-    func send<T: Decodable>(request: StatisticsNetworkRequest,
+    func send<T: Decodable>(
+                            request: StatisticsNetworkRequest,
                             type: T.Type,
                             completionQueue: DispatchQueue,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> StatisticsNetworkTask?
+                            onResponse: @escaping (Result<T, Error>) -> Void
+                            ) -> StatisticsNetworkTask?
 }
 
 extension StatisticsNetworkClient {
 
     @discardableResult
-    func send(request: StatisticsNetworkRequest,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> StatisticsNetworkTask? {
+    func send(
+              request: StatisticsNetworkRequest,
+              onResponse: @escaping (Result<Data, Error>) -> Void
+             ) -> StatisticsNetworkTask? {
         send(request: request, completionQueue: .main, onResponse: onResponse)
     }
 
     @discardableResult
-    func send<T: Decodable>(request: StatisticsNetworkRequest,
+    func send<T: Decodable>(
+                            request: StatisticsNetworkRequest,
                             type: T.Type,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> StatisticsNetworkTask? {
+                            onResponse: @escaping (Result<T, Error>) -> Void
+                            ) -> StatisticsNetworkTask? {
         send(request: request, type: type, completionQueue: .main, onResponse: onResponse)
     }
 }
@@ -41,9 +49,11 @@ struct StatisticsDefaultNetworkClient: StatisticsNetworkClient {
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared,
+    init(
+         session: URLSession = URLSession.shared,
          decoder: JSONDecoder = JSONDecoder(),
-         encoder: JSONEncoder = JSONEncoder()) {
+         encoder: JSONEncoder = JSONEncoder()
+        ) {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder

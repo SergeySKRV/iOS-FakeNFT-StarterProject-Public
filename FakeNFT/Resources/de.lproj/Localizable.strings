@@ -67,3 +67,11 @@
 //MARK: - FavoritesNFT
 "FavoritesNFT.title" = "Favorisierte NFT";
 "FavoritesNFT.emptyState" = "Sie haben noch keine favorisierten NFTs";
+
+//MARK: Statistics
+"Name.sort.title" = "Nach Name";
+"Rating.sort.title" = "Nach Bewertung";
+"Close.title" = "Schließen";
+"Sort.title" = "Sortierung";
+"Statistics.NFTCollection" = "NFT sammlung";
+"Statistics.moveToSite" = "Website des benutzers";
