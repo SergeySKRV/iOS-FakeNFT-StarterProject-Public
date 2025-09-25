@@ -4,7 +4,7 @@
 
 [Дизайн Figma](https://www.figma.com/design/Uz5G39wRRCr2mRE4SbnNla/FakeNFT--YP-)
 
-[Скринкаст эпика "Статистика"] (https://github.com/user-attachments/assets/c0293fc0-d363-40cf-8833-6d2aae1431f8)
+Скринкаст эпика "Статистика": https://github.com/user-attachments/assets/c0293fc0-d363-40cf-8833-6d2aae1431f8
 
 ## Назначение и цели приложения
 
