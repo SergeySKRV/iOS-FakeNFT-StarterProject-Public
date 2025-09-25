@@ -1,13 +1,12 @@
 {
-  "originHash" : "f849e0e43a40d5c2fb7b572c3fdd44a78a5173b12736805ecba5e7e027b0f227",
   "pins" : [
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "2ef543ee21d63734e1c004ad6c870255e8716c50",
-        "version" : "7.12.0"
+        "revision" : "af4be924ad984cf4d16f4ae4df424e79a443d435",
+        "version" : "7.6.2"
       }
     },
     {
@@ -18,16 +17,7 @@
         "revision" : "2b80c6f5a091c76a01f080545723f9b0bcf928cd",
         "version" : "13.6.2"
       }
-    },
-    {
-      "identity" : "swiftlintplugins",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
-      "state" : {
-        "revision" : "6166499ede0efe43c3809f101d2c3cd409e2b77a",
-        "version" : "0.61.0"
-      }
     }
   ],
-  "version" : 3
+  "version" : 2
 }

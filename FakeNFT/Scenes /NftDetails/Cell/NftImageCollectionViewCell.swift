@@ -32,7 +32,6 @@ final class NftImageCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         imageView.heightAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

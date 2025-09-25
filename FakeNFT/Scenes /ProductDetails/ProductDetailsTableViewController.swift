@@ -8,7 +8,7 @@ final class ProductDetailsTableViewController: UITableViewController {
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        10
+        return 10
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -1,5 +1,5 @@
-import Kingfisher
 import UIKit
+import Kingfisher
 
 protocol NftDetailView: AnyObject, ErrorView, LoadingView {
     func displayCells(_ cellModels: [NftDetailCellModel])
@@ -27,7 +27,7 @@ final class NftDetailViewController: UIViewController {
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.tintColor = .closeButton
-        button.setImage(UIImage(resource: .close), for: .normal)
+        button.setImage(UIImage(named: "close"), for: .normal)
         button.addTarget(self, action: #selector(close), for: .touchUpInside)
         return button
     }()
@@ -44,7 +44,6 @@ final class NftDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -107,10 +106,8 @@ extension NftDetailViewController: UICollectionViewDataSource {
         cellModels.count
     }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: NftImageCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
 
         let cellModel = cellModels[indexPath.row]
@@ -123,11 +120,9 @@ extension NftDetailViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension NftDetailViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         collectionView.bounds.size
     }
 
