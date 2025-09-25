@@ -10,6 +10,8 @@
 
 Скринкаст эпика "Корзина": https://github.com/user-attachments/assets/7bb9c1e5-7f1f-4c56-86e2-e31906ea09d5
 
+Скринкаст эпика "Каталог": https://github.com/user-attachments/assets/55ef1a83-7cf0-4607-9abd-12b7dfa39a0e
+
 ## Назначение и цели приложения
 
 Приложение помогает пользователям просматривать и покупать NFT (Non-Fungible Token). Функционал покупки имитируется с помощью mock-сервера.
