@@ -4,6 +4,8 @@
 
 [Дизайн Figma](https://www.figma.com/design/Uz5G39wRRCr2mRE4SbnNla/FakeNFT--YP-)
 
+[Скринкаст эпика "Статистика"](https://github.com/user-attachments/assets/c0293fc0-d363-40cf-8833-6d2aae1431f8)
+
 ## Назначение и цели приложения
 
 Приложение помогает пользователям просматривать и покупать NFT (Non-Fungible Token). Функционал покупки имитируется с помощью mock-сервера.
@@ -198,4 +200,4 @@
 - **Обязательно:** обновление UI только из главного потока `Main Thread`.
 - **Используется:** GCD (`DispatchQueue`, `DispatchGroup`);
 
-  Скринкаст эпика "Статистика" https://github.com/user-attachments/assets/c0293fc0-d363-40cf-8833-6d2aae1431f8
+  
