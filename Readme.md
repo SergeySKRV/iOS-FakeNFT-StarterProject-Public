@@ -8,7 +8,7 @@
 
 Скринкаст эпика "Профиль": https://github.com/user-attachments/assets/ec2c199b-0974-40bc-a768-2f50a8009646
 
-Скринкаст эпика "Профиль": https://github.com/user-attachments/assets/7bb9c1e5-7f1f-4c56-86e2-e31906ea09d5
+Скринкаст эпика "Корзина": https://github.com/user-attachments/assets/7bb9c1e5-7f1f-4c56-86e2-e31906ea09d5
 
 ## Назначение и цели приложения
 
